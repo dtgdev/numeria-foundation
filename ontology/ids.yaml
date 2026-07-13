@@ -1,0 +1,35 @@
+namespace: NUM
+
+entities:
+
+  Universe: NUM-UNI
+
+  Concept: NUM-CON
+
+  Character: NUM-CHR
+
+  Story: NUM-STO
+
+  Lesson: NUM-LES
+
+  Curriculum: NUM-CUR
+
+  Book: NUM-BOK
+
+  Episode: NUM-EP
+
+  Animation: NUM-ANI
+
+  Game: NUM-GAM
+
+  Worksheet: NUM-WS
+
+  Assessment: NUM-ASM
+
+  Organization: NUM-ORG
+
+  Location: NUM-LOC
+
+  Event: NUM-EVT
+
+  Mission: NUM-MSN

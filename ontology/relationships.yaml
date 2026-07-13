@@ -1,0 +1,41 @@
+relationships:
+
+  represents
+
+  teaches
+
+  appearsIn
+
+  livesIn
+
+  belongsTo
+
+  inspiredBy
+
+  prerequisiteFor
+
+  friendOf
+
+  rivalOf
+
+  mentorOf
+
+  createdBy
+
+  partOf
+
+  references
+
+  illustrates
+
+  explains
+
+  discovers
+
+  protects
+
+  explores
+
+  solves
+
+  learns

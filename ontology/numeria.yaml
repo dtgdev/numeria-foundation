@@ -1,0 +1,86 @@
+schema:
+  name: Numeria Foundation Ontology
+
+  version: 0.1.0
+
+  codename: Project Atlas
+
+description: >
+  The canonical semantic model for the Numeria educational universe.
+  Every mathematical concept, character, story, lesson, game,
+  animation, assessment, and AI experience ultimately derives from
+  this ontology.
+
+principles:
+
+  - Mathematics is the source of truth.
+
+  - Knowledge has one canonical representation.
+
+  - Stories communicate knowledge.
+
+  - Characters embody knowledge.
+
+  - Lessons teach knowledge.
+
+  - Games reinforce knowledge.
+
+  - AI personalizes knowledge.
+
+  - Every entity has a permanent identity.
+
+  - Every relationship is explicit.
+
+  - Every change is versioned.
+
+  - Everything is traceable.
+
+layers:
+
+  - Mathematics
+
+  - Knowledge
+
+  - Character
+
+  - Story
+
+  - Learning
+
+  - Media
+
+  - AI
+
+entityTypes:
+
+  - Concept
+
+  - Character
+
+  - Story
+
+  - Lesson
+
+  - Curriculum
+
+  - Book
+
+  - Chapter
+
+  - Episode
+
+  - Animation
+
+  - Game
+
+  - Assessment
+
+  - Worksheet
+
+  - Organization
+
+  - Location
+
+  - Event
+
+  - Mission
