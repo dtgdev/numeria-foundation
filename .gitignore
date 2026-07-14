@@ -4,3 +4,16 @@
 
 # macOS metadata
 .DS_Store
+
+# Local IDE files
+.idea/
+
+# Python virtual environments
+.venv/
+**/.venv/
+
+# Node dependencies and builds
+node_modules/
+**/node_modules/
+dist/
+**/dist/
