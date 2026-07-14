@@ -1,0 +1,23 @@
+id: NUM-REL-000007
+type: APPEARS_IN
+status: CANON
+
+source:
+  id: NUM-EVT-000001
+  type: Event
+  name: Derivative Discovers the Silver Delta
+
+target:
+  id: NUM-BOOK-000001
+  type: Book
+  name: The Adventures of Detective Derivative
+
+description: >
+  The event in which Derivative discovers and receives the Silver Delta
+  appears in Book 1 and serves as a foundational moment in the origin story.
+
+relationship_properties:
+  primary_event: true
+  canon_defining: true
+
+version: 1.0.0
