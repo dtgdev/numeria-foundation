@@ -1,0 +1,34 @@
+id: NUM-CHR-000006
+name: Limit
+title: Keeper of the Horizon
+type: Character
+status: CANON
+version: 1.0.0
+
+world: Numeria
+
+role: Guardian of Approaching
+
+summary: >
+  Limit teaches that understanding often comes from getting closer and
+  closer to an idea. Wise and patient, Limit helps others recognize
+  where things are heading, even before they arrive.
+
+mathematical_domain:
+  - limits
+  - continuity
+  - approaching
+  - infinity
+
+personality:
+  patient: true
+  wise: true
+  calm: true
+  observant: true
+  encouraging: true
+
+first_appearance:
+  work_id: NUM-BOOK-000003
+
+creator:
+  organization: Numeria Foundation
