@@ -1,0 +1,34 @@
+id: NUM-EVT-000001
+name: Derivative Discovers the Silver Delta
+type: Event
+status: CANON
+
+summary: >
+  The defining event in which Derivative receives the Silver Delta and
+  begins his journey as the Guardian of Change.
+
+participants:
+  - NUM-CHR-000001
+  - NUM-CHR-000002
+
+artifacts:
+  - NUM-ART-000001
+
+location:
+  - NUM-LOC-000001
+
+appears_in:
+  - NUM-BOOK-000001
+
+educational_concepts:
+  - change
+  - observation
+  - curiosity
+
+significance: >
+  This event marks the beginning of Derivative's transformation from a
+  curious child into the Guardian of Change.
+
+timeline_order: 1
+
+version: 1.0.0
