@@ -1,0 +1,22 @@
+id: NUM-REL-000036
+type: PART_OF_LESSON
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-ACT-000001
+  type: Activity
+  name: Spot the Change
+
+target:
+  id: NUM-LESSON-000001
+  type: Lesson
+  name: Noticing Change
+
+description: >
+  The Spot the Change activity is part of Lesson 1 and gives learners
+  direct practice observing and describing change.
+
+relationship_properties:
+  primary_activity: true
+  instructional_sequence: 2
