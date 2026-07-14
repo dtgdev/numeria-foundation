@@ -1,0 +1,37 @@
+id: NUM-CON-000002
+name: Delta
+title: Difference
+type: Concept
+status: CANON
+version: 1.0.0
+
+summary: >
+  Delta represents the difference between two values.
+  It measures how much something has changed from one state to another.
+
+formal_definition: >
+  Delta is the mathematical symbol used to represent change or
+  difference between two quantities.
+
+kid_friendly_definition: >
+  Delta asks one simple question:
+
+  "What changed?"
+
+real_world_examples:
+  - The tree grew 5 centimeters.
+  - The temperature increased by 3 degrees.
+  - Your savings increased by 20 dollars.
+  - A plant became taller.
+
+guardian:
+  id: NUM-CHR-000002
+  name: Delta
+
+related_concepts:
+  - NUM-CON-000001
+  - NUM-CON-000003
+  - NUM-CON-000004
+
+introduced_in:
+  work_id: NUM-BOOK-000001
