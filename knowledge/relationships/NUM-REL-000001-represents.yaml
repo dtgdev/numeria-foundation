@@ -1,0 +1,11 @@
+id: NUM-REL-000001
+
+relationship: represents
+
+description: >
+  A narrative character embodies and teaches a canonical
+  mathematical concept without replacing its definition.
+
+source: Character
+
+target: MathematicalConcept

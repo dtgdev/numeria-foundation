@@ -1,0 +1,78 @@
+name: MathematicalConceptSchema
+version: 1.0.0
+
+entityType: MathematicalConcept
+
+description: >
+  Validation schema for canonical mathematical concept
+  entities within the Numeria Knowledge Layer.
+
+required:
+  - id
+  - type
+  - status
+  - version
+  - name
+  - domain
+  - summary
+  - canonicalDefinition
+
+properties:
+
+  id:
+    type: string
+    pattern: "^NUM-CON-[0-9]{6}$"
+
+  type:
+    type: string
+    enum:
+      - MathematicalConcept
+
+  status:
+    type: string
+    enum:
+      - draft
+      - review
+      - canonical
+      - deprecated
+      - archived
+
+  version:
+    type: string
+
+  name:
+    type: string
+
+  symbol:
+    type: string
+
+  domain:
+    type: string
+
+  summary:
+    type: markdown
+
+  canonicalDefinition:
+    type: markdown
+
+  mathematicalLayer:
+    type: object
+
+  relationships:
+    type: object
+
+  learningObjectives:
+    type: array
+
+  applications:
+    type: array
+
+  createdBy:
+    type: string
+
+  reviewStatus:
+    type: string
+    enum:
+      - draft
+      - review
+      - canonical

@@ -1,0 +1,46 @@
+id: NUM-CHR-000001
+
+type: Character
+
+status: canonical
+
+version: 1.0.0
+
+name: Detective Derivative
+
+slug: detective-derivative
+
+guild: Calculus Guild
+
+represents:
+
+  concept: NUM-CON-000001
+
+mathematicalDomain: Calculus
+
+role: Detective
+
+educationalMission: >
+  Help learners observe, measure,
+  and understand change.
+
+mathematicalHabitOfMind:
+  Observe Change
+
+coreValues:
+
+  - Curiosity
+  - Truth
+  - Patience
+  - Evidence
+  - Discovery
+
+creator:
+
+  organization: Numeria Foundation
+
+firstAppearance:
+
+  project: Project Lantern
+
+tag: v0.3.0-project-lantern
