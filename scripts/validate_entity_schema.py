@@ -28,6 +28,16 @@ REQUIRED_FIELDS = {
         "status",
         "version",
     ],
+    "Lesson": [
+        "id",
+        "name",
+        "type",
+        "status",
+        "version",
+        "grade_band",
+        "primary_concept",
+        "primary_learning_objective",
+    ],
 }
 
 errors = []

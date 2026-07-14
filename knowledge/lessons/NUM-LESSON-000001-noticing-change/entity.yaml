@@ -1,0 +1,24 @@
+id: NUM-LESSON-000001
+name: Noticing Change
+type: Lesson
+status: CANON
+version: 1.0.0
+
+summary: >
+  The learner discovers that mathematics begins by observing change in
+  the world.
+
+grade_band: Early
+
+primary_concept:
+  id: NUM-CON-000002
+  name: Delta
+
+primary_learning_objective:
+  id: NUM-LO-000001
+  name: Recognize Change
+
+estimated_duration_minutes: 20
+
+creator:
+  organization: Numeria Foundation

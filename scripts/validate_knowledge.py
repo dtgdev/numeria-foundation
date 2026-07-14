@@ -14,6 +14,7 @@ PREFIX_BY_TYPE = {
     "Event": "NUM-EVT-",
     "Lesson": "NUM-LSN-",
     "Concept": "NUM-CON-",
+    "Lesson": "NUM-LESSON-",
 }
 
 errors = []

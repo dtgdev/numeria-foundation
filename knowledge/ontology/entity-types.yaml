@@ -42,3 +42,7 @@ entity_types:
   LearningObjective:
     prefix: NUM-LO
     description: Measurable educational outcomes linked to concepts, Guardians, stories, and assessments.
+
+  Lesson:
+    prefix: NUM-LESSON
+    description: Canonical instructional lesson built from one or more scenes.
