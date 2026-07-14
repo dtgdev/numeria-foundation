@@ -2,7 +2,7 @@ id: NUM-CON-000001
 type: Concept
 status: CANON
 version: 1.0.0
-name: Detective Derivative
+name: Derivative
 slug: detective-derivative
 guild: Calculus Guild
 represents:
@@ -24,3 +24,4 @@ creator:
 firstAppearance:
   project: Project Lantern
 tag: v0.3.0-project-lantern
+title: Rate of Change
