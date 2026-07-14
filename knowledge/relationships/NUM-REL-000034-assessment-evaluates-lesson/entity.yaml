@@ -1,0 +1,22 @@
+id: NUM-REL-000034
+type: EVALUATES_LESSON
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-ASMT-000001
+  type: Assessment
+  name: Recognize Change Assessment
+
+target:
+  id: NUM-LESSON-000001
+  type: Lesson
+  name: Noticing Change
+
+description: >
+  The Recognize Change Assessment evaluates the learning delivered
+  through Lesson 1, Noticing Change.
+
+relationship_properties:
+  primary_assessment: true
+  formative: true

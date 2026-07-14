@@ -95,3 +95,7 @@ relationship_types:
   ASSESSES_OBJECTIVE:
     source: Assessment
     target: LearningObjective
+
+  EVALUATES_LESSON:
+    source: Assessment
+    target: Lesson
