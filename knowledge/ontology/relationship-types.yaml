@@ -51,3 +51,7 @@ relationship_types:
   REPRESENTED_BY:
     source: Concept
     target: Character
+
+  TEACHES:
+    source: LearningObjective
+    target: Concept

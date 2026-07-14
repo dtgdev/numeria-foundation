@@ -1,0 +1,21 @@
+id: NUM-REL-000016
+type: TEACHES
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-LO-000001
+  type: LearningObjective
+  name: Recognize Change
+
+target:
+  id: NUM-CON-000002
+  type: Concept
+  name: Delta
+
+description: >
+  The learning objective "Recognize Change" teaches the mathematical
+  concept of Delta by helping learners compare before and after states.
+
+relationship_properties:
+  primary_objective: true
