@@ -1,0 +1,22 @@
+id: NUM-REL-000037
+type: PRACTICES_OBJECTIVE
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-ACT-000001
+  type: Activity
+  name: Spot the Change
+
+target:
+  id: NUM-LO-000001
+  type: LearningObjective
+  name: Recognize Change
+
+description: >
+  The Spot the Change activity gives learners direct practice toward
+  achieving the Recognize Change learning objective.
+
+relationship_properties:
+  primary_objective: true
+  guided_practice: true

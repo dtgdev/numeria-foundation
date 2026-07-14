@@ -107,3 +107,7 @@ relationship_types:
   PART_OF_LESSON:
     source: Activity
     target: Lesson
+
+  PRACTICES_OBJECTIVE:
+    source: Activity
+    target: LearningObjective
