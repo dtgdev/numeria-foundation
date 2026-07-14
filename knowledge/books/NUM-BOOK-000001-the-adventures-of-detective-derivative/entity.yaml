@@ -1,0 +1,36 @@
+id: NUM-BOOK-000001
+title: The Adventures of Detective Derivative
+series: Calculus Made Easy
+book_number: 1
+
+status: CANON
+world: Numeria
+
+summary: >
+  The origin story of Derivative, the Silver Delta, and the Book of Change.
+  Young readers discover that understanding change begins with curiosity,
+  careful observation, and asking good questions.
+
+primary_characters:
+  - NUM-CHR-000001
+  - NUM-CHR-000002
+
+primary_location:
+  - NUM-LOC-000001
+
+primary_artifacts:
+  - NUM-ART-000001
+  - NUM-ART-000002
+
+educational_concepts:
+  - change
+  - observation
+  - difference
+  - curiosity
+  - evidence
+
+target_age:
+  min: 7
+  max: 11
+
+version: 1.0.0
