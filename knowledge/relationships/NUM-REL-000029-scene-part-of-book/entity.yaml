@@ -1,0 +1,23 @@
+id: NUM-REL-000029
+type: PART_OF_BOOK
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000001
+  type: Scene
+  name: Derivative Meets Delta
+
+target:
+  id: NUM-BOOK-000001
+  type: Book
+  name: The Adventures of Detective Derivative
+
+description: >
+  The scene "Derivative Meets Delta" is part of Book 1 and serves as its
+  opening canonical scene.
+
+relationship_properties:
+  chapter: 1
+  scene_number: 1
+  opening_scene: true
