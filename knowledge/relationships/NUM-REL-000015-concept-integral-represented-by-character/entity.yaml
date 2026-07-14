@@ -1,0 +1,22 @@
+id: NUM-REL-000015
+type: REPRESENTED_BY
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000008
+  type: Concept
+  name: Integral
+
+target:
+  id: NUM-CHR-000008
+  type: Character
+  name: Integral
+
+description: >
+  The mathematical concept of Integral is personified in Numeria by
+  the Guardian Integral.
+
+relationship_properties:
+  canonical_representation: true
+  primary_character: true

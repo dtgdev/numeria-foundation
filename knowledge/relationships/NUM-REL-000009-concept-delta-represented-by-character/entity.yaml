@@ -1,0 +1,22 @@
+id: NUM-REL-000009
+type: REPRESENTED_BY
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000002
+  type: Concept
+  name: Delta
+
+target:
+  id: NUM-CHR-000002
+  type: Character
+  name: Delta
+
+description: >
+  The mathematical concept of Delta is personified in Numeria by
+  the Guardian Delta.
+
+relationship_properties:
+  canonical_representation: true
+  primary_character: true

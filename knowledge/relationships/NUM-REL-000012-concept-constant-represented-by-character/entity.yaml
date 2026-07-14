@@ -1,0 +1,22 @@
+id: NUM-REL-000012
+type: REPRESENTED_BY
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000005
+  type: Concept
+  name: Constant
+
+target:
+  id: NUM-CHR-000005
+  type: Character
+  name: Constant
+
+description: >
+  The mathematical concept of Constant is personified in Numeria by
+  the Guardian Constant.
+
+relationship_properties:
+  canonical_representation: true
+  primary_character: true

@@ -1,0 +1,22 @@
+id: NUM-REL-000013
+type: REPRESENTED_BY
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000006
+  type: Concept
+  name: Limit
+
+target:
+  id: NUM-CHR-000006
+  type: Character
+  name: Limit
+
+description: >
+  The mathematical concept of Limit is personified in Numeria by
+  the Guardian Limit.
+
+relationship_properties:
+  canonical_representation: true
+  primary_character: true

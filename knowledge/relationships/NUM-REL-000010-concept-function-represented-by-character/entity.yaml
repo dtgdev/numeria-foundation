@@ -1,0 +1,22 @@
+id: NUM-REL-000010
+type: REPRESENTED_BY
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000003
+  type: Concept
+  name: Function
+
+target:
+  id: NUM-CHR-000003
+  type: Character
+  name: Function
+
+description: >
+  The mathematical concept of Function is personified in Numeria by
+  the Guardian Function.
+
+relationship_properties:
+  canonical_representation: true
+  primary_character: true

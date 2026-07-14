@@ -1,0 +1,22 @@
+id: NUM-REL-000014
+type: REPRESENTED_BY
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000007
+  type: Concept
+  name: Tangent
+
+target:
+  id: NUM-CHR-000007
+  type: Character
+  name: Tangent
+
+description: >
+  The mathematical concept of Tangent is personified in Numeria by
+  the Guardian Tangent.
+
+relationship_properties:
+  canonical_representation: true
+  primary_character: true

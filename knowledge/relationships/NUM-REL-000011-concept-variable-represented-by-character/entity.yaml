@@ -1,0 +1,22 @@
+id: NUM-REL-000011
+type: REPRESENTED_BY
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000004
+  type: Concept
+  name: Variable
+
+target:
+  id: NUM-CHR-000004
+  type: Character
+  name: Variable
+
+description: >
+  The mathematical concept of Variable is personified in Numeria by
+  the Guardian Variable.
+
+relationship_properties:
+  canonical_representation: true
+  primary_character: true
