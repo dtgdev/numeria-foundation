@@ -75,3 +75,7 @@ relationship_types:
   ACHIEVES_OBJECTIVE:
     source: Scene
     target: LearningObjective
+
+  PART_OF_BOOK:
+    source: Scene
+    target: Book
