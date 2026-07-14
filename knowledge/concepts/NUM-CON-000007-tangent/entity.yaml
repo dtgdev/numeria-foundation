@@ -1,0 +1,47 @@
+id: NUM-CON-000007
+name: Tangent
+title: Instantaneous Direction
+type: Concept
+status: CANON
+version: 1.0.0
+
+summary: >
+  A tangent describes the direction or slope of a curve at a single
+  point. It provides local information about how something is changing
+  at that exact moment.
+
+formal_definition: >
+  A tangent line touches a curve at a point and has the same
+  instantaneous slope as the curve at that point.
+
+kid_friendly_definition: >
+  Imagine riding your bike on a winding road.
+
+  Right where you are now...
+
+  Which way are you pointing?
+
+  Tangent tells you the direction of your very next step.
+
+real_world_examples:
+  - The direction of a skateboard ramp at one spot.
+  - The slope of a hill where you are standing.
+  - The angle of a road at one location.
+  - The direction a race car is moving in a turn.
+
+common_misconceptions:
+  - A tangent describes one point, not the entire path.
+  - A tangent may touch a curve without crossing it.
+  - A tangent is about local behavior.
+
+guardian:
+  id: NUM-CHR-000007
+  name: Tangent
+
+related_concepts:
+  - NUM-CON-000006
+  - NUM-CON-000001
+  - NUM-CON-000003
+
+introduced_in:
+  work_id: NUM-BOOK-000003
