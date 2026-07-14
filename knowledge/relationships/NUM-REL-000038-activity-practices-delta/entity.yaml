@@ -1,0 +1,22 @@
+id: NUM-REL-000038
+type: PRACTICES_CONCEPT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-ACT-000001
+  type: Activity
+  name: Spot the Change
+
+target:
+  id: NUM-CON-000002
+  type: Concept
+  name: Delta
+
+description: >
+  The Spot the Change activity gives learners direct practice with the
+  Delta concept by comparing before-and-after states.
+
+relationship_properties:
+  primary_concept: true
+  guided_practice: true

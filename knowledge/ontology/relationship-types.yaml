@@ -111,3 +111,7 @@ relationship_types:
   PRACTICES_OBJECTIVE:
     source: Activity
     target: LearningObjective
+
+  PRACTICES_CONCEPT:
+    source: Activity
+    target: Concept
