@@ -1,0 +1,20 @@
+id: NUM-REL-000044
+type: FEATURES_CHARACTER
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000002
+  type: Scene
+  name: The Silver Delta
+
+target:
+  id: NUM-CHR-000001
+  type: Character
+  name: Derivative
+
+description: >
+  The scene features Derivative as the learner and future Guardian of Change.
+
+relationship_properties:
+  primary_character: true

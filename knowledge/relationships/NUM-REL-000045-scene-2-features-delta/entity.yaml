@@ -1,0 +1,20 @@
+id: NUM-REL-000045
+type: FEATURES_CHARACTER
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000002
+  type: Scene
+  name: The Silver Delta
+
+target:
+  id: NUM-CHR-000002
+  type: Character
+  name: Delta
+
+description: >
+  The scene features Delta as the guide who reveals the Silver Delta artifact.
+
+relationship_properties:
+  guide: true

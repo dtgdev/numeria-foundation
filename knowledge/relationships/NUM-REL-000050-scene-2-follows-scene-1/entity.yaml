@@ -1,0 +1,21 @@
+id: NUM-REL-000050
+type: FOLLOWS_SCENE
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000002
+  type: Scene
+  name: The Silver Delta
+
+target:
+  id: NUM-SCN-000001
+  type: Scene
+  name: Derivative Meets Delta
+
+description: >
+  The Silver Delta follows directly after Derivative Meets Delta.
+
+relationship_properties:
+  sequence: 2
+  direct_follow: true

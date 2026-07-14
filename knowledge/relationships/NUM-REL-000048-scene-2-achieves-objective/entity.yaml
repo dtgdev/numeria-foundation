@@ -1,0 +1,20 @@
+id: NUM-REL-000048
+type: ACHIEVES_OBJECTIVE
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000002
+  type: Scene
+  name: The Silver Delta
+
+target:
+  id: NUM-LO-000001
+  type: LearningObjective
+  name: Recognize Change
+
+description: >
+  The scene reinforces the objective of recognizing meaningful change.
+
+relationship_properties:
+  reinforcement: true

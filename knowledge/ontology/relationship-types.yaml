@@ -131,3 +131,11 @@ relationship_types:
   ENDS_WITH_ASSESSMENT:
     source: LearningJourney
     target: Assessment
+
+  FEATURES_ARTIFACT:
+    source: Scene
+    target: Artifact
+
+  FOLLOWS_SCENE:
+    source: Scene
+    target: Scene
