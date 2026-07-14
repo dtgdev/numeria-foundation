@@ -38,6 +38,17 @@ REQUIRED_FIELDS = {
         "primary_concept",
         "primary_learning_objective",
     ],
+    "Assessment": [
+        "id",
+        "name",
+        "type",
+        "status",
+        "version",
+        "grade_band",
+        "assessment_type",
+        "learning_objective",
+        "success_criteria",
+    ],
 }
 
 errors = []

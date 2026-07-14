@@ -46,3 +46,7 @@ entity_types:
   Lesson:
     prefix: NUM-LESSON
     description: Canonical instructional lesson built from one or more scenes.
+
+  Assessment:
+    prefix: NUM-ASMT
+    description: Canonical assessment used to verify achievement of a learning objective.

@@ -1,0 +1,38 @@
+id: NUM-ASMT-000001
+name: Recognize Change Assessment
+type: Assessment
+status: CANON
+version: 1.0.0
+
+summary: >
+  A short formative assessment that checks whether a learner can identify
+  and describe change by comparing a before state with an after state.
+
+grade_band: Early
+
+assessment_type: formative
+
+learning_objective:
+  id: NUM-LO-000001
+  name: Recognize Change
+
+concept:
+  id: NUM-CON-000002
+  name: Delta
+
+lesson:
+  id: NUM-LESSON-000001
+  name: Noticing Change
+
+success_criteria:
+  - Identifies whether a change occurred.
+  - Describes at least one observable difference.
+  - Uses before-and-after language accurately.
+
+items:
+  - prompt: Compare two pictures and describe what changed.
+    response_type: oral_or_written
+  - prompt: Explain how a plant changed after one week.
+    response_type: oral_or_written
+  - prompt: Identify one thing that stayed the same.
+    response_type: oral_or_written
