@@ -1,0 +1,22 @@
+id: NUM-REL-000035
+type: ASSESSES_CONCEPT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-ASMT-000001
+  type: Assessment
+  name: Recognize Change Assessment
+
+target:
+  id: NUM-CON-000002
+  type: Concept
+  name: Delta
+
+description: >
+  The Recognize Change Assessment evaluates the learner's understanding
+  of the Delta concept through before-and-after comparison.
+
+relationship_properties:
+  primary_concept: true
+  formative: true

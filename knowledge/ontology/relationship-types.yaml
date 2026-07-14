@@ -99,3 +99,7 @@ relationship_types:
   EVALUATES_LESSON:
     source: Assessment
     target: Lesson
+
+  ASSESSES_CONCEPT:
+    source: Assessment
+    target: Concept
