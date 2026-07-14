@@ -1,0 +1,28 @@
+id: NUM-REL-000004
+type: CREATED
+status: CANON
+
+source:
+  id: NUM-CHR-000002
+  type: Character
+  name: Delta
+
+target:
+  id: NUM-ART-000001
+  type: Artifact
+  name: Silver Delta
+
+description: >
+  Delta forged the Silver Delta by placing a portion of her own light
+  and wisdom into a silver pendant. She later entrusted it to
+  Derivative to aid him in recognizing meaningful change.
+
+first_appearance:
+  work_id: NUM-BOOK-000001
+  title: The Adventures of Detective Derivative
+
+relationship_properties:
+  permanent: true
+  origin_story: true
+
+version: 1.0.0
