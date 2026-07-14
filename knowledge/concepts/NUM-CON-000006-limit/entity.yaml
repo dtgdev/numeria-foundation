@@ -1,0 +1,45 @@
+id: NUM-CON-000006
+name: Limit
+title: Approaching a Value
+type: Concept
+status: CANON
+version: 1.0.0
+
+summary: >
+  A limit describes the value that a function or sequence approaches as
+  its input gets closer to a particular point.
+
+formal_definition: >
+  A limit is the value that a mathematical expression approaches as its
+  independent variable approaches a specified value.
+
+kid_friendly_definition: >
+  Imagine walking toward a door.
+
+  With every step, you get closer.
+
+  A limit is about understanding where you're heading, even before you
+  arrive.
+
+real_world_examples:
+  - Walking toward a finish line.
+  - Filling a glass until it is almost full.
+  - Zooming in closer to a picture.
+  - A bouncing ball coming to rest.
+
+common_misconceptions:
+  - A limit does not always mean you reach the value.
+  - Getting closer and arriving are different ideas.
+  - Limits are about behavior, not just position.
+
+guardian:
+  id: NUM-CHR-000006
+  name: Limit
+
+related_concepts:
+  - NUM-CON-000003
+  - NUM-CON-000001
+  - NUM-CON-000007
+
+introduced_in:
+  work_id: NUM-BOOK-000003
