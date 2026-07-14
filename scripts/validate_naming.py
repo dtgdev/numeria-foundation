@@ -1,6 +1,7 @@
 from pathlib import Path
 import re
 import sys
+
 import yaml
 
 ROOT = Path("knowledge")
@@ -52,17 +53,19 @@ for path in ROOT.rglob("entity.yaml"):
 
     if entity_name:
         normalized_name = entity_name.strip().casefold()
+        key = (entity_type, normalized_name)
 
-        if normalized_name in names:
-            previous_id, previous_path = names[normalized_name]
+        if key in names:
+            previous_id, previous_path = names[key]
 
             if previous_id != entity_id:
                 errors.append(
-                    f"{path}: duplicate canonical name '{entity_name}' "
-                    f"also used by {previous_id} in {previous_path}"
+                    f"{path}: duplicate {entity_type} name "
+                    f"'{entity_name}' also used by "
+                    f"{previous_id} in {previous_path}"
                 )
         else:
-            names[normalized_name] = (entity_id, path)
+            names[key] = (entity_id, path)
 
 if errors:
     print("\nNaming validation failed:\n")
@@ -72,4 +75,7 @@ if errors:
 
     sys.exit(1)
 
-print(f"Naming validation passed: {len(names)} canonical names checked.")
+print(
+    f"Naming validation passed: "
+    f"{len(names)} canonical entity names checked."
+)
