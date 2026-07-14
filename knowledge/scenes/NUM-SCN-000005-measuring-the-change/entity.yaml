@@ -1,0 +1,34 @@
+id: NUM-SCN-000005
+name: Measuring the Change
+type: Scene
+status: CANON
+version: 1.0.0
+
+summary: >
+  Derivative compares the sunflower's earlier height with its current
+  height and records the difference. The Book of Change reveals its first
+  written page only after the evidence is explained clearly.
+
+book:
+  id: NUM-BOOK-000001
+
+participants:
+  - NUM-CHR-000001
+  - NUM-CHR-000002
+
+concepts:
+  - NUM-CON-000002
+  - NUM-CON-000004
+  - NUM-CON-000005
+
+artifacts:
+  - NUM-ART-000002
+
+location:
+  id: NUM-LOC-000001
+
+learning_objectives:
+  - NUM-LO-000001
+
+previous_scene:
+  NUM-SCN-000004
