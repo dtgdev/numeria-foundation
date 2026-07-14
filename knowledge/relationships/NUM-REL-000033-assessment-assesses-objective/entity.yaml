@@ -1,0 +1,21 @@
+id: NUM-REL-000033
+type: ASSESSES_OBJECTIVE
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-ASMT-000001
+  type: Assessment
+  name: Recognize Change Assessment
+
+target:
+  id: NUM-LO-000001
+  type: LearningObjective
+  name: Recognize Change
+
+description: >
+  This assessment measures whether the learner has achieved the
+  "Recognize Change" learning objective.
+
+relationship_properties:
+  primary_objective: true
