@@ -59,3 +59,19 @@ relationship_types:
   REQUIRES:
     source: Concept
     target: Concept
+
+  FEATURES_CHARACTER:
+    source: Scene
+    target: Character
+
+  INTRODUCES_CONCEPT:
+    source: Scene
+    target: Concept
+
+  OCCURS_AT:
+    source: Scene
+    target: Location
+
+  ACHIEVES_OBJECTIVE:
+    source: Scene
+    target: LearningObjective

@@ -1,0 +1,17 @@
+id: NUM-REL-000026
+type: INTRODUCES_CONCEPT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000001
+  type: Scene
+  name: Derivative Meets Delta
+
+target:
+  id: NUM-CON-000002
+  type: Concept
+  name: Delta
+
+description: >
+  This scene introduces the concept of mathematical change.

@@ -1,0 +1,20 @@
+id: NUM-REL-000025
+type: FEATURES_CHARACTER
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000001
+  type: Scene
+  name: Derivative Meets Delta
+
+target:
+  id: NUM-CHR-000002
+  type: Character
+  name: Delta
+
+description: >
+  This scene introduces Delta as Derivative's guide.
+
+relationship_properties:
+  mentor: true

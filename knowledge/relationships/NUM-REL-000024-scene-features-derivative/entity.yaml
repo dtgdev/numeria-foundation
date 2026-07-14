@@ -1,0 +1,20 @@
+id: NUM-REL-000024
+type: FEATURES_CHARACTER
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000001
+  type: Scene
+  name: Derivative Meets Delta
+
+target:
+  id: NUM-CHR-000001
+  type: Character
+  name: Derivative
+
+description: >
+  This scene features Derivative as the primary protagonist.
+
+relationship_properties:
+  primary_character: true
