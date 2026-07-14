@@ -5,6 +5,7 @@ import sys
 VALIDATORS = [
     Path("scripts/validate_knowledge.py"),
     Path("scripts/validate_relationships.py"),
+    Path("scripts/validate_canon_rules.py"),
 ]
 
 failed = False
