@@ -1,0 +1,34 @@
+id: NUM-CHR-000005
+name: Constant
+title: The Steady Guardian
+type: Character
+status: CANON
+version: 1.0.0
+
+world: Numeria
+
+role: Guardian of Stability
+
+summary: >
+  Constant represents values that never change. Calm, dependable, and
+  unwavering, Constant provides the stable foundation that allows others
+  to recognize and measure change.
+
+mathematical_domain:
+  - constants
+  - fixed_values
+  - stability
+  - reference
+
+personality:
+  calm: true
+  dependable: true
+  patient: true
+  wise: true
+  loyal: true
+
+first_appearance:
+  work_id: NUM-BOOK-000002
+
+creator:
+  organization: Numeria Foundation
