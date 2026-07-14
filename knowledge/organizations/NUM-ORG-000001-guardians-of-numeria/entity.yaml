@@ -1,0 +1,35 @@
+id: NUM-ORG-000001
+name: Guardians of Numeria
+type: Organization
+status: CANON
+world: Numeria
+
+summary: >
+  The Guardians of Numeria are entrusted with protecting mathematical
+  knowledge, guiding learners, and preserving the balance of the five
+  fundamental forces of Numeria.
+
+purpose:
+  - Protect mathematical knowledge
+  - Guide learners
+  - Preserve truth
+  - Encourage curiosity
+  - Maintain balance across Numeria
+
+headquarters:
+  id: NUM-LOC-000001
+  name: Observatory of Change
+
+founding_members:
+  - NUM-CHR-000001
+  - NUM-CHR-000002
+  - NUM-CHR-000003
+
+values:
+  - Curiosity
+  - Understanding
+  - Evidence
+  - Wisdom
+  - Kindness
+
+version: 1.0.0
