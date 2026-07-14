@@ -1,0 +1,21 @@
+id: NUM-REL-000075
+type: FEATURES_ARTIFACT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000005
+  type: Scene
+  name: Measuring the Change
+
+target:
+  id: NUM-ART-000002
+  type: Artifact
+  name: Book of Change
+
+description: >
+  The Book of Change records its first verified discovery.
+
+relationship_properties:
+  primary_artifact: true
+  first_written_page: true

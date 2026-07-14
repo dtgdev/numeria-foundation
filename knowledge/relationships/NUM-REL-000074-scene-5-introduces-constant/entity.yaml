@@ -1,0 +1,20 @@
+id: NUM-REL-000074
+type: INTRODUCES_CONCEPT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000005
+  type: Scene
+  name: Measuring the Change
+
+target:
+  id: NUM-CON-000005
+  type: Concept
+  name: Constant
+
+description: >
+  The fixed measuring marks introduce the idea of a constant reference.
+
+relationship_properties:
+  introductory: true

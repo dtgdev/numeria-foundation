@@ -1,0 +1,21 @@
+id: NUM-REL-000078
+type: FOLLOWS_SCENE
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000005
+  type: Scene
+  name: Measuring the Change
+
+target:
+  id: NUM-SCN-000004
+  type: Scene
+  name: The First Clue of Change
+
+description: >
+  Measuring the Change follows directly after The First Clue of Change.
+
+relationship_properties:
+  sequence: 5
+  direct_follow: true

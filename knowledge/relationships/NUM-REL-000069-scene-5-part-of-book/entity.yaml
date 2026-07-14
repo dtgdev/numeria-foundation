@@ -1,0 +1,21 @@
+id: NUM-REL-000069
+type: PART_OF_BOOK
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000005
+  type: Scene
+  name: Measuring the Change
+
+target:
+  id: NUM-BOOK-000001
+  type: Book
+  name: The Adventures of Detective Derivative
+
+description: >
+  Measuring the Change is the fifth canonical scene in Book 1.
+
+relationship_properties:
+  chapter: 1
+  scene_number: 5

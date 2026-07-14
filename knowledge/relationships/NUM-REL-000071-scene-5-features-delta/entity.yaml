@@ -1,0 +1,20 @@
+id: NUM-REL-000071
+type: FEATURES_CHARACTER
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000005
+  type: Scene
+  name: Measuring the Change
+
+target:
+  id: NUM-CHR-000002
+  type: Character
+  name: Delta
+
+description: >
+  Delta guides Derivative as he compares the sunflower's earlier and current heights.
+
+relationship_properties:
+  guide: true

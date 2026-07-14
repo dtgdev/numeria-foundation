@@ -1,0 +1,20 @@
+id: NUM-REL-000070
+type: FEATURES_CHARACTER
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000005
+  type: Scene
+  name: Measuring the Change
+
+target:
+  id: NUM-CHR-000001
+  type: Character
+  name: Derivative
+
+description: >
+  Derivative measures and explains the sunflower's change.
+
+relationship_properties:
+  primary_character: true

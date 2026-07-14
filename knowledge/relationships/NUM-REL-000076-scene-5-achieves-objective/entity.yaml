@@ -1,0 +1,20 @@
+id: NUM-REL-000076
+type: ACHIEVES_OBJECTIVE
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000005
+  type: Scene
+  name: Measuring the Change
+
+target:
+  id: NUM-LO-000001
+  type: LearningObjective
+  name: Recognize Change
+
+description: >
+  The scene helps learners recognize, measure, and explain change.
+
+relationship_properties:
+  primary_objective: true

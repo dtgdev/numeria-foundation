@@ -1,0 +1,20 @@
+id: NUM-REL-000073
+type: INTRODUCES_CONCEPT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000005
+  type: Scene
+  name: Measuring the Change
+
+target:
+  id: NUM-CON-000004
+  type: Concept
+  name: Variable
+
+description: >
+  The sunflower's changing height reinforces the idea of a variable value.
+
+relationship_properties:
+  reinforcement: true
