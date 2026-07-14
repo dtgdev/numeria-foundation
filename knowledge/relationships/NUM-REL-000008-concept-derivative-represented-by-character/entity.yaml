@@ -1,0 +1,22 @@
+id: NUM-REL-000008
+type: REPRESENTED_BY
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000001
+  type: Concept
+  name: Derivative
+
+target:
+  id: NUM-CHR-000001
+  type: Character
+  name: Derivative
+
+description: >
+  The mathematical concept of Derivative is personified in Numeria by
+  the Guardian Derivative.
+
+relationship_properties:
+  canonical_representation: true
+  primary_character: true

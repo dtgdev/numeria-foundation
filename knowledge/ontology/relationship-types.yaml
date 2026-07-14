@@ -47,3 +47,7 @@ relationship_types:
   LOCATED_IN:
     source: Organization
     target: Location
+
+  REPRESENTED_BY:
+    source: Concept
+    target: Character
