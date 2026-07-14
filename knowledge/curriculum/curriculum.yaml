@@ -1,0 +1,24 @@
+id: NUM-CUR-000001
+name: Numeria Core Curriculum
+status: CANON
+version: 1.0.0
+
+description: >
+  The canonical educational structure of Numeria.
+  It defines what concepts are taught, when they are introduced,
+  and how they relate to one another.
+
+guiding_principles:
+  - Concept before procedure
+  - Story before notation
+  - Curiosity before memorization
+  - Understanding before speed
+  - Visual intuition before formal proof
+
+learning_model:
+  concept
+  character
+  story
+  exploration
+  formal_math
+  application

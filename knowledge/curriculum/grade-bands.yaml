@@ -1,0 +1,19 @@
+grade_bands:
+
+  Early:
+    ages: "5-7"
+
+  Explorer:
+    ages: "7-9"
+
+  Adventurer:
+    ages: "9-11"
+
+  Investigator:
+    ages: "11-13"
+
+  Scholar:
+    ages: "13-15"
+
+  Master:
+    ages: "15+"
