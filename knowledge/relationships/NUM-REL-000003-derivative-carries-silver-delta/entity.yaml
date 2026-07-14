@@ -1,0 +1,28 @@
+id: NUM-REL-000003
+type: CARRIES
+status: CANON
+
+source:
+  id: NUM-CHR-000001
+  type: Character
+  name: Derivative
+
+target:
+  id: NUM-ART-000001
+  type: Artifact
+  name: Silver Delta
+
+description: >
+  Derivative carries the Silver Delta pendant as his primary artifact.
+  It helps him notice subtle changes but never replaces observation,
+  reasoning, or investigation.
+
+first_appearance:
+  work_id: NUM-BOOK-000001
+  title: The Adventures of Detective Derivative
+
+relationship_properties:
+  permanent: true
+  primary_artifact: true
+
+version: 1.0.0
