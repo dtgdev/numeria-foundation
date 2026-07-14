@@ -26,3 +26,6 @@ jobs:
 
       - name: Validate knowledge canon
         run: python scripts/validate_knowledge.py
+
+      - name: Validate relationship ontology
+        run: python scripts/validate_relationships.py
