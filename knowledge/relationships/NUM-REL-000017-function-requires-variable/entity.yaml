@@ -1,0 +1,22 @@
+id: NUM-REL-000017
+type: REQUIRES
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000003
+  type: Concept
+  name: Function
+
+target:
+  id: NUM-CON-000004
+  type: Concept
+  name: Variable
+
+description: >
+  Understanding variables is a prerequisite for understanding functions,
+  because functions define relationships between changing values.
+
+relationship_properties:
+  prerequisite: true
+  curriculum_edge: true

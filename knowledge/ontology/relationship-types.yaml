@@ -55,3 +55,7 @@ relationship_types:
   TEACHES:
     source: LearningObjective
     target: Concept
+
+  REQUIRES:
+    source: Concept
+    target: Concept
