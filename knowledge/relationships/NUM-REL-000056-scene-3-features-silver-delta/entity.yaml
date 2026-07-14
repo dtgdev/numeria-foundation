@@ -1,0 +1,20 @@
+id: NUM-REL-000056
+type: FEATURES_ARTIFACT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000003
+  type: Scene
+  name: The Book of Change Awakens
+
+target:
+  id: NUM-ART-000001
+  type: Artifact
+  name: Silver Delta
+
+description: >
+  The Silver Delta glows and helps awaken the Book of Change.
+
+relationship_properties:
+  primary_artifact: false

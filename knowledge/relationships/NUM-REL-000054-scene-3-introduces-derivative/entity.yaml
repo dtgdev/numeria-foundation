@@ -1,0 +1,20 @@
+id: NUM-REL-000054
+type: INTRODUCES_CONCEPT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000003
+  type: Scene
+  name: The Book of Change Awakens
+
+target:
+  id: NUM-CON-000001
+  type: Concept
+  name: Derivative
+
+description: >
+  The scene begins connecting observed change with the role of Derivative.
+
+relationship_properties:
+  introductory: true

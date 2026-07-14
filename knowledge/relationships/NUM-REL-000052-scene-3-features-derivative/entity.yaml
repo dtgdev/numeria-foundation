@@ -1,0 +1,20 @@
+id: NUM-REL-000052
+type: FEATURES_CHARACTER
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000003
+  type: Scene
+  name: The Book of Change Awakens
+
+target:
+  id: NUM-CHR-000001
+  type: Character
+  name: Derivative
+
+description: >
+  The scene features Derivative as the learner who must observe and explain change.
+
+relationship_properties:
+  primary_character: true

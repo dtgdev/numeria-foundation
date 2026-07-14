@@ -1,0 +1,20 @@
+id: NUM-REL-000059
+type: OCCURS_AT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000003
+  type: Scene
+  name: The Book of Change Awakens
+
+target:
+  id: NUM-LOC-000001
+  type: Location
+  name: Observatory of Change
+
+description: >
+  The scene takes place at the Observatory of Change.
+
+relationship_properties:
+  primary_location: true
