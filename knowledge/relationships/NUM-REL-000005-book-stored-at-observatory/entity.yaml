@@ -1,0 +1,24 @@
+id: NUM-REL-000005
+type: STORED_AT
+status: CANON
+
+source:
+  id: NUM-ART-000002
+  type: Artifact
+  name: Book of Change
+
+target:
+  id: NUM-LOC-000001
+  type: Location
+  name: Observatory of Change
+
+description: >
+  The Book of Change is permanently preserved within the Observatory of
+  Change, where it records verified discoveries from Derivative's
+  investigations.
+
+relationship_properties:
+  permanent: true
+  protected: true
+
+version: 1.0.0
