@@ -1,0 +1,35 @@
+id: NUM-CHR-000004
+name: Variable
+title: The Shapeshifter
+type: Character
+status: CANON
+version: 1.0.0
+
+world: Numeria
+
+role: Guardian of Possibility
+
+summary: >
+  Variable represents values that can change. Curious, energetic, and
+  endlessly adaptable, Variable reminds everyone that the future is full
+  of possibilities waiting to be explored.
+
+mathematical_domain:
+  - variables
+  - unknowns
+  - values
+  - expressions
+  - possibility
+
+personality:
+  curious: true
+  adventurous: true
+  adaptable: true
+  playful: true
+  optimistic: true
+
+first_appearance:
+  work_id: NUM-BOOK-000002
+
+creator:
+  organization: Numeria Foundation
