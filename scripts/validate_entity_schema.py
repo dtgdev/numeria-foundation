@@ -21,6 +21,13 @@ REQUIRED_FIELDS = {
         "objective",
         "grade_band",
     ],
+    "Scene": [
+        "id",
+        "name",
+        "type",
+        "status",
+        "version",
+    ],
 }
 
 errors = []

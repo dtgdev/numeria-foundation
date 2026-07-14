@@ -1,0 +1,25 @@
+id: NUM-SCN-000001
+name: Derivative Meets Delta
+type: Scene
+status: CANON
+version: 1.0.0
+
+summary: >
+  Derivative first encounters Delta, who challenges him to notice the
+  smallest changes in the world around him.
+
+book:
+  id: NUM-BOOK-000001
+
+participants:
+  - NUM-CHR-000001
+  - NUM-CHR-000002
+
+concepts:
+  - NUM-CON-000002
+
+location:
+  id: NUM-LOC-000001
+
+learning_objectives:
+  - NUM-LO-000001

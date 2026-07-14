@@ -1,7 +1,6 @@
 from pathlib import Path
 import re
 import sys
-
 import yaml
 
 ROOT = Path("knowledge")
@@ -15,6 +14,7 @@ PREFIXES = {
     "Event": "NUM-EVT",
     "Concept": "NUM-CON",
     "LearningObjective": "NUM-LO",
+    "Scene": "NUM-SCN",
 }
 
 errors = []
@@ -53,8 +53,7 @@ for path in ROOT.rglob("entity.yaml"):
         )
 
     if entity_name:
-        normalized_name = entity_name.strip().casefold()
-        key = (entity_type, normalized_name)
+        key = (entity_type, entity_name.strip().casefold())
 
         if key in names:
             previous_id, previous_path = names[key]
