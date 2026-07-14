@@ -1,0 +1,28 @@
+id: NUM-SCN-000002
+name: The Silver Delta
+type: Scene
+status: CANON
+version: 1.0.0
+
+summary: >
+  Delta reveals the ancient Silver Delta pendant and explains that it
+  glows whenever true mathematical change is discovered.
+
+book:
+  id: NUM-BOOK-000001
+
+participants:
+  - NUM-CHR-000001
+  - NUM-CHR-000002
+
+concepts:
+  - NUM-CON-000002
+
+location:
+  id: NUM-LOC-000001
+
+learning_objectives:
+  - NUM-LO-000001
+
+previous_scene:
+  NUM-SCN-000001
