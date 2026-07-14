@@ -1,0 +1,34 @@
+id: NUM-CHR-000007
+name: Tangent
+title: Master of One Perfect Touch
+type: Character
+status: CANON
+version: 1.0.0
+
+world: Numeria
+
+role: Guardian of Direction
+
+summary: >
+  Tangent specializes in understanding direction at a single moment.
+  Fast, confident, and precise, Tangent can instantly determine the
+  best path forward from exactly where he stands.
+
+mathematical_domain:
+  - tangent
+  - slope
+  - direction
+  - local_behavior
+
+personality:
+  energetic: true
+  confident: true
+  brave: true
+  precise: true
+  competitive: true
+
+first_appearance:
+  work_id: NUM-BOOK-000003
+
+creator:
+  organization: Numeria Foundation
