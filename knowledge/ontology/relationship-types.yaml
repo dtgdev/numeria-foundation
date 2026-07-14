@@ -1,0 +1,45 @@
+version: 1.0.0
+status: CANON
+
+relationship_types:
+
+  LIVES_AT:
+    source: Character
+    target: Location
+
+  GUIDED_BY:
+    source: Character
+    target: Character
+
+  FRIEND_OF:
+    source: Character
+    target: Character
+    symmetric: true
+
+  CARRIES:
+    source: Character
+    target: Artifact
+
+  CREATED:
+    source: Character
+    target: Artifact
+
+  STORED_AT:
+    source: Artifact
+    target: Location
+
+  MEMBER_OF:
+    source: Character
+    target: Organization
+
+  PROTECTS:
+    source: Character
+    target: Artifact
+
+  APPEARS_IN:
+    source: Character
+    target: Book
+
+  LOCATED_IN:
+    source: Organization
+    target: Location

@@ -1,0 +1,40 @@
+version: 1.0.0
+status: CANON
+
+entity_types:
+
+  Character:
+    prefix: NUM-CHR
+    description: Living beings that represent mathematical concepts.
+
+  Artifact:
+    prefix: NUM-ART
+    description: Important objects with educational significance.
+
+  Location:
+    prefix: NUM-LOC
+    description: Places within Numeria.
+
+  Organization:
+    prefix: NUM-ORG
+    description: Groups and institutions.
+
+  Relationship:
+    prefix: NUM-REL
+    description: Canonical connections between entities.
+
+  Book:
+    prefix: NUM-BOOK
+    description: Published stories within the Numeria universe.
+
+  Event:
+    prefix: NUM-EVT
+    description: Historical events in Numeria.
+
+  Lesson:
+    prefix: NUM-LSN
+    description: Educational learning objectives.
+
+  Concept:
+    prefix: NUM-CON
+    description: Mathematical concepts represented in Numeria.
