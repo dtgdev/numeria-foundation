@@ -1,0 +1,29 @@
+id: NUM-REL-000002
+type: GUIDED_BY
+status: CANON
+
+source:
+  id: NUM-CHR-000001
+  type: Character
+  name: Derivative
+
+target:
+  id: NUM-CHR-000002
+  type: Character
+  name: Delta
+
+description: >
+  Delta serves as Derivative's guide and mentor, helping him notice
+  the smallest differences and encouraging him to investigate change
+  rather than providing answers directly.
+
+first_appearance:
+  work_id: NUM-BOOK-000001
+  title: The Adventures of Detective Derivative
+
+relationship_properties:
+  mentor: true
+  permanent: true
+  spiritual: true
+
+version: 1.0.0
