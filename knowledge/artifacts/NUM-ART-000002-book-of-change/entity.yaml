@@ -1,0 +1,68 @@
+id: NUM-ART-000002
+name: Book of Change
+type: Artifact
+status: CANON
+world: Numeria
+
+summary: >
+  The Book of Change is an ancient living record of discoveries about
+  motion, growth, decline, patterns, and transformation. Its pages reveal
+  new knowledge only when a discovery has been understood truthfully.
+
+primary_keeper:
+  id: NUM-CHR-000001
+  name: Derivative
+
+primary_location:
+  id: NUM-LOC-000001
+  name: Observatory of Change
+
+purpose:
+  - Preserve discoveries about change
+  - Record evidence from investigations
+  - Reveal patterns across time
+  - Guide future learners
+  - Protect mathematical truth
+
+abilities:
+  - Records verified discoveries
+  - Displays changes across time
+  - Reveals connections between past observations
+  - Creates new pages when understanding is achieved
+
+limitations:
+  - Cannot provide answers before an investigation
+  - Cannot record assumptions as truth
+  - Cannot be changed through force
+  - Does not respond to curiosity without effort
+  - Never replaces observation or reasoning
+
+visual_identity:
+  material: Ancient silver-bound book
+  cover_symbol: Glowing Silver Delta
+  page_style: Moving diagrams, graphs, and handwritten discoveries
+  glow: Silver-blue
+
+related_characters:
+  - NUM-CHR-000001
+  - NUM-CHR-000002
+
+related_artifacts:
+  - NUM-ART-000001
+
+related_locations:
+  - NUM-LOC-000001
+
+mathematical_concepts:
+  - change
+  - rate_of_change
+  - evidence
+  - patterns
+  - transformation
+  - mathematical_history
+
+first_appearance:
+  work_id: NUM-BOOK-000001
+  title: The Adventures of Detective Derivative
+
+version: 1.0.0
