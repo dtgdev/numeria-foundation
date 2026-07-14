@@ -1,0 +1,26 @@
+id: NUM-REL-000006
+type: FRIEND_OF
+status: CANON
+
+source:
+  id: NUM-CHR-000001
+  type: Character
+  name: Derivative
+
+target:
+  id: NUM-CHR-000003
+  type: Character
+  name: Function
+
+description: >
+  Derivative and Function are close friends. Function builds dependable
+  paths and relationships, while Derivative studies how those
+  relationships change. Their complementary abilities make them natural
+  collaborators.
+
+relationship_properties:
+  bidirectional: true
+  permanent: true
+  collaborative: true
+
+version: 1.0.0
