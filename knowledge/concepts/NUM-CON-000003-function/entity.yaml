@@ -1,0 +1,40 @@
+id: NUM-CON-000003
+name: Function
+title: Relationship
+type: Concept
+status: CANON
+version: 1.0.0
+
+summary: >
+  A function describes a dependable relationship between inputs and outputs.
+  Every valid input is connected to exactly one output according to a rule.
+
+formal_definition: >
+  A function is a mapping that assigns exactly one output to every input
+  in its domain.
+
+kid_friendly_definition: >
+  A function is like a magical machine.
+
+  Whatever you put in...
+
+  It follows the same rule every time.
+
+real_world_examples:
+  - A vending machine.
+  - A recipe.
+  - A calculator.
+  - A drink machine.
+
+guardian:
+  id: NUM-CHR-000003
+  name: Function
+
+related_concepts:
+  - NUM-CON-000001
+  - NUM-CON-000002
+  - NUM-CON-000004
+  - NUM-CON-000005
+
+introduced_in:
+  work_id: NUM-BOOK-000002
