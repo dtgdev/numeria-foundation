@@ -79,3 +79,7 @@ relationship_types:
   PART_OF_BOOK:
     source: Scene
     target: Book
+
+  USES_SCENE:
+    source: Lesson
+    target: Scene

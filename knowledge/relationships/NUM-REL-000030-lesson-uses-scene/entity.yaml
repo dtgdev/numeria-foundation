@@ -1,0 +1,22 @@
+id: NUM-REL-000030
+type: USES_SCENE
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-LESSON-000001
+  type: Lesson
+  name: Noticing Change
+
+target:
+  id: NUM-SCN-000001
+  type: Scene
+  name: Derivative Meets Delta
+
+description: >
+  The lesson Noticing Change uses the scene Derivative Meets Delta as
+  its primary story-based learning experience.
+
+relationship_properties:
+  primary_scene: true
+  instructional_sequence: 1
