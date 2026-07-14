@@ -1,0 +1,21 @@
+id: NUM-REL-000088
+type: FOLLOWS_SCENE
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000006
+  type: Scene
+  name: The Pattern Appears
+
+target:
+  id: NUM-SCN-000005
+  type: Scene
+  name: Measuring the Change
+
+description: >
+  The Pattern Appears follows directly after Measuring the Change.
+
+relationship_properties:
+  sequence: 6
+  direct_follow: true

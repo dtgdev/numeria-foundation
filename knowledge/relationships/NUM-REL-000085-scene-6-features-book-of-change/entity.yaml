@@ -1,0 +1,20 @@
+id: NUM-REL-000085
+type: FEATURES_ARTIFACT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000006
+  type: Scene
+  name: The Pattern Appears
+
+target:
+  id: NUM-ART-000002
+  type: Artifact
+  name: Book of Change
+
+description: >
+  The Book of Change records the newly discovered growth pattern.
+
+relationship_properties:
+  primary_artifact: true

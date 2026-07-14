@@ -1,0 +1,20 @@
+id: NUM-REL-000080
+type: FEATURES_CHARACTER
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000006
+  type: Scene
+  name: The Pattern Appears
+
+target:
+  id: NUM-CHR-000001
+  type: Character
+  name: Derivative
+
+description: >
+  Derivative discovers that repeated observations reveal a pattern.
+
+relationship_properties:
+  primary_character: true

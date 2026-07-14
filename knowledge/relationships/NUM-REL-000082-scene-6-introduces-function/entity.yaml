@@ -1,0 +1,20 @@
+id: NUM-REL-000082
+type: INTRODUCES_CONCEPT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000006
+  type: Scene
+  name: The Pattern Appears
+
+target:
+  id: NUM-CON-000003
+  type: Concept
+  name: Function
+
+description: >
+  The scene introduces the idea that repeated observations may follow a consistent rule.
+
+relationship_properties:
+  introductory: true

@@ -1,0 +1,20 @@
+id: NUM-REL-000087
+type: OCCURS_AT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000006
+  type: Scene
+  name: The Pattern Appears
+
+target:
+  id: NUM-LOC-000001
+  type: Location
+  name: Observatory of Change
+
+description: >
+  The observations continue in the Observatory garden.
+
+relationship_properties:
+  primary_location: true

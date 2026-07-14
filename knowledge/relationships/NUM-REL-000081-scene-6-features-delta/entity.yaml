@@ -1,0 +1,20 @@
+id: NUM-REL-000081
+type: FEATURES_CHARACTER
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000006
+  type: Scene
+  name: The Pattern Appears
+
+target:
+  id: NUM-CHR-000002
+  type: Character
+  name: Delta
+
+description: >
+  Delta encourages Derivative to search for the rule behind the observations.
+
+relationship_properties:
+  guide: true

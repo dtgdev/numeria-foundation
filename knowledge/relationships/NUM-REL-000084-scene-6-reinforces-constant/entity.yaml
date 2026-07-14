@@ -1,0 +1,20 @@
+id: NUM-REL-000084
+type: INTRODUCES_CONCEPT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000006
+  type: Scene
+  name: The Pattern Appears
+
+target:
+  id: NUM-CON-000005
+  type: Concept
+  name: Constant
+
+description: >
+  Equal time intervals provide a constant reference for observing growth.
+
+relationship_properties:
+  reinforcement: true

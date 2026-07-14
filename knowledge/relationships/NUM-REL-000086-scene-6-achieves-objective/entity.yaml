@@ -1,0 +1,20 @@
+id: NUM-REL-000086
+type: ACHIEVES_OBJECTIVE
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000006
+  type: Scene
+  name: The Pattern Appears
+
+target:
+  id: NUM-LO-000001
+  type: LearningObjective
+  name: Recognize Change
+
+description: >
+  Learners recognize that multiple observations can reveal meaningful patterns.
+
+relationship_properties:
+  reinforcement: true
