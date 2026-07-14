@@ -1,0 +1,46 @@
+id: NUM-LOC-000001
+
+name: Observatory of Change
+
+type: Location
+
+status: Canon
+
+world: Numeria
+
+guardian: NUM-CHR-000001
+
+primary_resident:
+  - NUM-CHR-000001
+
+first_appearance:
+  book: 1
+
+description: >
+  The Observatory of Change is the home of Derivative.
+  Built on the highest hill in Numeria, it overlooks every region
+  of the world. From its towers, even the smallest changes can be
+  observed before anyone else notices them.
+
+purpose:
+  - Observe change
+  - Study patterns
+  - Begin investigations
+  - Preserve knowledge
+
+related_artifacts:
+  - NUM-ART-000001
+
+related_locations:
+  - NUM-LOC-000002
+
+keywords:
+  - derivative
+  - observatory
+  - change
+  - investigation
+  - mathematics
+
+tags:
+  - location
+  - canon
