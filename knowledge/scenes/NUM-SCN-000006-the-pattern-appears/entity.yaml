@@ -1,0 +1,35 @@
+id: NUM-SCN-000006
+name: The Pattern Appears
+type: Scene
+status: CANON
+version: 1.0.0
+
+summary: >
+  Derivative compares several days of sunflower measurements and notices
+  that the height is increasing according to a pattern. Delta helps him
+  see that understanding change requires more than one observation.
+
+book:
+  id: NUM-BOOK-000001
+
+participants:
+  - NUM-CHR-000001
+  - NUM-CHR-000002
+
+concepts:
+  - NUM-CON-000002
+  - NUM-CON-000003
+  - NUM-CON-000004
+  - NUM-CON-000005
+
+artifacts:
+  - NUM-ART-000002
+
+location:
+  id: NUM-LOC-000001
+
+learning_objectives:
+  - NUM-LO-000001
+
+previous_scene:
+  NUM-SCN-000005
