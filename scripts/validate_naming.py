@@ -14,6 +14,7 @@ PREFIXES = {
     "Book": "NUM-BOOK",
     "Event": "NUM-EVT",
     "Concept": "NUM-CON",
+    "LearningObjective": "NUM-LO",
 }
 
 errors = []

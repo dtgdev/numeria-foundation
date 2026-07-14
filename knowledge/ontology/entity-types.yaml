@@ -38,3 +38,7 @@ entity_types:
   Concept:
     prefix: NUM-CON
     description: Mathematical concepts represented in Numeria.
+
+  LearningObjective:
+    prefix: NUM-LO
+    description: Measurable educational outcomes linked to concepts, Guardians, stories, and assessments.

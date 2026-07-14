@@ -12,6 +12,15 @@ REQUIRED_FIELDS = {
     "Book": ["id", "title", "type", "status", "version"],
     "Event": ["id", "name", "type", "status", "version"],
     "Concept": ["id", "name", "type", "status", "version"],
+    "LearningObjective": [
+        "id",
+        "name",
+        "type",
+        "status",
+        "version",
+        "objective",
+        "grade_band",
+    ],
 }
 
 errors = []
