@@ -1,0 +1,34 @@
+id: NUM-SCN-000003
+name: The Book of Change Awakens
+type: Scene
+status: CANON
+version: 1.0.0
+
+summary: >
+  The Silver Delta begins to glow and awakens the Book of Change.
+  Its pages remain blank until Derivative notices and explains a real
+  change using evidence.
+
+book:
+  id: NUM-BOOK-000001
+
+participants:
+  - NUM-CHR-000001
+  - NUM-CHR-000002
+
+concepts:
+  - NUM-CON-000002
+  - NUM-CON-000001
+
+artifacts:
+  - NUM-ART-000001
+  - NUM-ART-000002
+
+location:
+  id: NUM-LOC-000001
+
+learning_objectives:
+  - NUM-LO-000001
+
+previous_scene:
+  NUM-SCN-000002
