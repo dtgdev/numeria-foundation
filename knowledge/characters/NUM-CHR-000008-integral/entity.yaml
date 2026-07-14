@@ -1,0 +1,35 @@
+id: NUM-CHR-000008
+name: Integral
+title: Keeper of Wholes
+type: Character
+status: CANON
+version: 1.0.0
+
+world: Numeria
+
+role: Guardian of Accumulation
+
+summary: >
+  Integral understands that great things are built from many small
+  parts. Patient and thoughtful, Integral helps others see the whole
+  picture by gathering tiny pieces into something meaningful.
+
+mathematical_domain:
+  - integrals
+  - accumulation
+  - area
+  - summation
+  - total
+
+personality:
+  patient: true
+  thoughtful: true
+  generous: true
+  wise: true
+  collaborative: true
+
+first_appearance:
+  work_id: NUM-BOOK-000004
+
+creator:
+  organization: Numeria Foundation
