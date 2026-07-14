@@ -1,0 +1,42 @@
+id: NUM-CON-000005
+name: Constant
+title: Fixed Value
+type: Concept
+status: CANON
+version: 1.0.0
+
+summary: >
+  A constant is a value that does not change. Constants provide stability
+  and serve as reliable reference points in mathematics.
+
+formal_definition: >
+  A constant is a quantity whose value remains fixed within a given
+  context or mathematical expression.
+
+kid_friendly_definition: >
+  A constant is like the North Star.
+
+  No matter what changes around it,
+  it stays the same and helps everyone find their way.
+
+real_world_examples:
+  - There are 7 days in a week.
+  - A triangle has 3 sides.
+  - One dozen always means 12.
+  - The speed limit on a particular road sign.
+
+common_misconceptions:
+  - Constants are not always numbers like π or e.
+  - A value can be constant in one situation and variable in another.
+
+guardian:
+  id: NUM-CHR-000005
+  name: Constant
+
+related_concepts:
+  - NUM-CON-000004
+  - NUM-CON-000003
+  - NUM-CON-000001
+
+introduced_in:
+  work_id: NUM-BOOK-000002
