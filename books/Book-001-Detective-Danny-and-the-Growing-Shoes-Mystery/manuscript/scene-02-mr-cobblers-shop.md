@@ -1,131 +1,81 @@
-Scene 2
+Page 2
 
-Mr. Cobbler’s Shop
+Derivative was not the tallest child in Numeria Village.
 
-Danny and Ben hurried down the cobblestone street until they reached the little shoe shop on the corner of the village square.
+He was not the fastest.
 
-A wooden sign hung above the door.
+He was not the strongest.
 
-It read:
+And he certainly wasn’t the loudest.
 
-Mr. Cobbler’s Fine Shoes
+In fact…
 
-The tiny bell above the door jingled as they stepped inside.
+most people didn’t notice Derivative at all.
 
-“Good morning!” called Mr. Cobbler.
+Until something strange began to happen.
 
-He looked up from a bright red shoe he was polishing.
+Because whenever the Silver Delta resting around his neck became warm…
 
-Then he noticed Ben.
+Derivative knew the world was trying to tell him something.
 
-“My goodness!” he said.
+Not the answer.
 
-“You look worried.”
+Just…
 
-Ben held up one foot.
+“Look a little closer.”
 
-“My shoes don’t fit anymore.”
+Derivative loved that feeling.
 
-Mr. Cobbler smiled.
+Every mystery began with a tiny clue.
 
-“That can’t be right.”
+Every clue began with a careful observation.
 
-“I measured your feet yesterday.”
+And every observation began with one simple question.
 
-He reached for a small wooden measuring board.
+“Why?”
 
-“Come over here, Ben.”
+One beautiful spring morning, Derivative was on his way to meet his best friend, Ben.
 
-Ben stepped onto the board.
+He skipped along the cobblestone path, whistling softly as butterflies danced through the flowers.
 
-Mr. Cobbler measured once.
+The Silver Delta rested quietly against his chest.
 
-Then he measured again.
+Cold.
 
-His smile slowly disappeared.
+Still.
 
-“Hmm…”
+Peaceful.
 
-He scratched his head.
+Derivative smiled.
 
-“That’s very strange.”
+“No mysteries today,” he whispered.
 
-“What is it?” Ben asked.
+Just then…
 
-Mr. Cobbler looked at Danny.
+The Silver Delta grew warm.
 
-“Ben’s feet are longer than yesterday.”
+Very warm.
 
-Ben’s eyes grew wide.
+Derivative stopped walking.
 
-“So… my shoes didn’t shrink?”
+He gently held the silver pendant in his hand.
 
-Mr. Cobbler shook his head.
+“Hmmm…”
 
-“No.”
+he said with a smile.
 
-“The shoes are exactly the same size.”
+“Something has just begun to change.”
 
-Danny didn’t say a word.
+He looked around.
 
-Instead, he quietly opened his detective notebook.
+The birds were singing.
 
-He wrote:
+The trees swayed gently.
 
-Clue #1
+The river sparkled in the morning sun.
 
-The shoes did not change.
+Everything looked perfectly ordinary.
 
-Then he wrote another line.
+Which, Derivative knew…
 
-Clue #2
-
-Ben’s feet became longer.
-
-Danny tapped his pencil against the notebook.
-
-“Hmm…”
-
-Ben leaned closer.
-
-“What do you think?”
-
-Danny smiled.
-
-“I don’t know yet.”
-
-Mr. Cobbler laughed.
-
-“That’s an honest detective.”
-
-Danny closed his notebook.
-
-“My job isn’t to guess.”
-
-“It’s to understand.”
-
-As they walked toward the door, Mr. Cobbler called after them.
-
-“Oh, Danny!”
-
-Danny turned around.
-
-“I found something outside my shop this morning.”
-
-“What was it?” Danny asked.
-
-Mr. Cobbler reached behind the counter and placed a tiny green leaf in Danny’s hand.
-
-“I’ve never seen a leaf like this before.”
-
-Danny looked at the strange leaf.
-
-Tiny silver lines shimmered across its surface.
-
-He carefully tucked it into his notebook.
-
-Then he smiled.
-
-“I think…”
-
-“…we just found our next clue.”
+was exactly how the greatest mysteries always began.

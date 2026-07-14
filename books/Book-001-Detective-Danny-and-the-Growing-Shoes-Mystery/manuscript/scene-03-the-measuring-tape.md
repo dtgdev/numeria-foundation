@@ -1,121 +1,133 @@
-Scene 3
+Page 3
 
-The Measuring Tape
+Just then…
 
-Danny and Ben walked slowly through Numeria Village.
+“Derivative!”
 
-Neither of them said a word.
+A voice echoed across the village square.
 
-Danny was thinking.
+Derivative turned around.
 
-Ben was wiggling his toes.
+His best friend, Ben, was running toward him.
 
-“They still hurt,” Ben sighed.
+Well…
 
-Danny stopped walking.
+Trying to run.
 
-He opened his backpack and smiled.
+Something looked strange.
 
-“I think it’s time.”
+Ben wasn’t running the way he always did.
 
-“Time for what?” Ben asked.
+Instead of long, quick steps…
 
-Danny pulled out a bright yellow measuring tape.
+he waddled.
 
-“My favorite part of every mystery.”
+Step.
 
-Ben laughed.
+Hop.
 
-“Measuring things?”
+Step.
 
-Danny nodded.
+Hop.
 
-“If we only guess…”
+Step.
 
-He shrugged.
+Hop.
 
-“…we might guess wrong.”
+Derivative watched quietly.
 
-“But measurements tell us stories.”
+The Silver Delta was still warm.
 
-Ben carefully took off one shoe.
+“Hmmm…” he whispered.
 
-Danny stretched the measuring tape from Ben’s heel to the tip of his longest toe.
+Ben finally reached him and bent over, breathing hard.
 
-“Twenty-two centimeters,” Danny whispered.
+“I’ve been looking everywhere for you!”
 
-He opened his detective notebook.
+Derivative smiled.
 
-Case File #001
+“I’m glad you found me.”
 
-Measurement #1
+Ben looked worried.
 
-Today’s Foot Length: 22 cm
+“I think something is wrong.”
 
-Danny looked at Ben.
+Derivative didn’t answer.
 
-“Do you remember how long your foot was the last time Mr. Cobbler measured it?”
+He simply waited.
 
-Ben scratched his head.
+“My shoes…” Ben said softly.
+
+“They don’t fit anymore.”
+
+Derivative looked down.
+
+The shoes looked perfectly normal.
+
+“They fit yesterday,” Ben continued.
+
+“But this morning…”
+
+He wiggled his toes.
+
+“…they feel much too tight.”
+
+Derivative knelt beside him.
+
+He gently pressed one hand against the shoe.
+
+He didn’t pull.
+
+He didn’t measure.
+
+He didn’t guess.
+
+He simply looked.
+
+Very carefully.
+
+The Silver Delta grew just a little warmer.
+
+Derivative smiled.
+
+“I don’t know what’s happening yet.”
+
+Ben sighed.
+
+“I was hoping you’d know.”
+
+Derivative stood up and brushed the dust from his knees.
+
+“My grandfather always told me something.”
+
+Ben looked up.
+
+“What?”
+
+Derivative smiled.
+
+“The first clue is almost never the answer.”
+
+Ben blinked.
+
+“So…”
+
+“What do we do now?”
+
+Derivative looked toward the little shoe shop at the end of the street.
+
+A wooden sign swayed gently in the morning breeze.
+
+Mr. Cobbler’s Fine Shoes
+
+Derivative smiled.
 
 “I think…”
 
-“…twenty centimeters?”
+“…we should ask someone who knows shoes better than we do.”
 
-Danny smiled.
+Together, the two friends walked toward the little shop.
 
-“I think we should check.”
+Neither of them noticed…
 
-Just then, Mr. Cobbler came walking down the street carrying a small wooden box.
-
-“I thought you two might need this,” he said.
-
-He opened the box.
-
-Inside were dozens of tiny measurement cards.
-
-Every time Mr. Cobbler made a new pair of shoes, he carefully wrote down the customer’s foot size.
-
-He flipped through the cards until he found one labeled:
-
-Ben
-
-Mr. Cobbler smiled.
-
-“Here it is.”
-
-Danny looked closely.
-
-Yesterday’s Measurement:
-
-20 cm
-
-Today’s Measurement:
-
-22 cm
-
-Danny looked at Ben.
-
-Then at the card.
-
-Then at his notebook.
-
-Finally, he wrote:
-
-Clue #3
-
-Ben’s feet grew 2 centimeters.
-
-Danny tapped his pencil against the notebook.
-
-“Hmm…”
-
-Ben leaned over.
-
-“What does it mean?”
-
-Danny closed the notebook with a gentle smile.
-
-“It means…”
-
-“…our mystery just became even more interesting.”
+the Silver Delta glowing just a little brighter than before.
