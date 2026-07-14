@@ -25,4 +25,4 @@ jobs:
         run: python -m pip install -r requirements-dev.txt
 
       - name: Validate Numeria canon
-        run: python scripts/validate_all.py
+        run: make validate
