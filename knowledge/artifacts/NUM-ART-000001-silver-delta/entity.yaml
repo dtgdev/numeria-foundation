@@ -1,53 +1,38 @@
 id: NUM-ART-000001
-
 type: Artifact
-
 name: Silver Delta
-
 slug: silver-delta
-
-status: canonical
-
+status: CANON
 version: 1.0.0
-
-symbol: "Δ"
-
+symbol: Δ
 artifactClass: Pattern-Revealing Pendant
-
 currentKeeper: NUM-CHR-000001
+primaryPurpose: 'Reveal hidden patterns of change without explaining, predicting,
+  or solving the mystery.
 
-primaryPurpose: >
-  Reveal hidden patterns of change without explaining,
-  predicting, or solving the mystery.
-
+  '
 capabilities:
-  - Detects meaningful patterns of change
-  - Becomes warm when an unexplained change is nearby
-  - Reveals visual relationships among observed measurements
-  - Responds to careful observation and curiosity
-
+- Detects meaningful patterns of change
+- Becomes warm when an unexplained change is nearby
+- Reveals visual relationships among observed measurements
+- Responds to careful observation and curiosity
 limitations:
-  - Does not create change
-  - Does not stop change
-  - Does not provide answers
-  - Does not predict the future
-  - Does not replace measurement or reasoning
-  - Cannot be commanded to activate
-
+- Does not create change
+- Does not stop change
+- Does not provide answers
+- Does not predict the future
+- Does not replace measurement or reasoning
+- Cannot be commanded to activate
 canonicalRules:
-  - Only one Silver Delta exists
-  - The Silver Delta chooses its Keeper
-  - It reveals patterns but never interpretations
-  - It works only when genuine change is present
-  - It becomes quiet when the relevant change has stopped
-  - It cannot solve a mystery without observation and evidence
-
+- Only one Silver Delta exists
+- The Silver Delta chooses its Keeper
+- It reveals patterns but never interpretations
+- It works only when genuine change is present
+- It becomes quiet when the relevant change has stopped
+- It cannot solve a mystery without observation and evidence
 associatedConcepts:
-  - NUM-CON-000001
-
+- NUM-CON-000001
 associatedCharacters:
-  - NUM-CHR-000001
-
+- NUM-CHR-000001
 createdBy: Numeria Foundation
-
 reviewStatus: canonical

@@ -1,0 +1,23 @@
+id: NUM-CHR-000002
+name: Delta
+title: Keeper of Tiny Changes
+type: Character
+status: CANON
+world: Numeria
+role: Guardian of Difference
+
+summary: >
+  Delta notices the smallest meaningful differences in Numeria.
+  She guides Derivative by helping him observe what changed without
+  giving him answers directly.
+
+mathematical_domain:
+  - difference
+  - change
+  - comparison
+  - before_and_after
+
+first_appearance:
+  work_id: NUM-BOOK-000001
+
+version: 1.0.0
