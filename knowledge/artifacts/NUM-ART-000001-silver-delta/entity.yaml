@@ -17,12 +17,9 @@ capabilities:
 - Reveals visual relationships among observed measurements
 - Responds to careful observation and curiosity
 limitations:
-- Does not create change
-- Does not stop change
-- Does not provide answers
-- Does not predict the future
-- Does not replace measurement or reasoning
-- Cannot be commanded to activate
+- Does not solve mysteries
+- Does not replace observation or reasoning
+- Cannot create knowledge automatically
 canonicalRules:
 - Only one Silver Delta exists
 - The Silver Delta chooses its Keeper
@@ -36,3 +33,11 @@ associatedCharacters:
 - NUM-CHR-000001
 createdBy: Numeria Foundation
 reviewStatus: canonical
+purpose:
+- Help Derivative notice subtle and meaningful changes
+- Focus attention on differences that require investigation
+- Represent awareness of change
+abilities:
+- Glows when meaningful change is nearby
+- Responds to differences in motion, growth, and direction
+- Helps reveal clues without providing answers
