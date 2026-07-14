@@ -1,0 +1,20 @@
+id: NUM-REL-000040
+type: INCLUDES_LESSON
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-LJ-000001
+  type: LearningJourney
+  name: First Steps in Change
+
+target:
+  id: NUM-LESSON-000001
+  type: Lesson
+  name: Noticing Change
+
+description: >
+  The learning journey continues with Lesson 1.
+
+relationship_properties:
+  sequence: 2

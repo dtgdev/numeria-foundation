@@ -1,0 +1,20 @@
+id: NUM-REL-000039
+type: STARTS_WITH_SCENE
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-LJ-000001
+  type: LearningJourney
+  name: First Steps in Change
+
+target:
+  id: NUM-SCN-000001
+  type: Scene
+  name: Derivative Meets Delta
+
+description: >
+  The learning journey begins with the opening story scene.
+
+relationship_properties:
+  sequence: 1

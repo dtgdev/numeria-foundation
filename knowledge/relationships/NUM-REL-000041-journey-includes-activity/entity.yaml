@@ -1,0 +1,20 @@
+id: NUM-REL-000041
+type: INCLUDES_ACTIVITY
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-LJ-000001
+  type: LearningJourney
+  name: First Steps in Change
+
+target:
+  id: NUM-ACT-000001
+  type: Activity
+  name: Spot the Change
+
+description: >
+  The learner practices the concept through the Spot the Change activity.
+
+relationship_properties:
+  sequence: 3
