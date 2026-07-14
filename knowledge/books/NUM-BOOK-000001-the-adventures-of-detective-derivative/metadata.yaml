@@ -1,0 +1,54 @@
+id: NUM-BOOK-000001
+title: The Adventures of Detective Derivative
+subtitle: The Origin of the Silver Delta
+series: Calculus Made Easy
+book_number: 1
+
+content_type: illustrated_children_book
+language: en
+status: CANON
+
+audience:
+  minimum_age: 7
+  maximum_age: 11
+  reading_level: elementary
+
+themes:
+  - curiosity
+  - change
+  - observation
+  - courage
+  - discovery
+  - learning_from_mistakes
+
+educational_focus:
+  primary_concept: change
+  supporting_concepts:
+    - difference
+    - comparison
+    - patterns
+    - evidence
+    - rate_of_change
+
+canon_entities:
+  characters:
+    - NUM-CHR-000001
+    - NUM-CHR-000002
+
+  locations:
+    - NUM-LOC-000001
+
+  artifacts:
+    - NUM-ART-000001
+    - NUM-ART-000002
+
+format:
+  planned_pages: 9
+  illustration_style: full_page
+  story_structure: origin_story
+
+repository_content:
+  manuscript_directory: books
+  knowledge_directory: knowledge/books/NUM-BOOK-000001-the-adventures-of-detective-derivative
+
+version: 1.0.0
