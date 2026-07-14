@@ -37,7 +37,11 @@ relationship_types:
     target: Artifact
 
   APPEARS_IN:
-    source: Character
+    source:
+      - Character
+      - Event
+      - Artifact
+      - Location
     target: Book
 
   LOCATED_IN:
