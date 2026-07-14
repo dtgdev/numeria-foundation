@@ -54,3 +54,7 @@ entity_types:
   Activity:
     prefix: NUM-ACT
     description: Canonical learner activity used to practice a concept and achieve a learning objective.
+
+  LearningJourney:
+    prefix: NUM-LJ
+    description: Canonical sequence connecting story, lesson, activity, and assessment into a learner experience.

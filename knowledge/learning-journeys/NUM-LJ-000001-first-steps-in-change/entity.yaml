@@ -1,0 +1,26 @@
+id: NUM-LJ-000001
+name: First Steps in Change
+type: LearningJourney
+status: CANON
+version: 1.0.0
+
+summary: >
+  The learner's first journey through the Numeria universe, beginning
+  with noticing change and ending with demonstrating understanding
+  through guided practice and assessment.
+
+grade_band: Early
+
+steps:
+  - NUM-SCN-000001
+  - NUM-LESSON-000001
+  - NUM-ACT-000001
+  - NUM-ASMT-000001
+
+primary_concept:
+  id: NUM-CON-000002
+  name: Delta
+
+primary_learning_objective:
+  id: NUM-LO-000001
+  name: Recognize Change

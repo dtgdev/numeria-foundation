@@ -17,6 +17,7 @@ PREFIX_BY_TYPE = {
     "Lesson": "NUM-LESSON-",
     "Assessment": "NUM-ASMT-",
     "Activity": "NUM-ACT-",
+    "LearningJourney": "NUM-LJ-",
 }
 
 errors = []

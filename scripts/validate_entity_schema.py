@@ -21,13 +21,7 @@ REQUIRED_FIELDS = {
         "objective",
         "grade_band",
     ],
-    "Scene": [
-        "id",
-        "name",
-        "type",
-        "status",
-        "version",
-    ],
+    "Scene": ["id", "name", "type", "status", "version"],
     "Lesson": [
         "id",
         "name",
@@ -59,6 +53,17 @@ REQUIRED_FIELDS = {
         "activity_type",
         "learning_objective",
         "instructions",
+    ],
+    "LearningJourney": [
+        "id",
+        "name",
+        "type",
+        "status",
+        "version",
+        "grade_band",
+        "steps",
+        "primary_concept",
+        "primary_learning_objective",
     ],
 }
 
