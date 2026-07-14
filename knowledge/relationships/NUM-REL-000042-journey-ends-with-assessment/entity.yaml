@@ -1,0 +1,22 @@
+id: NUM-REL-000042
+type: ENDS_WITH_ASSESSMENT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-LJ-000001
+  type: LearningJourney
+  name: First Steps in Change
+
+target:
+  id: NUM-ASMT-000001
+  type: Assessment
+  name: Recognize Change Assessment
+
+description: >
+  The First Steps in Change learning journey ends with the
+  Recognize Change Assessment.
+
+relationship_properties:
+  sequence: 4
+  final_step: true

@@ -115,3 +115,19 @@ relationship_types:
   PRACTICES_CONCEPT:
     source: Activity
     target: Concept
+
+  STARTS_WITH_SCENE:
+    source: LearningJourney
+    target: Scene
+
+  INCLUDES_LESSON:
+    source: LearningJourney
+    target: Lesson
+
+  INCLUDES_ACTIVITY:
+    source: LearningJourney
+    target: Activity
+
+  ENDS_WITH_ASSESSMENT:
+    source: LearningJourney
+    target: Assessment
