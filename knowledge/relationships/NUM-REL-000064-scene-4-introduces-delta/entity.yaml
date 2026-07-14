@@ -1,0 +1,20 @@
+id: NUM-REL-000064
+type: INTRODUCES_CONCEPT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000004
+  type: Scene
+  name: The First Clue of Change
+
+target:
+  id: NUM-CON-000002
+  type: Concept
+  name: Delta
+
+description: >
+  The scene reinforces Delta through before-and-after comparison.
+
+relationship_properties:
+  reinforcement: true

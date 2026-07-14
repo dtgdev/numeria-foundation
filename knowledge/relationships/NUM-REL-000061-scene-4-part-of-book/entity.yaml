@@ -1,0 +1,21 @@
+id: NUM-REL-000061
+type: PART_OF_BOOK
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000004
+  type: Scene
+  name: The First Clue of Change
+
+target:
+  id: NUM-BOOK-000001
+  type: Book
+  name: The Adventures of Detective Derivative
+
+description: >
+  The First Clue of Change is the fourth canonical scene in Book 1.
+
+relationship_properties:
+  chapter: 1
+  scene_number: 4

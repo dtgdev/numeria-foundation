@@ -1,0 +1,20 @@
+id: NUM-REL-000062
+type: FEATURES_CHARACTER
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000004
+  type: Scene
+  name: The First Clue of Change
+
+target:
+  id: NUM-CHR-000001
+  type: Character
+  name: Derivative
+
+description: >
+  Derivative investigates the sunflower and identifies the first visible clue of change.
+
+relationship_properties:
+  primary_character: true
