@@ -1,0 +1,21 @@
+id: NUM-REL-000032
+type: TEACHES_CONCEPT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-LESSON-000001
+  type: Lesson
+  name: Noticing Change
+
+target:
+  id: NUM-CON-000002
+  type: Concept
+  name: Delta
+
+description: >
+  Lesson 1 teaches the mathematical concept of Delta by helping learners
+  observe and describe change.
+
+relationship_properties:
+  primary_concept: true

@@ -87,3 +87,7 @@ relationship_types:
   TEACHES_OBJECTIVE:
     source: Lesson
     target: LearningObjective
+
+  TEACHES_CONCEPT:
+    source: Lesson
+    target: Concept
