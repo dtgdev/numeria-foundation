@@ -1,0 +1,13 @@
+annotated-types==0.7.0
+anyio==4.14.2
+click==8.4.2
+fastapi==0.115.0
+h11==0.16.0
+idna==3.18
+networkx==3.3
+pydantic==2.9.2
+pydantic_core==2.23.4
+PyYAML==6.0.3
+starlette==0.38.6
+typing_extensions==4.16.0
+uvicorn==0.30.6
