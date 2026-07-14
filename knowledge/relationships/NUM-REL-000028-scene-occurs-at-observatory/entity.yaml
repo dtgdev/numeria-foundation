@@ -1,0 +1,21 @@
+id: NUM-REL-000028
+type: OCCURS_AT
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-SCN-000001
+  type: Scene
+  name: Derivative Meets Delta
+
+target:
+  id: NUM-LOC-000001
+  type: Location
+  name: Observatory of Change
+
+description: >
+  The scene in which Derivative meets Delta takes place at the
+  Observatory of Change.
+
+relationship_properties:
+  primary_location: true
