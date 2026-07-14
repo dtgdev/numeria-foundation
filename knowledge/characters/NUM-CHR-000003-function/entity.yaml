@@ -1,0 +1,32 @@
+id: NUM-CHR-000003
+name: Function
+title: Builder of Paths
+type: Character
+status: CANON
+world: Numeria
+role: Guardian of Relationships
+
+summary: >
+  Function creates reliable connections throughout Numeria.
+  Every bridge, road, river, and pathway follows a rule.
+  Function teaches that each valid input is connected to exactly one output.
+
+personality:
+  curious: true
+  dependable: true
+  creative: true
+  patient: true
+
+mathematical_domain:
+  - functions
+  - inputs
+  - outputs
+  - mapping
+  - relationships
+  - rules
+  - patterns
+
+first_appearance:
+  work_id: NUM-BOOK-000002
+
+version: 1.0.0
