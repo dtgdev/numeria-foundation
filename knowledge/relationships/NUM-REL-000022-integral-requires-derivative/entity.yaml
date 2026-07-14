@@ -1,0 +1,22 @@
+id: NUM-REL-000022
+type: REQUIRES
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000008
+  type: Concept
+  name: Integral
+
+target:
+  id: NUM-CON-000001
+  type: Concept
+  name: Derivative
+
+description: >
+  A conceptual understanding of derivatives supports understanding the
+  relationship between differentiation and integration.
+
+relationship_properties:
+  prerequisite: true
+  curriculum_edge: true

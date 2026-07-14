@@ -1,0 +1,22 @@
+id: NUM-REL-000019
+type: REQUIRES
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000006
+  type: Concept
+  name: Limit
+
+target:
+  id: NUM-CON-000003
+  type: Concept
+  name: Function
+
+description: >
+  Understanding functions is a prerequisite for understanding limits,
+  because limits describe the behavior of functions.
+
+relationship_properties:
+  prerequisite: true
+  curriculum_edge: true

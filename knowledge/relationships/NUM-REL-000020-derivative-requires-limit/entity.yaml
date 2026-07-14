@@ -1,0 +1,21 @@
+id: NUM-REL-000020
+type: REQUIRES
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000001
+  type: Concept
+  name: Derivative
+
+target:
+  id: NUM-CON-000006
+  type: Concept
+  name: Limit
+
+description: >
+  Understanding limits is a prerequisite for understanding derivatives.
+
+relationship_properties:
+  prerequisite: true
+  curriculum_edge: true
