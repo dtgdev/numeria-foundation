@@ -1,0 +1,22 @@
+id: NUM-REL-000018
+type: REQUIRES
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-CON-000003
+  type: Concept
+  name: Function
+
+target:
+  id: NUM-CON-000005
+  type: Concept
+  name: Constant
+
+description: >
+  Understanding constants helps learners distinguish fixed values from
+  changing values before studying functions.
+
+relationship_properties:
+  prerequisite: true
+  curriculum_edge: true
