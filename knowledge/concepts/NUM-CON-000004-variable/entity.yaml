@@ -1,0 +1,46 @@
+id: NUM-CON-000004
+name: Variable
+title: Unknown Value
+type: Concept
+status: CANON
+version: 1.0.0
+
+summary: >
+  A variable represents a value that can change or may not yet be known.
+  It allows mathematics to describe patterns, relationships, and possibilities.
+
+formal_definition: >
+  A variable is a symbol that represents a quantity whose value may vary
+  depending on the situation or according to a defined rule.
+
+kid_friendly_definition: >
+  A variable is like an empty box.
+
+  Today it might hold 3.
+
+  Tomorrow it might hold 10.
+
+  The box stays the same, but what is inside can change.
+
+real_world_examples:
+  - The number of apples in a basket.
+  - The outside temperature.
+  - Your height as you grow.
+  - The distance you walk each day.
+
+common_misconceptions:
+  - A variable is not always x.
+  - A variable is not always unknown forever.
+  - Different variables can represent different things.
+
+guardian:
+  id: NUM-CHR-000004
+  name: Variable
+
+related_concepts:
+  - NUM-CON-000003
+  - NUM-CON-000005
+  - NUM-CON-000001
+
+introduced_in:
+  work_id: NUM-BOOK-000002
