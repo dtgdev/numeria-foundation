@@ -83,3 +83,7 @@ relationship_types:
   USES_SCENE:
     source: Lesson
     target: Scene
+
+  TEACHES_OBJECTIVE:
+    source: Lesson
+    target: LearningObjective

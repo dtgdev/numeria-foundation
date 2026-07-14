@@ -1,0 +1,21 @@
+id: NUM-REL-000031
+type: TEACHES_OBJECTIVE
+status: CANON
+version: 1.0.0
+
+source:
+  id: NUM-LESSON-000001
+  type: Lesson
+  name: Noticing Change
+
+target:
+  id: NUM-LO-000001
+  type: LearningObjective
+  name: Recognize Change
+
+description: >
+  Lesson 1 is designed to achieve the learning objective
+  "Recognize Change."
+
+relationship_properties:
+  primary_objective: true
