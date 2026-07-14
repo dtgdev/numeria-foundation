@@ -1,0 +1,48 @@
+id: NUM-CON-000008
+name: Integral
+title: Accumulation
+type: Concept
+status: CANON
+version: 1.0.0
+
+summary: >
+  An integral represents the accumulation of many small quantities into
+  a meaningful whole. It helps us understand totals, areas, and growth
+  over time.
+
+formal_definition: >
+  An integral accumulates infinitesimal quantities to determine a total,
+  such as area under a curve or accumulated change.
+
+kid_friendly_definition: >
+  Imagine filling a bucket one drop at a time.
+
+  Each drop seems tiny.
+
+  Together they fill the whole bucket.
+
+  That's what an integral does.
+
+real_world_examples:
+  - Filling a swimming pool one bucket at a time.
+  - Saving one dollar every day.
+  - Counting every raindrop that falls into a lake.
+  - Measuring the area of an irregular field.
+
+common_misconceptions:
+  - Integrals are not just about finding area.
+  - Integration is not simply the opposite of addition.
+  - Small pieces become meaningful when accumulated.
+
+guardian:
+  id: NUM-CHR-000008
+  name: Integral
+
+related_concepts:
+  - NUM-CON-000001
+  - NUM-CON-000003
+  - NUM-CON-000006
+  - NUM-CON-000007
+
+introduced_in:
+  work_id: NUM-BOOK-000004
