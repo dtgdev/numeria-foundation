@@ -1,0 +1,41 @@
+id: NUM-ACT-000001
+name: Spot the Change
+type: Activity
+status: CANON
+version: 1.0.0
+
+summary: >
+  Learners compare two pictures, objects, or situations and identify
+  what changed and what remained the same.
+
+grade_band: Early
+activity_type: observation
+estimated_duration_minutes: 10
+
+concept:
+  id: NUM-CON-000002
+  name: Delta
+
+learning_objective:
+  id: NUM-LO-000001
+  name: Recognize Change
+
+lesson:
+  id: NUM-LESSON-000001
+  name: Noticing Change
+
+instructions:
+  - Show the learner two related images or objects.
+  - Ask what changed.
+  - Ask what stayed the same.
+  - Ask the learner to describe the difference.
+  - Encourage the learner to explain the evidence used.
+
+materials:
+  - Two before-and-after images or objects
+  - Optional paper and pencil
+
+success_criteria:
+  - Identifies at least one change.
+  - Identifies at least one unchanged feature.
+  - Describes the difference using clear language.

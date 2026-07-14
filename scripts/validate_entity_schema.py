@@ -49,6 +49,17 @@ REQUIRED_FIELDS = {
         "learning_objective",
         "success_criteria",
     ],
+    "Activity": [
+        "id",
+        "name",
+        "type",
+        "status",
+        "version",
+        "grade_band",
+        "activity_type",
+        "learning_objective",
+        "instructions",
+    ],
 }
 
 errors = []

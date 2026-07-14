@@ -50,3 +50,7 @@ entity_types:
   Assessment:
     prefix: NUM-ASMT
     description: Canonical assessment used to verify achievement of a learning objective.
+
+  Activity:
+    prefix: NUM-ACT
+    description: Canonical learner activity used to practice a concept and achieve a learning objective.
