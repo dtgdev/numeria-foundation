@@ -1,0 +1,31 @@
+id: NUM-LO-000001
+name: Recognize Change
+type: LearningObjective
+status: CANON
+version: 1.0.0
+
+summary: >
+  Learners recognize that quantities, objects, or situations can change
+  by comparing a "before" state with an "after" state.
+
+objective: >
+  Identify whether something has changed and describe the difference.
+
+grade_band: Early
+
+teaches:
+  concept:
+    id: NUM-CON-000002
+    name: Delta
+
+guardian:
+  id: NUM-CHR-000002
+  name: Delta
+
+introduced_in:
+  work_id: NUM-BOOK-000001
+
+assessment_examples:
+  - Compare two pictures and identify what changed.
+  - Describe how a plant changed after one week.
+  - Explain what is different before and after a journey.
