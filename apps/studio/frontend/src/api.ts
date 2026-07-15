@@ -5,18 +5,32 @@ export interface CanonSummary {
   relationship_types: Record<string, number>;
 }
 
+export interface CanonEntity {
+  id: string;
+  type: string;
+  name: string;
+  path: string;
+  data: Record<string, unknown>;
+}
+
 const API_BASE_URL = "http://127.0.0.1:8001";
 
-export async function getSummary(): Promise<CanonSummary> {
-  const response = await fetch(
-    `${API_BASE_URL}/api/graph/summary`,
-  );
+async function getJson<T>(path: string): Promise<T> {
+  const response = await fetch(`${API_BASE_URL}${path}`);
 
   if (!response.ok) {
     throw new Error(
-      `Failed to load graph summary: ${response.status}`,
+      `Request failed: ${response.status} ${response.statusText}`,
     );
   }
 
-  return response.json();
+  return response.json() as Promise<T>;
+}
+
+export function getSummary(): Promise<CanonSummary> {
+  return getJson<CanonSummary>("/api/graph/summary");
+}
+
+export function getEntities(): Promise<CanonEntity[]> {
+  return getJson<CanonEntity[]>("/api/graph/entities");
 }
