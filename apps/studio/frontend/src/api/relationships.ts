@@ -24,7 +24,7 @@ export interface PublishedRelationship {
 
 const API_BASE_URL = "http://127.0.0.1:8001";
 
-async function postJson<TResponse>(
+async function postJson<TResponse extends object>(
   path: string,
   body: unknown,
 ): Promise<TResponse> {

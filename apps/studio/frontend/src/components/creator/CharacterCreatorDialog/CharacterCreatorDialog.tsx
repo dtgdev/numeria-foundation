@@ -30,6 +30,14 @@ interface CharacterCreatorDialogProps {
   onPublished: (character: PublishedCharacter) => void;
 }
 
+interface FieldErrors {
+  name?: string;
+  role?: string;
+  summary?: string;
+  power?: string;
+  educationalMission?: string;
+}
+
 const EMPTY_DRAFT: CharacterDraft = {
   name: "",
   nickname: "",
@@ -41,6 +49,41 @@ const EMPTY_DRAFT: CharacterDraft = {
   color_theme: "",
   artwork_prompt: "",
 };
+
+function getFieldErrors(
+  draft: CharacterDraft,
+): FieldErrors {
+  const errors: FieldErrors = {};
+
+  if (draft.name.trim().length < 2) {
+    errors.name =
+      "Character name must contain at least 2 characters.";
+  }
+
+  if (draft.role.trim().length < 2) {
+    errors.role =
+      "Role must contain at least 2 characters.";
+  }
+
+  if (draft.summary.trim().length < 10) {
+    errors.summary =
+      "Summary must contain at least 10 characters.";
+  }
+
+  if (draft.power.trim().length < 5) {
+    errors.power =
+      "Mathematical power must contain at least 5 characters.";
+  }
+
+  if (
+    draft.educational_mission.trim().length < 10
+  ) {
+    errors.educationalMission =
+      "Educational mission must contain at least 10 characters.";
+  }
+
+  return errors;
+}
 
 export default function CharacterCreatorDialog({
   open,
@@ -61,6 +104,8 @@ export default function CharacterCreatorDialog({
 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [showFieldErrors, setShowFieldErrors] =
+    useState(false);
 
   const normalizedDraft = useMemo<CharacterDraft>(
     () => ({
@@ -72,6 +117,14 @@ export default function CharacterCreatorDialog({
     }),
     [draft, personalityText],
   );
+
+  const fieldErrors = useMemo(
+    () => getFieldErrors(normalizedDraft),
+    [normalizedDraft],
+  );
+
+  const formIsComplete =
+    Object.keys(fieldErrors).length === 0;
 
   function updateField(
     field: keyof CharacterDraft,
@@ -94,6 +147,7 @@ export default function CharacterCreatorDialog({
     setPublished(null);
     setError("");
     setBusy(false);
+    setShowFieldErrors(false);
   }
 
   function closeDialog() {
@@ -102,9 +156,15 @@ export default function CharacterCreatorDialog({
   }
 
   async function handleValidate() {
-    setBusy(true);
+    setShowFieldErrors(true);
     setError("");
     setPublished(null);
+
+    if (!formIsComplete) {
+      return;
+    }
+
+    setBusy(true);
 
     try {
       const result =
@@ -123,8 +183,14 @@ export default function CharacterCreatorDialog({
   }
 
   async function handlePublish() {
-    setBusy(true);
+    setShowFieldErrors(true);
     setError("");
+
+    if (!formIsComplete || !validation?.valid) {
+      return;
+    }
+
+    setBusy(true);
 
     try {
       const result =
@@ -179,6 +245,7 @@ export default function CharacterCreatorDialog({
             onClick={handlePublish}
             disabled={
               busy ||
+              !formIsComplete ||
               !validation?.valid ||
               Boolean(published)
             }
@@ -190,17 +257,39 @@ export default function CharacterCreatorDialog({
     >
       <div className="character-creator-layout">
         <div className="character-form">
+          {!formIsComplete && showFieldErrors && (
+            <StatusMessage
+              tone="warning"
+              title="Complete the required fields"
+            >
+              Fix the highlighted fields before
+              validating the draft.
+            </StatusMessage>
+          )}
+
           <div className="character-form-grid">
             <FormField
               label="Character name"
               htmlFor="character-name"
               required
+              error={
+                showFieldErrors
+                  ? fieldErrors.name
+                  : undefined
+              }
             >
               <TextInput
                 id="character-name"
                 value={draft.name}
+                invalid={
+                  showFieldErrors &&
+                  Boolean(fieldErrors.name)
+                }
                 onChange={(event) =>
-                  updateField("name", event.target.value)
+                  updateField(
+                    "name",
+                    event.target.value,
+                  )
                 }
                 placeholder="Captain Chain Rule"
               />
@@ -227,12 +316,24 @@ export default function CharacterCreatorDialog({
               label="Role"
               htmlFor="character-role"
               required
+              error={
+                showFieldErrors
+                  ? fieldErrors.role
+                  : undefined
+              }
             >
               <TextInput
                 id="character-role"
                 value={draft.role}
+                invalid={
+                  showFieldErrors &&
+                  Boolean(fieldErrors.role)
+                }
                 onChange={(event) =>
-                  updateField("role", event.target.value)
+                  updateField(
+                    "role",
+                    event.target.value,
+                  )
                 }
                 placeholder="Hero, guide, mentor..."
               />
@@ -260,12 +361,24 @@ export default function CharacterCreatorDialog({
             label="Summary"
             htmlFor="character-summary"
             required
+            error={
+              showFieldErrors
+                ? fieldErrors.summary
+                : undefined
+            }
           >
             <TextArea
               id="character-summary"
               value={draft.summary}
+              invalid={
+                showFieldErrors &&
+                Boolean(fieldErrors.summary)
+              }
               onChange={(event) =>
-                updateField("summary", event.target.value)
+                updateField(
+                  "summary",
+                  event.target.value,
+                )
               }
               placeholder="Who is this character in the Numeria universe?"
               rows={4}
@@ -281,7 +394,9 @@ export default function CharacterCreatorDialog({
               id="character-personality"
               value={personalityText}
               onChange={(event) => {
-                setPersonalityText(event.target.value);
+                setPersonalityText(
+                  event.target.value,
+                );
                 setValidation(null);
                 setPublished(null);
               }}
@@ -293,12 +408,24 @@ export default function CharacterCreatorDialog({
             label="Mathematical power"
             htmlFor="character-power"
             required
+            error={
+              showFieldErrors
+                ? fieldErrors.power
+                : undefined
+            }
           >
             <TextArea
               id="character-power"
               value={draft.power}
+              invalid={
+                showFieldErrors &&
+                Boolean(fieldErrors.power)
+              }
               onChange={(event) =>
-                updateField("power", event.target.value)
+                updateField(
+                  "power",
+                  event.target.value,
+                )
               }
               placeholder="What mathematical ability does this character embody?"
               rows={4}
@@ -309,10 +436,21 @@ export default function CharacterCreatorDialog({
             label="Educational mission"
             htmlFor="character-mission"
             required
+            error={
+              showFieldErrors
+                ? fieldErrors.educationalMission
+                : undefined
+            }
           >
             <TextArea
               id="character-mission"
               value={draft.educational_mission}
+              invalid={
+                showFieldErrors &&
+                Boolean(
+                  fieldErrors.educationalMission,
+                )
+              }
               onChange={(event) =>
                 updateField(
                   "educational_mission",
@@ -354,7 +492,8 @@ export default function CharacterCreatorDialog({
               </div>
 
               <Badge tone="brand">
-                {draft.role.trim() || "Canon Character"}
+                {draft.role.trim() ||
+                  "Canon Character"}
               </Badge>
 
               <h3>{previewName}</h3>
@@ -367,7 +506,8 @@ export default function CharacterCreatorDialog({
 
               <p>{previewMission}</p>
 
-              {normalizedDraft.personality.length > 0 && (
+              {normalizedDraft.personality.length >
+                0 && (
                 <div className="character-traits">
                   {normalizedDraft.personality.map(
                     (trait) => (
@@ -405,23 +545,32 @@ export default function CharacterCreatorDialog({
             >
               {validation.proposed_id && (
                 <p>
-                  Proposed ID: {validation.proposed_id}
+                  Proposed ID:{" "}
+                  {validation.proposed_id}
                 </p>
               )}
 
               {validation.proposed_path && (
-                <p>{validation.proposed_path}</p>
+                <p>
+                  {validation.proposed_path}
+                </p>
               )}
 
-              {validation.errors.map((message) => (
-                <p key={message}>{message}</p>
-              ))}
+              {validation.errors.map(
+                (message) => (
+                  <p key={message}>
+                    {message}
+                  </p>
+                ),
+              )}
 
-              {validation.warnings.map((message) => (
-                <p key={message}>
-                  Warning: {message}
-                </p>
-              ))}
+              {validation.warnings.map(
+                (message) => (
+                  <p key={message}>
+                    Warning: {message}
+                  </p>
+                ),
+              )}
             </StatusMessage>
           )}
 
@@ -432,7 +581,8 @@ export default function CharacterCreatorDialog({
             >
               <p>{published.message}</p>
               <p>
-                {published.name} — {published.id}
+                {published.name} —{" "}
+                {published.id}
               </p>
               <p>{published.path}</p>
             </StatusMessage>
