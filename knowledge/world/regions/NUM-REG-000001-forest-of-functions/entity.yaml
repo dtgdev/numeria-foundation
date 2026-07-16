@@ -1,0 +1,48 @@
+id: NUM-REG-000001
+name: Forest of Functions
+type: Region
+status: CANON
+version: 1.0.0
+
+world:
+  id: NUM-WLD-000001
+
+domain:
+  name: Calculus
+
+summary: >
+  The Forest of Functions is a vast living region where inputs travel
+  through mysterious paths and emerge transformed as outputs. Every
+  function has its own behavior, shape, rule, and personality.
+
+educational_mission: >
+  Help learners understand functions as processes that receive inputs,
+  apply rules, and produce outputs.
+
+themes:
+  - transformation
+  - input and output
+  - connected change
+  - composition
+  - patterns
+
+visual_identity:
+  atmosphere:
+    - enchanted
+    - green
+    - luminous
+    - interconnected
+  landmarks:
+    - Function River
+    - Domain Bridge
+    - Range Lake
+    - Composition Cave
+    - Ancient Function Tree
+
+related_concepts:
+  - Function
+  - Variable
+  - Constant
+  - Composition of Functions
+  - Derivative
+  - Chain Rule

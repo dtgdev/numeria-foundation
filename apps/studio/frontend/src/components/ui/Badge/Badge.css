@@ -1,0 +1,35 @@
+.numeria-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 5px 9px;
+  border-radius: var(--numeria-radius-pill);
+  font-size: var(--numeria-font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.numeria-badge-neutral {
+  background: #eef1f5;
+  color: var(--numeria-text-secondary);
+}
+
+.numeria-badge-brand {
+  background: var(--numeria-surface-selected);
+  color: var(--numeria-canon-blue-dark);
+}
+
+.numeria-badge-success {
+  background: #e9f8ef;
+  color: #216a42;
+}
+
+.numeria-badge-warning {
+  background: #fff4df;
+  color: #935b10;
+}
+
+.numeria-badge-danger {
+  background: #fff0ef;
+  color: #982f28;
+}

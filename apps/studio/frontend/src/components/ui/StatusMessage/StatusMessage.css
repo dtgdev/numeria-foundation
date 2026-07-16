@@ -1,0 +1,51 @@
+.numeria-status-message {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--numeria-space-4);
+  padding: var(--numeria-space-4);
+  border: 1px solid;
+  border-radius: var(--numeria-radius-md);
+}
+
+.numeria-status-message strong {
+  display: block;
+  margin-bottom: var(--numeria-space-1);
+}
+
+.numeria-status-content {
+  font-size: var(--numeria-font-size-sm);
+  line-height: 1.5;
+}
+
+.numeria-status-content p {
+  margin: var(--numeria-space-1) 0 0;
+}
+
+.numeria-status-info {
+  border-color: #bfd4f2;
+  background: #eef5ff;
+  color: #275a99;
+}
+
+.numeria-status-success {
+  border-color: #b9dfc7;
+  background: #eef9f2;
+  color: #245e39;
+}
+
+.numeria-status-warning {
+  border-color: #efd39f;
+  background: #fff8e9;
+  color: #85550d;
+}
+
+.numeria-status-danger {
+  border-color: #efc0bc;
+  background: #fff2f1;
+  color: #8d2821;
+}
+
+.numeria-status-action {
+  flex: 0 0 auto;
+}

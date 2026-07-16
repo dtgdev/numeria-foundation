@@ -1,0 +1,46 @@
+.numeria-card {
+  border: 1px solid #dfe5ef;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 14px 40px rgba(31, 42, 68, 0.06);
+}
+
+.numeria-card-padding-none {
+  padding: 0;
+}
+
+.numeria-card-padding-small {
+  padding: 14px;
+}
+
+.numeria-card-padding-medium {
+  padding: 22px;
+}
+
+.numeria-card-padding-large {
+  padding: 30px;
+}
+
+.numeria-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.numeria-card-header h2 {
+  margin: 0;
+  color: #1c2538;
+  font-size: 1.05rem;
+}
+
+.numeria-card-header p {
+  margin: 5px 0 0;
+  color: #788398;
+  font-size: 0.9rem;
+}
+
+.numeria-card-action {
+  flex: 0 0 auto;
+}

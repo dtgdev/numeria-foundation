@@ -1,0 +1,32 @@
+.numeria-text-input {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--numeria-border-strong);
+  border-radius: var(--numeria-radius-md);
+  outline: none;
+  background: var(--numeria-surface);
+  color: var(--numeria-text-primary);
+  transition:
+    border-color var(--numeria-transition-fast),
+    box-shadow var(--numeria-transition-fast);
+}
+
+.numeria-text-input::placeholder {
+  color: var(--numeria-text-muted);
+}
+
+.numeria-text-input:focus {
+  border-color: var(--numeria-canon-blue);
+  box-shadow: 0 0 0 3px rgba(89, 105, 216, 0.14);
+}
+
+.numeria-text-input-invalid {
+  border-color: var(--numeria-danger);
+}
+
+.numeria-text-input:disabled {
+  cursor: not-allowed;
+  background: var(--numeria-surface-soft);
+  opacity: 0.7;
+}

@@ -1,0 +1,33 @@
+.numeria-text-area {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--numeria-border-strong);
+  border-radius: var(--numeria-radius-md);
+  outline: none;
+  background: var(--numeria-surface);
+  color: var(--numeria-text-primary);
+  line-height: 1.5;
+  resize: vertical;
+  transition:
+    border-color var(--numeria-transition-fast),
+    box-shadow var(--numeria-transition-fast);
+}
+
+.numeria-text-area::placeholder {
+  color: var(--numeria-text-muted);
+}
+
+.numeria-text-area:focus {
+  border-color: var(--numeria-canon-blue);
+  box-shadow: 0 0 0 3px rgba(89, 105, 216, 0.14);
+}
+
+.numeria-text-area-invalid {
+  border-color: var(--numeria-danger);
+}
+
+.numeria-text-area:disabled {
+  cursor: not-allowed;
+  background: var(--numeria-surface-soft);
+  opacity: 0.7;
+}
