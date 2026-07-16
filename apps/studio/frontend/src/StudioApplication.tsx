@@ -37,6 +37,7 @@ import {
 
 import {
   CanonStudio,
+  WorldStudio,
 } from "./studios";
 
 export default function StudioApplication() {
@@ -300,7 +301,15 @@ export default function StudioApplication() {
         }
         toolbar={renderToolbar()}
       >
-        <CanonStudio />
+        {activeSection === "world" ? (
+          <WorldStudio
+            onCreateRegion={() =>
+              setRegionCreatorOpen(true)
+            }
+          />
+        ) : (
+          <CanonStudio />
+        )}
       </StudioShell>
 
       <CharacterCreatorDialog
