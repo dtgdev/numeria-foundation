@@ -1,6 +1,12 @@
-import { useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import type { CanonEntity } from "../../api";
+
+import { Numeria } from "../../engine";
 
 import {
   Badge,
@@ -39,7 +45,6 @@ export default function StoryStudio({
   onCreateStory,
 }: StoryStudioProps) {
   const {
-    entities,
     selectedEntity,
     selectedId,
     selectEntity,
@@ -47,15 +52,54 @@ export default function StoryStudio({
 
   const [query, setQuery] = useState("");
 
-  const stories = useMemo(
-    () =>
-      entities.filter(
-        (entity) =>
-          entity.type === "Story" ||
-          entity.type === "Scene",
-      ),
-    [entities],
-  );
+  const [stories, setStories] =
+    useState<CanonEntity[]>([]);
+
+  const [
+    storiesLoading,
+    setStoriesLoading,
+  ] = useState(true);
+
+  const [
+    storiesError,
+    setStoriesError,
+  ] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadStories() {
+      setStoriesLoading(true);
+      setStoriesError("");
+
+      try {
+        const result =
+          await Numeria.story.list();
+
+        if (!cancelled) {
+          setStories(result);
+        }
+      } catch (caughtError) {
+        if (!cancelled) {
+          setStoriesError(
+            caughtError instanceof Error
+              ? caughtError.message
+              : "Failed to load Story Forge content.",
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setStoriesLoading(false);
+        }
+      }
+    }
+
+    void loadStories();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const filteredStories = useMemo(() => {
     const normalized =
@@ -113,8 +157,17 @@ export default function StoryStudio({
         selectedStory?.id ?? null
       }
       actionLabel="+ Forge Story"
-      emptyTitle="No stories yet"
-      emptyDescription="Create the first adventure in the Numeria universe."
+      emptyTitle={
+        storiesLoading
+          ? "Loading stories..."
+          : storiesError
+            ? "Story Forge could not load"
+            : "No stories yet"
+      }
+      emptyDescription={
+        storiesError ||
+        "Create the first adventure in the Numeria universe."
+      }
       renderIcon={() => "📖"}
       onSelect={selectEntity}
       onAction={onCreateStory}
