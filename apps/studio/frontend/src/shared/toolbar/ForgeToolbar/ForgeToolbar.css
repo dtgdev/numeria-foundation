@@ -1,0 +1,38 @@
+.forge-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--numeria-space-4);
+
+  padding: var(--numeria-space-3);
+
+  border: 1px solid var(--numeria-border);
+  border-radius: var(--numeria-radius-lg);
+
+  background: var(--numeria-surface);
+
+  box-shadow: var(--numeria-shadow-sm);
+}
+
+.forge-toolbar-search {
+  flex: 1;
+  min-width: 0;
+}
+
+.forge-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--numeria-space-2);
+}
+
+@media (max-width: 900px) {
+  .forge-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .forge-toolbar-actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+}
