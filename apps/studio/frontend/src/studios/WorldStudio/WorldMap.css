@@ -317,3 +317,92 @@
     flex-direction: column;
   }
 }
+
+/* Living Numeria map motion */
+
+@keyframes numeria-world-float {
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      translateY(-8px);
+  }
+}
+
+@keyframes numeria-region-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 4px rgba(255, 191, 66, 0.18),
+      0 24px 60px rgba(42, 50, 110, 0.22);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 9px rgba(255, 191, 66, 0.08),
+      0 28px 66px rgba(42, 50, 110, 0.28);
+  }
+}
+
+@keyframes numeria-edge-flow {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+
+@keyframes numeria-star-drift {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 52px 52px;
+  }
+}
+
+.numeria-map-world-node {
+  animation:
+    numeria-world-float
+    6s
+    ease-in-out
+    infinite;
+}
+
+.numeria-map-region-node.selected {
+  animation:
+    numeria-region-pulse
+    2.2s
+    ease-in-out
+    infinite;
+}
+
+.numeria-world-map-edges line {
+  animation:
+    numeria-edge-flow
+    7s
+    linear
+    infinite;
+}
+
+.numeria-map-stars {
+  animation:
+    numeria-star-drift
+    30s
+    linear
+    infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .numeria-map-world-node,
+  .numeria-map-region-node.selected,
+  .numeria-world-map-edges line,
+  .numeria-map-stars {
+    animation: none;
+  }
+}
