@@ -49,9 +49,9 @@ const NAVIGATION_ITEMS: NavigationItem[] = [
   },
   {
     id: "stories",
-    label: "Stories",
+    label: "Story Forge",
     icon: "📖",
-    available: false,
+    available: true,
   },
   {
     id: "books",

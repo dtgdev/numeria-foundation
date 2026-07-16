@@ -1,6 +1,7 @@
 import {
   CanonStudio,
   CharacterStudio,
+  StoryStudio,
   WorldStudio,
 } from "../studios";
 
@@ -40,6 +41,9 @@ export default function StudioRouter({
           }
         />
       );
+
+    case "stories":
+      return <StoryStudio />;
 
     case "relationships":
     case "canon":
