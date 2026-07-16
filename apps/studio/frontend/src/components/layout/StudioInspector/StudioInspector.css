@@ -49,3 +49,64 @@
   border-top: 1px solid var(--numeria-border);
   background: var(--numeria-surface-soft);
 }
+
+/* Shared entity inspector framework */
+
+.studio-inspector-heading-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--numeria-space-3);
+}
+
+.studio-inspector-status {
+  flex: 0 0 auto;
+}
+
+.entity-inspector-section {
+  display: grid;
+  gap: var(--numeria-space-3);
+  padding: var(--numeria-space-4);
+  border: 1px solid var(--numeria-border);
+  border-radius: var(--numeria-radius-lg);
+  background: var(--numeria-surface-soft);
+}
+
+.entity-inspector-section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--numeria-space-3);
+}
+
+.entity-inspector-section-header h3 {
+  margin: 0;
+  color: var(--numeria-text-primary);
+  font-size: var(--numeria-font-size-sm);
+}
+
+.entity-inspector-section-header p {
+  margin: var(--numeria-space-1) 0 0;
+  color: var(--numeria-text-muted);
+  font-size: var(--numeria-font-size-xs);
+  line-height: 1.45;
+}
+
+.entity-inspector-section-content {
+  min-width: 0;
+  color: var(--numeria-text-secondary);
+  font-size: var(--numeria-font-size-sm);
+  line-height: 1.55;
+}
+
+.entity-inspector-section-content > :first-child {
+  margin-top: 0;
+}
+
+.entity-inspector-section-content > :last-child {
+  margin-bottom: 0;
+}
+
+.entity-inspector-section-action {
+  flex: 0 0 auto;
+}

@@ -7,5 +7,7 @@ export { default as StudioNavigation } from
 export type { StudioSection } from
   "./StudioNavigation/StudioNavigation";
 
-export { default as StudioInspector } from
-  "./StudioInspector/StudioInspector";
+export {
+  default as StudioInspector,
+  InspectorSection,
+} from "./StudioInspector/StudioInspector";
