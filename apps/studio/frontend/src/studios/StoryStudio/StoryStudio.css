@@ -1,0 +1,121 @@
+.story-forge-layout .forge-layout-canvas {
+  gap: var(--numeria-space-5);
+}
+
+.story-forge-hero {
+  display: grid;
+  grid-template-columns:
+    auto
+    minmax(0, 1fr);
+  align-items: center;
+  gap: var(--numeria-space-5);
+  padding: var(--numeria-space-6);
+  border: 1px solid rgba(117, 104, 245, 0.22);
+  border-radius: var(--numeria-radius-xl);
+  background:
+    radial-gradient(
+      circle at 12% 25%,
+      rgba(255, 191, 66, 0.18),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #f3f5ff
+    );
+  box-shadow: var(--numeria-shadow-md);
+}
+
+.story-forge-symbol {
+  display: grid;
+  place-items: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 30px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--numeria-canon-blue),
+      var(--numeria-discovery-purple)
+    );
+  font-size: 3.6rem;
+  box-shadow: var(--numeria-shadow-md);
+}
+
+.story-forge-hero h2 {
+  margin:
+    var(--numeria-space-3)
+    0
+    var(--numeria-space-2);
+  color: var(--numeria-text-primary);
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  letter-spacing: -0.05em;
+}
+
+.story-forge-hero p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--numeria-text-muted);
+  line-height: 1.65;
+}
+
+.story-forge-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: var(--numeria-space-4);
+}
+
+.story-forge-grid p {
+  margin: 0;
+  color: var(--numeria-text-muted);
+  line-height: 1.6;
+}
+
+.story-timeline-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--numeria-space-3);
+  min-height: 150px;
+  overflow-x: auto;
+}
+
+.story-timeline-placeholder span {
+  flex: 0 0 auto;
+  padding:
+    var(--numeria-space-3)
+    var(--numeria-space-4);
+  border: 1px solid var(--numeria-border);
+  border-radius: var(--numeria-radius-pill);
+  background: var(--numeria-surface-selected);
+  color: var(--numeria-canon-blue-dark);
+  font-weight: 800;
+}
+
+.story-timeline-placeholder i {
+  flex: 1;
+  min-width: 40px;
+  height: 2px;
+  background:
+    linear-gradient(
+      90deg,
+      var(--numeria-canon-blue),
+      var(--numeria-story-gold)
+    );
+}
+
+@media (max-width: 760px) {
+  .story-forge-hero,
+  .story-forge-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .story-forge-hero {
+    text-align: center;
+  }
+
+  .story-forge-symbol {
+    margin: 0 auto;
+  }
+}

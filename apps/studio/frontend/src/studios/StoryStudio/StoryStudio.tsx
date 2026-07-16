@@ -1,0 +1,252 @@
+import { useMemo, useState } from "react";
+
+import type { CanonEntity } from "../../api";
+
+import {
+  Badge,
+  Button,
+  Card,
+} from "../../components/ui";
+
+import { useStudio } from "../../hooks";
+
+import {
+  EntityLibrary,
+  ForgeLayout,
+  ForgeToolbar,
+  SearchBar,
+} from "../../shared";
+
+import "./StoryStudio.css";
+
+interface StoryStudioProps {
+  onCreateStory?: () => void;
+}
+
+function readText(
+  entity: CanonEntity,
+  key: string,
+  fallback: string,
+): string {
+  const value = entity.data[key];
+
+  return typeof value === "string" && value.trim()
+    ? value.trim()
+    : fallback;
+}
+
+export default function StoryStudio({
+  onCreateStory,
+}: StoryStudioProps) {
+  const {
+    entities,
+    selectedEntity,
+    selectedId,
+    selectEntity,
+  } = useStudio();
+
+  const [query, setQuery] = useState("");
+
+  const stories = useMemo(
+    () =>
+      entities.filter(
+        (entity) =>
+          entity.type === "Story" ||
+          entity.type === "Scene",
+      ),
+    [entities],
+  );
+
+  const filteredStories = useMemo(() => {
+    const normalized =
+      query.trim().toLowerCase();
+
+    if (!normalized) {
+      return stories;
+    }
+
+    return stories.filter(
+      (story) =>
+        story.name
+          .toLowerCase()
+          .includes(normalized) ||
+        story.id
+          .toLowerCase()
+          .includes(normalized),
+    );
+  }, [query, stories]);
+
+  const selectedStory =
+    selectedEntity &&
+    (
+      selectedEntity.type === "Story" ||
+      selectedEntity.type === "Scene"
+    )
+      ? selectedEntity
+      : filteredStories.find(
+          (story) =>
+            story.id === selectedId,
+        ) ??
+        filteredStories[0] ??
+        null;
+
+  const libraryItems = filteredStories.map(
+    (story) => ({
+      id: story.id,
+      name: story.name,
+      type: story.type,
+      description: readText(
+        story,
+        "summary",
+        "A story from the living Numeria canon.",
+      ),
+    }),
+  );
+
+  const library = (
+    <EntityLibrary
+      eyebrow="STORY FORGE"
+      title="Story Library"
+      description="Shape the adventures that bring mathematics to life."
+      entities={libraryItems}
+      selectedId={
+        selectedStory?.id ?? null
+      }
+      actionLabel="+ Forge Story"
+      emptyTitle="No stories yet"
+      emptyDescription="Create the first adventure in the Numeria universe."
+      renderIcon={() => "📖"}
+      onSelect={selectEntity}
+      onAction={onCreateStory}
+    />
+  );
+
+  const toolbar = (
+    <ForgeToolbar
+      search={
+        <SearchBar
+          value={query}
+          placeholder="Search stories and scenes..."
+          onChange={setQuery}
+        />
+      }
+      actions={
+        <Button
+          onClick={onCreateStory}
+          disabled={!onCreateStory}
+        >
+          + Forge Story
+        </Button>
+      }
+    />
+  );
+
+  return (
+    <ForgeLayout
+      library={library}
+      toolbar={toolbar}
+      libraryLabel="Story Forge library"
+      canvasLabel="Story Forge canvas"
+      className="story-forge-layout"
+    >
+      {selectedStory ? (
+        <>
+          <section className="story-forge-hero">
+            <div className="story-forge-symbol">
+              📖
+            </div>
+
+            <div>
+              <Badge tone="brand">
+                {selectedStory.type}
+              </Badge>
+
+              <h2>{selectedStory.name}</h2>
+
+              <p>
+                {readText(
+                  selectedStory,
+                  "summary",
+                  "This story is waiting for its next chapter.",
+                )}
+              </p>
+            </div>
+          </section>
+
+          <section className="story-forge-grid">
+            <Card
+              title="Learning Goal"
+              description="The mathematical understanding this story develops."
+            >
+              <p>
+                {readText(
+                  selectedStory,
+                  "educational_mission",
+                  "No learning goal has been documented yet.",
+                )}
+              </p>
+            </Card>
+
+            <Card
+              title="Story Status"
+              description="Current position in the canon workflow."
+            >
+              <p>
+                {readText(
+                  selectedStory,
+                  "status",
+                  "CANON",
+                )}
+              </p>
+            </Card>
+
+            <Card
+              title="Characters"
+              description="Heroes participating in this adventure."
+            >
+              <p>
+                Character connections will appear here.
+              </p>
+            </Card>
+
+            <Card
+              title="Location"
+              description="Where this adventure takes place."
+            >
+              <p>
+                World and region connections will appear here.
+              </p>
+            </Card>
+          </section>
+
+          <Card
+            title="Story Timeline"
+            description="Scenes will eventually appear here as a visual sequence."
+          >
+            <div className="story-timeline-placeholder">
+              <span>Origin</span>
+              <i />
+              <span>Challenge</span>
+              <i />
+              <span>Discovery</span>
+              <i />
+              <span>Resolution</span>
+            </div>
+          </Card>
+        </>
+      ) : (
+        <Card
+          title="Forge the First Story"
+          description="Create an adventure that transforms a mathematical idea into a memorable experience."
+        >
+          <Button
+            onClick={onCreateStory}
+            disabled={!onCreateStory}
+          >
+            + Forge Story
+          </Button>
+        </Card>
+      )}
+    </ForgeLayout>
+  );
+}
