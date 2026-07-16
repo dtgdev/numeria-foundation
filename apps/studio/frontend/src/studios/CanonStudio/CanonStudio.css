@@ -1,0 +1,220 @@
+.canon-studio {
+  display: grid;
+  grid-template-columns:
+    minmax(270px, 340px)
+    minmax(0, 1fr);
+  gap: var(--numeria-space-5);
+  min-height: calc(100vh - 140px);
+}
+
+.canon-studio-browser {
+  display: flex;
+  flex-direction: column;
+  gap: var(--numeria-space-4);
+  min-width: 0;
+  padding: var(--numeria-space-4);
+  border: 1px solid var(--numeria-border);
+  border-radius: var(--numeria-radius-lg);
+  background: var(--numeria-surface);
+  box-shadow: var(--numeria-shadow-sm);
+}
+
+.canon-studio-browser-header h2 {
+  margin:
+    var(--numeria-space-1)
+    0
+    var(--numeria-space-2);
+  color: var(--numeria-text-primary);
+  font-size: var(--numeria-font-size-xl);
+}
+
+.canon-studio-browser-header p:last-child {
+  margin: 0;
+  color: var(--numeria-text-muted);
+  font-size: var(--numeria-font-size-sm);
+  line-height: 1.5;
+}
+
+.canon-studio-eyebrow {
+  margin: 0;
+  color: var(--numeria-canon-blue);
+  font-size: var(--numeria-font-size-xs);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.canon-studio-list {
+  display: grid;
+  align-content: start;
+  gap: var(--numeria-space-3);
+  max-height: calc(100vh - 330px);
+  overflow-y: auto;
+  padding-right: var(--numeria-space-1);
+}
+
+.canon-studio-card {
+  display: grid;
+  gap: var(--numeria-space-2);
+  width: 100%;
+  min-width: 0;
+  padding: var(--numeria-space-4);
+  border: 1px solid var(--numeria-border);
+  border-radius: var(--numeria-radius-lg);
+  background: var(--numeria-surface);
+  color: var(--numeria-text-primary);
+  text-align: left;
+  transition:
+    transform var(--numeria-transition-fast),
+    border-color var(--numeria-transition-fast),
+    background var(--numeria-transition-fast),
+    box-shadow var(--numeria-transition-fast);
+}
+
+.canon-studio-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--numeria-canon-blue);
+  box-shadow: var(--numeria-shadow-sm);
+}
+
+.canon-studio-card.selected {
+  border-color: var(--numeria-canon-blue);
+  background: var(--numeria-surface-selected);
+  box-shadow:
+    0 0 0 3px rgba(89, 105, 216, 0.12);
+}
+
+.canon-studio-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--numeria-space-2);
+}
+
+.canon-studio-selected-label {
+  color: var(--numeria-canon-blue-dark);
+  font-size: var(--numeria-font-size-xs);
+  font-weight: 800;
+}
+
+.canon-studio-card strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.canon-studio-card p {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--numeria-text-muted);
+  font-size: var(--numeria-font-size-sm);
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.canon-studio-card small {
+  color: var(--numeria-text-muted);
+}
+
+.canon-studio-canvas {
+  display: grid;
+  align-content: start;
+  gap: var(--numeria-space-5);
+  min-width: 0;
+}
+
+.canon-studio-canvas-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--numeria-space-4);
+  padding: var(--numeria-space-5);
+  border: 1px solid var(--numeria-border);
+  border-radius: var(--numeria-radius-lg);
+  background: var(--numeria-surface);
+  box-shadow: var(--numeria-shadow-sm);
+}
+
+.canon-studio-canvas-header h2 {
+  margin:
+    var(--numeria-space-2)
+    0
+    var(--numeria-space-1);
+  color: var(--numeria-text-primary);
+  font-size: var(--numeria-font-size-2xl);
+  letter-spacing: -0.04em;
+}
+
+.canon-studio-canvas-header p {
+  margin: 0;
+  color: var(--numeria-text-muted);
+}
+
+.canon-studio-neighbors {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill, minmax(190px, 1fr));
+  gap: var(--numeria-space-3);
+}
+
+.canon-neighbor-card {
+  display: grid;
+  justify-items: start;
+  gap: var(--numeria-space-2);
+  padding: var(--numeria-space-4);
+  border: 1px solid var(--numeria-border);
+  border-radius: var(--numeria-radius-lg);
+  background: var(--numeria-surface-soft);
+  color: var(--numeria-text-primary);
+  text-align: left;
+  transition:
+    transform var(--numeria-transition-fast),
+    border-color var(--numeria-transition-fast),
+    box-shadow var(--numeria-transition-fast);
+}
+
+.canon-neighbor-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--numeria-canon-blue);
+  box-shadow: var(--numeria-shadow-sm);
+}
+
+.canon-neighbor-card span {
+  color: var(--numeria-canon-blue-dark);
+  font-size: var(--numeria-font-size-xs);
+  font-weight: 800;
+}
+
+.canon-neighbor-card small {
+  color: var(--numeria-text-muted);
+}
+
+.canon-studio-empty,
+.canon-studio-loading,
+.canon-studio-error {
+  display: grid;
+  justify-items: center;
+  gap: var(--numeria-space-2);
+  padding: var(--numeria-space-6);
+  color: var(--numeria-text-muted);
+  text-align: center;
+}
+
+.canon-studio-empty p {
+  margin: 0;
+}
+
+.canon-studio-error {
+  color: var(--numeria-danger);
+}
+
+@media (max-width: 900px) {
+  .canon-studio {
+    grid-template-columns: 1fr;
+  }
+
+  .canon-studio-list {
+    max-height: 360px;
+  }
+}

@@ -1,0 +1,53 @@
+id: NUM-WLD-000001
+name: Numeria
+type: World
+status: CANON
+version: 1.0.0
+
+summary: >
+  Numeria is a living educational universe where mathematical ideas,
+  symbols, patterns, and relationships become memorable characters,
+  places, stories, discoveries, and adventures.
+
+purpose: >
+  Help learners experience mathematics as an interconnected world of
+  meaning rather than a collection of isolated rules and symbols.
+
+educational_mission: >
+  Make mathematics understandable, memorable, emotionally engaging,
+  and joyful through storytelling, visual learning, exploration, and
+  mathematically accurate world building.
+
+themes:
+  - curiosity
+  - discovery
+  - change
+  - patterns
+  - relationships
+  - mathematical wonder
+
+visual_identity:
+  primary_colors:
+    - Canon Blue
+    - Delta Silver
+    - Story Gold
+    - Discovery Purple
+  atmosphere:
+    - luminous
+    - adventurous
+    - mysterious
+    - welcoming
+    - timeless
+
+canonical_hierarchy:
+  - World
+  - Domain
+  - Region
+  - Location
+  - Landmark
+  - Institution
+  - Artifact
+
+source_documents:
+  - knowledge/world/WORLD_FOUNDATIONS.md
+  - knowledge/world/WORLD_ATLAS.md

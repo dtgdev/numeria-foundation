@@ -1,0 +1,2 @@
+export { CanonStudio } from
+  "./CanonStudio";
