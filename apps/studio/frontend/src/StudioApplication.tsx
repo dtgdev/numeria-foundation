@@ -35,10 +35,7 @@ import {
   useStudio,
 } from "./hooks";
 
-import {
-  CanonStudio,
-  WorldStudio,
-} from "./studios";
+import StudioRouter from "./app/StudioRouter";
 
 export default function StudioApplication() {
   const {
@@ -301,15 +298,18 @@ export default function StudioApplication() {
         }
         toolbar={renderToolbar()}
       >
-        {activeSection === "world" ? (
-          <WorldStudio
-            onCreateRegion={() =>
-              setRegionCreatorOpen(true)
-            }
-          />
-        ) : (
-          <CanonStudio />
-        )}
+        <StudioRouter
+          activeSection={activeSection}
+          onCreateRegion={() =>
+            setRegionCreatorOpen(true)
+          }
+          onCreateCharacter={() =>
+            setCharacterCreatorOpen(true)
+          }
+          onAddRelationship={() =>
+            setRelationshipCreatorOpen(true)
+          }
+        />
       </StudioShell>
 
       <CharacterCreatorDialog
