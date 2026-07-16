@@ -1,0 +1,76 @@
+:root {
+  /* Brand */
+  --numeria-canon-blue: #5969d8;
+  --numeria-canon-blue-dark: #4657c7;
+  --numeria-discovery-purple: #7568f5;
+  --numeria-delta-silver: #c9d1df;
+  --numeria-story-gold: #ffbf42;
+
+  /* Semantic colors */
+  --numeria-success: #2ca56b;
+  --numeria-warning: #f2a93b;
+  --numeria-danger: #d54e45;
+  --numeria-info: #3f7dd9;
+
+  /* Text */
+  --numeria-text-primary: #182033;
+  --numeria-text-secondary: #4d596d;
+  --numeria-text-muted: #758094;
+  --numeria-text-inverse: #ffffff;
+
+  /* Surfaces */
+  --numeria-background: #f3f6fb;
+  --numeria-surface: #ffffff;
+  --numeria-surface-soft: #f8faff;
+  --numeria-surface-selected: #eef1ff;
+  --numeria-border: #dfe5ef;
+  --numeria-border-strong: #c7d0de;
+
+  /* Typography */
+  --numeria-font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --numeria-font-size-xs: 0.75rem;
+  --numeria-font-size-sm: 0.875rem;
+  --numeria-font-size-md: 1rem;
+  --numeria-font-size-lg: 1.125rem;
+  --numeria-font-size-xl: 1.5rem;
+  --numeria-font-size-2xl: 2rem;
+
+  /* Spacing */
+  --numeria-space-1: 4px;
+  --numeria-space-2: 8px;
+  --numeria-space-3: 12px;
+  --numeria-space-4: 16px;
+  --numeria-space-5: 24px;
+  --numeria-space-6: 32px;
+  --numeria-space-7: 40px;
+  --numeria-space-8: 48px;
+
+  /* Radius */
+  --numeria-radius-sm: 8px;
+  --numeria-radius-md: 12px;
+  --numeria-radius-lg: 16px;
+  --numeria-radius-xl: 22px;
+  --numeria-radius-pill: 999px;
+
+  /* Shadows */
+  --numeria-shadow-sm:
+    0 8px 20px rgba(31, 42, 68, 0.08);
+
+  --numeria-shadow-md:
+    0 14px 40px rgba(31, 42, 68, 0.1);
+
+  --numeria-shadow-lg:
+    0 30px 90px rgba(10, 18, 38, 0.34);
+
+  /* Motion */
+  --numeria-transition-fast: 160ms ease;
+  --numeria-transition-normal: 240ms ease;
+
+  /* Layout */
+  --numeria-sidebar-width: 350px;
+  --numeria-header-height: 96px;
+  --numeria-content-max-width: 1440px;
+}

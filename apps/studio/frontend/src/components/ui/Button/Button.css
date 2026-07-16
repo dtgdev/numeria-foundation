@@ -1,0 +1,75 @@
+.numeria-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--numeria-space-2);
+  min-height: 40px;
+  padding: 9px 15px;
+  border: 1px solid transparent;
+  border-radius: var(--numeria-radius-md);
+  font: inherit;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background var(--numeria-transition-fast),
+    border-color var(--numeria-transition-fast),
+    color var(--numeria-transition-fast),
+    transform var(--numeria-transition-fast),
+    box-shadow var(--numeria-transition-fast);
+}
+
+.numeria-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.numeria-button:focus-visible {
+  outline: 3px solid rgba(89, 105, 216, 0.22);
+  outline-offset: 2px;
+}
+
+.numeria-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.numeria-button-primary {
+  border-color: var(--numeria-canon-blue);
+  background: var(--numeria-canon-blue);
+  color: var(--numeria-text-inverse);
+  box-shadow: var(--numeria-shadow-sm);
+}
+
+.numeria-button-primary:hover:not(:disabled) {
+  background: var(--numeria-canon-blue-dark);
+}
+
+.numeria-button-secondary {
+  border-color: var(--numeria-border);
+  background: var(--numeria-surface);
+  color: var(--numeria-text-secondary);
+}
+
+.numeria-button-secondary:hover:not(:disabled) {
+  border-color: var(--numeria-border-strong);
+  background: var(--numeria-surface-soft);
+}
+
+.numeria-button-danger {
+  border-color: var(--numeria-danger);
+  background: var(--numeria-danger);
+  color: var(--numeria-text-inverse);
+}
+
+.numeria-button-ghost {
+  background: transparent;
+  color: var(--numeria-text-secondary);
+}
+
+.numeria-button-ghost:hover:not(:disabled) {
+  background: var(--numeria-surface-selected);
+}
+
+.numeria-button-full-width {
+  width: 100%;
+}
