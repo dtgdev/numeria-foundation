@@ -123,3 +123,40 @@
     max-height: 360px;
   }
 }
+
+/* Character Studio shell containment */
+
+.character-studio,
+.character-studio-canvas,
+.character-studio-library {
+  min-width: 0;
+}
+
+.character-studio {
+  grid-template-columns:
+    minmax(240px, 300px)
+    minmax(0, 1fr);
+}
+
+.character-studio-canvas > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 1280px) {
+  .character-studio {
+    grid-template-columns:
+      minmax(220px, 270px)
+      minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 1050px) {
+  .character-studio {
+    grid-template-columns: 1fr;
+  }
+
+  .character-studio-list {
+    max-height: 320px;
+  }
+}

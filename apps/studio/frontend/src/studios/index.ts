@@ -1,5 +1,3 @@
-export { CanonStudio } from
-  "./CanonStudio";
-
-export { WorldStudio } from
-  "./WorldStudio";
+export { CanonStudio } from "./CanonStudio";
+export { CharacterStudio } from "./CharacterStudio";
+export { WorldStudio } from "./WorldStudio";

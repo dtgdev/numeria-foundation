@@ -258,3 +258,112 @@
     border-left: 0;
   }
 }
+
+/* Hero Forge responsive containment */
+
+.hero-forge-banner {
+  min-width: 0;
+  grid-template-columns:
+    minmax(170px, 230px)
+    minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 48px);
+  min-height: 380px;
+  padding: clamp(24px, 3vw, 42px);
+}
+
+.hero-forge-portrait-column,
+.hero-forge-content {
+  min-width: 0;
+}
+
+.hero-forge-portrait-frame {
+  width: min(210px, 100%);
+  height: 210px;
+}
+
+.hero-forge-portrait-placeholder,
+.hero-forge-portrait-image {
+  width: 158px;
+  height: 158px;
+}
+
+.hero-forge-orbit-one {
+  width: 205px;
+  height: 78px;
+}
+
+.hero-forge-orbit-two {
+  width: 108px;
+  height: 210px;
+}
+
+.hero-forge-content h2 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: clamp(2.4rem, 4vw, 4.6rem);
+}
+
+.hero-forge-content blockquote,
+.hero-forge-summary {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1280px) {
+  .hero-forge-banner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-forge-portrait-column {
+    justify-self: center;
+  }
+
+  .hero-forge-labels,
+  .hero-forge-actions {
+    justify-content: center;
+  }
+
+  .hero-forge-content blockquote {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero-forge-banner {
+    min-height: auto;
+    padding: var(--numeria-space-4);
+  }
+
+  .hero-forge-portrait-frame {
+    width: 180px;
+    height: 180px;
+  }
+
+  .hero-forge-portrait-placeholder,
+  .hero-forge-portrait-image {
+    width: 136px;
+    height: 136px;
+  }
+
+  .hero-forge-orbit-one {
+    width: 174px;
+    height: 66px;
+  }
+
+  .hero-forge-orbit-two {
+    width: 92px;
+    height: 180px;
+  }
+
+  .hero-forge-actions {
+    flex-direction: column;
+  }
+
+  .hero-forge-actions > * {
+    width: 100%;
+  }
+}
