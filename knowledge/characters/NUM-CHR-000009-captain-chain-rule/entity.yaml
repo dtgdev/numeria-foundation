@@ -1,0 +1,21 @@
+id: NUM-CHR-000009
+name: Captain Chain Rule
+type: Character
+status: CANON
+version: 1.0.0
+nickname: Chain
+role: Here, Guide
+summary: Chain Rule
+personality: []
+power: Chain Rule
+educational_mission: About chain Rule
+color_theme: Silver Blue
+artwork_prompt: 'Personality:
+
+  energetic, precise, encouraging, quick-thinking
+
+
+  Artwork prompt:
+
+  A heroic mathematical guide wearing linked silver rings, a violet cape, and carrying a glowing
+  chain-shaped compass.'

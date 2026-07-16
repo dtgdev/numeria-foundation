@@ -1,0 +1,179 @@
+.relationship-studio-layout {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.35fr)
+    minmax(280px, 0.75fr);
+  gap: var(--numeria-space-5);
+}
+
+.relationship-editor-column,
+.relationship-preview-column {
+  display: grid;
+  align-content: start;
+  gap: var(--numeria-space-5);
+}
+
+.relationship-source-card {
+  display: grid;
+  gap: var(--numeria-space-2);
+}
+
+.relationship-source-card strong {
+  color: var(--numeria-text-primary);
+  font-size: var(--numeria-font-size-lg);
+}
+
+.relationship-source-card small {
+  color: var(--numeria-text-muted);
+}
+
+.numeria-select {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--numeria-border-strong);
+  border-radius: var(--numeria-radius-md);
+  outline: none;
+  background: var(--numeria-surface);
+  color: var(--numeria-text-primary);
+  font: inherit;
+}
+
+.numeria-select:focus {
+  border-color: var(--numeria-canon-blue);
+  box-shadow:
+    0 0 0 3px rgba(89, 105, 216, 0.14);
+}
+
+.relationship-target-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fill, minmax(210px, 1fr));
+  gap: var(--numeria-space-3);
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: var(--numeria-space-1);
+}
+
+.relationship-target-card {
+  display: grid;
+  gap: var(--numeria-space-2);
+  min-width: 0;
+  padding: var(--numeria-space-4);
+  border: 1px solid var(--numeria-border);
+  border-radius: var(--numeria-radius-lg);
+  background: var(--numeria-surface);
+  color: var(--numeria-text-primary);
+  text-align: left;
+  transition:
+    transform var(--numeria-transition-fast),
+    border-color var(--numeria-transition-fast),
+    box-shadow var(--numeria-transition-fast),
+    background var(--numeria-transition-fast);
+}
+
+.relationship-target-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--numeria-canon-blue);
+  box-shadow: var(--numeria-shadow-sm);
+}
+
+.relationship-target-card.selected {
+  border-color: var(--numeria-canon-blue);
+  background: var(--numeria-surface-selected);
+  box-shadow:
+    0 0 0 3px rgba(89, 105, 216, 0.12);
+}
+
+.relationship-target-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--numeria-space-2);
+}
+
+.relationship-target-card strong {
+  overflow: hidden;
+  font-size: var(--numeria-font-size-md);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.relationship-target-card p {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--numeria-text-muted);
+  font-size: var(--numeria-font-size-sm);
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.relationship-target-card small {
+  overflow: hidden;
+  color: var(--numeria-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.relationship-selected-label {
+  color: var(--numeria-canon-blue-dark);
+  font-size: var(--numeria-font-size-xs);
+  font-weight: 800;
+}
+
+.relationship-empty-state {
+  margin: 0;
+  padding: var(--numeria-space-4);
+  color: var(--numeria-text-muted);
+  text-align: center;
+}
+
+.relationship-preview {
+  display: grid;
+  justify-items: center;
+  gap: var(--numeria-space-3);
+  padding: var(--numeria-space-3) 0;
+}
+
+.relationship-preview-node {
+  display: grid;
+  justify-items: center;
+  gap: var(--numeria-space-2);
+  width: 100%;
+  padding: var(--numeria-space-4);
+  border: 1px solid var(--numeria-border);
+  border-radius: var(--numeria-radius-lg);
+  background: var(--numeria-surface-soft);
+  text-align: center;
+}
+
+.relationship-preview-node strong {
+  color: var(--numeria-text-primary);
+}
+
+.relationship-preview-node small {
+  color: var(--numeria-text-muted);
+}
+
+.relationship-preview-edge {
+  display: grid;
+  justify-items: center;
+  gap: var(--numeria-space-1);
+  color: var(--numeria-canon-blue-dark);
+  font-size: var(--numeria-font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.relationship-preview-edge div {
+  font-size: 1.6rem;
+}
+
+@media (max-width: 820px) {
+  .relationship-studio-layout {
+    grid-template-columns: 1fr;
+  }
+}
