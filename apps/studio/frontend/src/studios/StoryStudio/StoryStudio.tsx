@@ -8,6 +8,10 @@ import type { CanonEntity } from "../../api";
 
 import { Numeria } from "../../engine";
 
+import type {
+  StoryAnalysis,
+} from "../../engine";
+
 import {
   Badge,
   Button,
@@ -22,6 +26,9 @@ import {
   ForgeToolbar,
   SearchBar,
 } from "../../shared";
+
+import DirectorPanel from
+  "../../intelligence/DirectorPanel/DirectorPanel";
 
 import "./StoryStudio.css";
 
@@ -51,6 +58,19 @@ export default function StoryStudio({
   } = useStudio();
 
   const [query, setQuery] = useState("");
+
+  const [analysis, setAnalysis] =
+    useState<StoryAnalysis | null>(null);
+
+  const [
+    analysisLoading,
+    setAnalysisLoading,
+  ] = useState(false);
+
+  const [
+    analysisError,
+    setAnalysisError,
+  ] = useState("");
 
   const [stories, setStories] =
     useState<CanonEntity[]>([]);
@@ -133,6 +153,38 @@ export default function StoryStudio({
         ) ??
         filteredStories[0] ??
         null;
+
+
+  useEffect(() => {
+    setAnalysis(null);
+    setAnalysisError("");
+  }, [selectedStory?.id]);
+
+  async function analyzeSelectedStory() {
+    if (!selectedStory) {
+      return;
+    }
+
+    setAnalysisLoading(true);
+    setAnalysisError("");
+
+    try {
+      const result =
+        await Numeria.director.analyzeStory(
+          selectedStory.id,
+        );
+
+      setAnalysis(result);
+    } catch (caughtError) {
+      setAnalysisError(
+        caughtError instanceof Error
+          ? caughtError.message
+          : "Story analysis failed.",
+      );
+    } finally {
+      setAnalysisLoading(false);
+    }
+  }
 
   const libraryItems = filteredStories.map(
     (story) => ({
@@ -271,6 +323,15 @@ export default function StoryStudio({
               </p>
             </Card>
           </section>
+
+          <DirectorPanel
+            analysis={analysis}
+            loading={analysisLoading}
+            error={analysisError}
+            onAnalyze={() =>
+              void analyzeSelectedStory()
+            }
+          />
 
           <Card
             title="Story Timeline"
