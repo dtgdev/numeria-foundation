@@ -1,5 +1,6 @@
 export type StudioSection =
   | "dashboard"
+  | "explorer"
   | "characters"
   | "stories"
   | "world"
@@ -19,6 +20,12 @@ export const STUDIOS: StudioDefinition[] = [
     title: "Dashboard",
     icon: "🏛️",
     description: "Universe Mission Control",
+  },
+  {
+    id: "explorer",
+    title: "Explorer",
+    icon: "🔎",
+    description: "Universe Explorer",
   },
   {
     id: "characters",

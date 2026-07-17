@@ -1,4 +1,5 @@
 import DashboardStudio from "../studios/DashboardStudio";
+import UniverseExplorer from "../studios/UniverseExplorer";
 import { CanonStudio } from "../studios/CanonStudio";
 import { CharacterStudio } from "../studios/CharacterStudio";
 import { StoryStudio } from "../studios/StoryStudio";
@@ -18,6 +19,9 @@ export default function StudioRouter({
   onAddRelationship,
 }: StudioRouterProps) {
   switch (activeSection) {
+    case "explorer":
+      return <UniverseExplorer />;
+
     case "characters":
       return (
         <CharacterStudio
