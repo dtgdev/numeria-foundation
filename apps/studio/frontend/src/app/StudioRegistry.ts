@@ -1,5 +1,13 @@
+export type StudioSection =
+  | "dashboard"
+  | "characters"
+  | "stories"
+  | "world"
+  | "canon"
+  | "relationships";
+
 export interface StudioDefinition {
-  id: string;
+  id: StudioSection;
   title: string;
   icon: string;
   description: string;
@@ -36,4 +44,16 @@ export const STUDIOS: StudioDefinition[] = [
     icon: "📚",
     description: "Canon Studio",
   },
+  {
+    id: "relationships",
+    title: "Relationships",
+    icon: "🔗",
+    description: "Canon Graph",
+  },
 ];
+
+export function getStudio(
+  id: StudioSection,
+): StudioDefinition | undefined {
+  return STUDIOS.find((studio) => studio.id === id);
+}

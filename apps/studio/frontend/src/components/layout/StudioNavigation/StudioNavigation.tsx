@@ -1,14 +1,11 @@
 import "./StudioNavigation.css";
 
-import { STUDIOS } from "../../../app/StudioRegistry";
+import {
+  STUDIOS,
+  type StudioSection,
+} from "../../../app/StudioRegistry";
 
-export type StudioSection =
-  | "dashboard"
-  | "characters"
-  | "stories"
-  | "world"
-  | "canon"
-  | "relationships";
+export type { StudioSection };
 
 interface StudioNavigationProps {
   activeSection: StudioSection;
@@ -37,7 +34,7 @@ export default function StudioNavigation({
             ]
               .filter(Boolean)
               .join(" ")}
-            onClick={() => onSelect(studio.id as StudioSection)}
+            onClick={() => onSelect(studio.id)}
           >
             <span className="studio-navigation-icon">
               {studio.icon}
@@ -49,24 +46,6 @@ export default function StudioNavigation({
             </div>
           </button>
         ))}
-
-        <button
-          type="button"
-          className={[
-            "studio-navigation-item",
-            activeSection === "relationships" ? "active" : "",
-          ]
-            .filter(Boolean)
-            .join(" ")}
-          onClick={() => onSelect("relationships")}
-        >
-          <span className="studio-navigation-icon">🔗</span>
-
-          <div>
-            <strong>Relationships</strong>
-            <small>Canon Graph</small>
-          </div>
-        </button>
       </div>
     </nav>
   );
