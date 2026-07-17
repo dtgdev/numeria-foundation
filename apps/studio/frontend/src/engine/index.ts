@@ -1,5 +1,10 @@
 export { Numeria } from "./NumeriaEngine";
 
+export type {
+  DirectorSuggestion,
+  StoryAnalysis,
+} from "./NumeriaEngine";
+
 export { canonService } from
   "./services/CanonService";
 
