@@ -1,136 +1,72 @@
 import "./StudioNavigation.css";
 
-export type StudioSection =
-  | "world"
-  | "characters"
-  | "relationships"
-  | "canon"
-  | "stories"
-  | "books"
-  | "lessons"
-  | "ai";
+import { STUDIOS } from "../../../app/StudioRegistry";
 
-interface NavigationItem {
-  id: StudioSection;
-  label: string;
-  icon: string;
-  available: boolean;
-}
+export type StudioSection =
+  | "dashboard"
+  | "characters"
+  | "stories"
+  | "world"
+  | "canon"
+  | "relationships";
 
 interface StudioNavigationProps {
   activeSection: StudioSection;
   onSelect: (section: StudioSection) => void;
 }
 
-const NAVIGATION_ITEMS: NavigationItem[] = [
-  {
-    id: "world",
-    label: "World",
-    icon: "🌍",
-    available: true,
-  },
-  {
-    id: "characters",
-    label: "Characters",
-    icon: "🎭",
-    available: true,
-  },
-  {
-    id: "relationships",
-    label: "Relationships",
-    icon: "🔗",
-    available: true,
-  },
-  {
-    id: "canon",
-    label: "Canon Explorer",
-    icon: "🕸",
-    available: true,
-  },
-  {
-    id: "stories",
-    label: "Story Forge",
-    icon: "📖",
-    available: true,
-  },
-  {
-    id: "books",
-    label: "Books",
-    icon: "📚",
-    available: false,
-  },
-  {
-    id: "lessons",
-    label: "Lessons",
-    icon: "🎓",
-    available: false,
-  },
-  {
-    id: "ai",
-    label: "AI Director",
-    icon: "✨",
-    available: false,
-  },
-];
-
 export default function StudioNavigation({
   activeSection,
   onSelect,
 }: StudioNavigationProps) {
   return (
-    <nav
-      className="studio-navigation"
-      aria-label="Numeria Studio navigation"
-    >
-      <div className="studio-navigation-brand">
-        <div className="studio-navigation-logo">N</div>
+    <nav className="studio-navigation">
+      <header className="studio-navigation-header">
+        <h2>Numeria Studio</h2>
+        <p>Creative Operating System</p>
+      </header>
 
-        <div>
-          <strong>Numeria</strong>
-          <span>Studio Genesis</span>
-        </div>
-      </div>
-
-      <div className="studio-navigation-items">
-        {NAVIGATION_ITEMS.map((item) => (
+      <div className="studio-navigation-list">
+        {STUDIOS.map((studio) => (
           <button
-            key={item.id}
+            key={studio.id}
             type="button"
             className={[
               "studio-navigation-item",
-              activeSection === item.id ? "active" : "",
-              !item.available ? "disabled" : "",
+              activeSection === studio.id ? "active" : "",
             ]
               .filter(Boolean)
               .join(" ")}
-            disabled={!item.available}
-            onClick={() => onSelect(item.id)}
+            onClick={() => onSelect(studio.id as StudioSection)}
           >
-            <span
-              className="studio-navigation-icon"
-              aria-hidden="true"
-            >
-              {item.icon}
+            <span className="studio-navigation-icon">
+              {studio.icon}
             </span>
 
-            <span className="studio-navigation-label">
-              {item.label}
-            </span>
-
-            {!item.available && (
-              <small>Coming soon</small>
-            )}
+            <div>
+              <strong>{studio.title}</strong>
+              <small>{studio.description}</small>
+            </div>
           </button>
         ))}
-      </div>
 
-      <div className="studio-navigation-footer">
-        <span className="studio-status-dot" />
+        <button
+          type="button"
+          className={[
+            "studio-navigation-item",
+            activeSection === "relationships" ? "active" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          onClick={() => onSelect("relationships")}
+        >
+          <span className="studio-navigation-icon">🔗</span>
 
-        <div>
-          <strong>Canon connected</strong>
-          <small>Numeria Studio API</small>
-        </div>
+          <div>
+            <strong>Relationships</strong>
+            <small>Canon Graph</small>
+          </div>
+        </button>
       </div>
     </nav>
   );

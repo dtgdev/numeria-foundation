@@ -1,16 +1,11 @@
-import {
-  CanonStudio,
-  CharacterStudio,
-  StoryStudio,
-  WorldStudio,
-} from "../studios";
-
-import type {
-  StudioSection,
-} from "../components/layout";
+import DashboardStudio from "../studios/DashboardStudio";
+import { CanonStudio } from "../studios/CanonStudio";
+import { CharacterStudio } from "../studios/CharacterStudio";
+import { StoryStudio } from "../studios/StoryStudio";
+import { WorldStudio } from "../studios/WorldStudio";
 
 interface StudioRouterProps {
-  activeSection: StudioSection;
+  activeSection: string;
   onCreateRegion: () => void;
   onCreateCharacter: () => void;
   onAddRelationship: () => void;
@@ -23,6 +18,17 @@ export default function StudioRouter({
   onAddRelationship,
 }: StudioRouterProps) {
   switch (activeSection) {
+    case "characters":
+      return (
+        <CharacterStudio
+          onCreateCharacter={onCreateCharacter}
+          onAddRelationship={onAddRelationship}
+        />
+      );
+
+    case "stories":
+      return <StoryStudio />;
+
     case "world":
       return (
         <WorldStudio
@@ -30,24 +36,11 @@ export default function StudioRouter({
         />
       );
 
-    case "characters":
-      return (
-        <CharacterStudio
-          onCreateCharacter={
-            onCreateCharacter
-          }
-          onAddRelationship={
-            onAddRelationship
-          }
-        />
-      );
-
-    case "stories":
-      return <StoryStudio />;
-
-    case "relationships":
     case "canon":
-    default:
       return <CanonStudio />;
+
+    case "dashboard":
+    default:
+      return <DashboardStudio />;
   }
 }
