@@ -80,6 +80,9 @@ export default function UniverseExplorer() {
   const [error, setError] =
     useState<string | null>(null);
 
+  const [copiedId, setCopiedId] =
+    useState(false);
+
   useEffect(() => {
     let cancelled = false;
 
@@ -94,12 +97,9 @@ export default function UniverseExplorer() {
         if (!cancelled) {
           setEntities(canon);
 
-          if (
-            canon.length > 0 &&
-            !selectedId
-          ) {
-            setSelectedId(canon[0].id);
-          }
+          setSelectedId((currentId) =>
+            currentId ?? canon[0]?.id ?? null,
+          );
         }
       } catch (caughtError) {
         if (!cancelled) {
@@ -121,7 +121,7 @@ export default function UniverseExplorer() {
     return () => {
       cancelled = true;
     };
-  }, [selectedId]);
+  }, []);
 
   const filteredEntities =
     useMemo(() => {
@@ -165,6 +165,22 @@ export default function UniverseExplorer() {
         ) ?? null,
       [entities, selectedId],
     );
+
+  async function copySelectedId() {
+    if (!selectedEntity) {
+      return;
+    }
+
+    await navigator.clipboard.writeText(
+      selectedEntity.id,
+    );
+
+    setCopiedId(true);
+
+    window.setTimeout(() => {
+      setCopiedId(false);
+    }, 1500);
+  }
 
   return (
     <main className="universe-explorer">
@@ -351,9 +367,21 @@ export default function UniverseExplorer() {
                 {selectedEntity.name}
               </h2>
 
-              <p className="universe-explorer-id">
-                {selectedEntity.id}
-              </p>
+              <div className="universe-explorer-id-row">
+                <p className="universe-explorer-id">
+                  {selectedEntity.id}
+                </p>
+
+                <button
+                  type="button"
+                  className="universe-explorer-copy-id"
+                  onClick={() => {
+                    void copySelectedId();
+                  }}
+                >
+                  {copiedId ? "Copied" : "Copy ID"}
+                </button>
+              </div>
 
               <div className="universe-explorer-inspector-section">
                 <strong>

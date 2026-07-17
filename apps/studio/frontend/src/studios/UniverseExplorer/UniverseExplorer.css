@@ -257,6 +257,26 @@
   font-size: var(--numeria-font-size-xs);
 }
 
+.universe-explorer-id-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--numeria-space-3);
+}
+
+.universe-explorer-copy-id {
+  padding:
+    var(--numeria-space-1)
+    var(--numeria-space-2);
+  border: 1px solid var(--numeria-border);
+  border-radius: var(--numeria-radius-sm);
+  background: var(--numeria-surface);
+  color: var(--numeria-canon-blue-dark);
+  cursor: pointer;
+  font-size: var(--numeria-font-size-xs);
+  font-weight: 800;
+}
+
 .universe-explorer-inspector-section {
   margin-top: var(--numeria-space-5);
   padding: var(--numeria-space-4);
