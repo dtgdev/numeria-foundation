@@ -1,6 +1,8 @@
 export { Numeria } from "./NumeriaEngine";
 
 export type {
+  CanonIssue,
+  CanonValidation,
   DirectorSuggestion,
   StoryAnalysis,
 } from "./NumeriaEngine";

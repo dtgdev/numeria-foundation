@@ -23,6 +23,22 @@ export interface StoryAnalysis {
   suggestions: DirectorSuggestion[];
 }
 
+export interface CanonIssue {
+  id: string;
+  severity: "info" | "warning" | "critical";
+  entityType: string;
+  entityId: string;
+  title: string;
+  message: string;
+}
+
+export interface CanonValidation {
+  score: number;
+  totalEntities: number;
+  connectedEntities: number;
+  issues: CanonIssue[];
+}
+
 function readText(
   entity: NumeriaEntity,
   key: string,
@@ -121,6 +137,96 @@ const directorService = {
       storyId,
       score,
       suggestions,
+    };
+  },
+
+  async validateUniverse(): Promise<CanonValidation> {
+    const entities = await canonService.list();
+    const issues: CanonIssue[] = [];
+    let connectedEntities = 0;
+
+    for (const entity of entities) {
+      const relationships =
+        await canonService.relationships(
+          entity.id,
+        );
+
+      if (
+        relationships.neighbors.length > 0
+      ) {
+        connectedEntities += 1;
+      } else {
+        issues.push({
+          id: `${entity.id}-orphan`,
+          severity: "warning",
+          entityType: entity.type,
+          entityId: entity.id,
+          title: "Disconnected canon entity",
+          message:
+            "This entity is not connected to another hero, story, concept, region, lesson, or artifact.",
+        });
+      }
+
+      if (
+        entity.type === "story" &&
+        !readText(
+          entity,
+          "educational_mission",
+        )
+      ) {
+        issues.push({
+          id: `${entity.id}-mission`,
+          severity: "critical",
+          entityType: entity.type,
+          entityId: entity.id,
+          title:
+            "Story has no educational mission",
+          message:
+            "Every Numeria story should declare the mathematical idea or learning outcome it teaches.",
+        });
+      }
+
+      if (
+        entity.type === "character" &&
+        !readText(
+          entity,
+          "mathematical_role",
+        )
+      ) {
+        issues.push({
+          id: `${entity.id}-role`,
+          severity: "warning",
+          entityType: entity.type,
+          entityId: entity.id,
+          title:
+            "Character has no mathematical role",
+          message:
+            "Define the mathematical concept, symbol, or behavior represented by this character.",
+        });
+      }
+    }
+
+    const deductions = issues.reduce(
+      (total, issue) =>
+        total +
+        (
+          issue.severity === "critical"
+            ? 8
+            : issue.severity === "warning"
+              ? 3
+              : 1
+        ),
+      0,
+    );
+
+    return {
+      score: Math.max(
+        0,
+        100 - deductions,
+      ),
+      totalEntities: entities.length,
+      connectedEntities,
+      issues,
     };
   },
 };
