@@ -1,0 +1,24 @@
+depends_on:
+  - function
+  - limit
+
+supports:
+  - tangent_line
+  - optimization
+  - velocity
+  - acceleration
+  - differential_equations
+
+represented_by:
+  - d/dx
+  - dy/dx
+  - f'(x)
+
+embodied_by:
+  - detective-derivative
+
+artifact:
+  - silver-delta-necklace
+
+location:
+  - kingdom-of-limits

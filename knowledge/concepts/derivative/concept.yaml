@@ -1,0 +1,34 @@
+id: calculus.derivative
+
+name: Derivative
+
+version: 1.0.0
+
+status: canonical
+
+domain: Calculus
+
+subdomain: Differential Calculus
+
+difficulty: Intermediate
+
+symbol:
+  primary: d/dx
+  alternate:
+    - f'(x)
+    - dy/dx
+
+meaning:
+  short: Measures instantaneous change.
+  slogan: Every change leaves a trail.
+
+essential_question:
+  How can we measure change at one exact instant?
+
+character: detective-derivative
+
+artifact: silver-delta-necklace
+
+location: kingdom-of-limits
+
+book: detective-derivative-book-1
