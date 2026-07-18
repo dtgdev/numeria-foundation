@@ -1,2 +1,0 @@
-[console_scripts]
-forge = numeria_forge.cli:app
