@@ -62,7 +62,19 @@ function entityIcon(type: string): string {
   }
 }
 
-export default function UniverseExplorer() {
+interface UniverseExplorerProps {
+  onOpenEntity: (
+    entity: NumeriaEntity,
+  ) => void;
+  onViewRelationships: (
+    entity: NumeriaEntity,
+  ) => void;
+}
+
+export default function UniverseExplorer({
+  onOpenEntity,
+  onViewRelationships,
+}: UniverseExplorerProps) {
   const [entities, setEntities] = useState<
     NumeriaEntity[]
   >([]);
@@ -396,11 +408,25 @@ export default function UniverseExplorer() {
               </div>
 
               <div className="universe-explorer-inspector-actions">
-                <button type="button">
+                <button
+                  type="button"
+                  onClick={() =>
+                    onOpenEntity(
+                      selectedEntity,
+                    )
+                  }
+                >
                   Open Studio
                 </button>
 
-                <button type="button">
+                <button
+                  type="button"
+                  onClick={() =>
+                    onViewRelationships(
+                      selectedEntity,
+                    )
+                  }
+                >
                   View Relationships
                 </button>
               </div>

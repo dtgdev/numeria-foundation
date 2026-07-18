@@ -1,4 +1,8 @@
-import { Numeria } from "../Numeria";
+import { Numeria } from "../NumeriaEngine";
+
+import type {
+  NumeriaEntity,
+} from "../types";
 
 export interface SearchResult {
   id: string;
@@ -7,32 +11,44 @@ export interface SearchResult {
   description?: string;
 }
 
+function matchesQuery(
+  entity: NumeriaEntity,
+  query: string,
+): boolean {
+  return [
+    entity.id,
+    entity.name,
+    entity.type,
+  ].some((value) =>
+    value
+      .toLowerCase()
+      .includes(query),
+  );
+}
+
 export async function searchUniverse(
   query: string,
 ): Promise<SearchResult[]> {
-  const q = query.trim().toLowerCase();
+  const normalizedQuery =
+    query.trim().toLowerCase();
 
-  if (!q) {
+  if (!normalizedQuery) {
     return [];
   }
 
-  const canon = await Numeria.canon.list();
+  const canon =
+    await Numeria.canon.list();
 
   return canon
-    .filter((item: any) =>
-      JSON.stringify(item)
-        .toLowerCase()
-        .includes(q),
+    .filter((entity) =>
+      matchesQuery(
+        entity,
+        normalizedQuery,
+      ),
     )
-    .map((item: any) => ({
-      id: item.id ?? item.slug ?? crypto.randomUUID(),
-      type: item.type ?? "Canon",
-      title:
-        item.name ??
-        item.title ??
-        "Untitled",
-      description:
-        item.description ??
-        "",
+    .map((entity) => ({
+      id: entity.id,
+      type: entity.type,
+      title: entity.name,
     }));
 }
