@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
   Background,
   Controls,
@@ -6,6 +6,8 @@ import {
   MarkerType,
   Position,
   ReactFlow,
+  useEdgesState,
+  useNodesState,
   type Edge,
   type Node,
   type NodeProps,
@@ -58,7 +60,7 @@ export default function RelationshipGraph({
   relationships,
   onSelectEntity,
 }: RelationshipGraphProps) {
-  const nodes = useMemo<Node<CanonNodeData>[]>(() => {
+  const initialNodes = useMemo<Node<CanonNodeData>[]>(() => {
     const centerX = 420;
     const centerY = 220;
     const radiusX = 310;
@@ -102,7 +104,7 @@ export default function RelationshipGraph({
     return [centerNode, ...neighborNodes];
   }, [neighbors, selectedEntity]);
 
-  const edges = useMemo<Edge[]>(() => {
+  const initialEdges = useMemo<Edge[]>(() => {
     return relationships.map((relationship) => ({
       id: relationship.id,
       source: relationship.source,
@@ -123,11 +125,27 @@ export default function RelationshipGraph({
     }));
   }, [relationships, selectedEntity.id]);
 
+  const [nodes, setNodes, onNodesChange] =
+    useNodesState(initialNodes);
+
+  const [edges, setEdges, onEdgesChange] =
+    useEdgesState(initialEdges);
+
+  useEffect(() => {
+    setNodes(initialNodes);
+  }, [initialNodes, setNodes]);
+
+  useEffect(() => {
+    setEdges(initialEdges);
+  }, [initialEdges, setEdges]);
+
   return (
     <div className="relationship-graph">
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
         fitView
         minZoom={0.25}

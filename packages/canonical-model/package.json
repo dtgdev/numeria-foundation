@@ -1,0 +1,24 @@
+{
+  "name": "@numeria/canonical-model",
+  "version": "0.1.0",
+  "description": "Canonical domain model for the Numeria platform.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts"
+  },
+  "keywords": [
+    "numeria",
+    "knowledge-graph",
+    "education",
+    "mathematics"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}

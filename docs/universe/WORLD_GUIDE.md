@@ -1,371 +1,213 @@
-# World Guide
-## The World of Numeria
+# Numeria World Guide
 
-> "Mathematics isn't something that exists inside books.
-> It is the language of the world itself."
-
-Version: 1.0
-Status: Canon
+**Version:** 1.0 — Genesis
 
 ---
 
 # Purpose
 
-The World Guide defines the geography, natural laws, and major locations of Numeria.
+The World Guide defines the canonical setting of the Numeria universe.
 
-Every story, game, animation, lesson, and character must follow this guide.
+It establishes the geography, civilizations, natural laws, history, and philosophy that shape every story, lesson, and adventure.
+
+Everything that exists within Numeria must fit within this shared world.
 
 ---
 
-# What is Numeria?
+# The Nature of Numeria
 
-Numeria is a living world built from mathematical ideas.
+Numeria is not Earth.
 
-Every mountain...
+It is a universe where mathematics is woven into the fabric of reality.
 
-Every river...
+Numbers are alive.
 
-Every forest...
+Patterns have form.
 
-Every star...
+Functions shape landscapes.
 
-exists because of mathematical principles.
+Geometry builds cities.
 
-The citizens of Numeria do not "use" mathematics.
+Calculus governs change.
 
-They live inside it.
+Probability influences possibility.
 
-To them...
+Every mathematical idea exists as something tangible.
 
-Mathematics is nature.
+---
+
+# The Fundamental Laws
+
+The universe is governed by timeless mathematical laws.
+
+These laws are not invented by its inhabitants.
+
+They are discovered.
+
+The purpose of every explorer is to better understand these laws.
 
 ---
 
 # The Great Balance
 
-Numeria exists because five ancient forces remain in balance.
+Numeria exists because balance exists.
 
-## Change
+Constants provide stability.
 
-Nothing remains exactly the same.
+Variables provide possibility.
 
-Guardian:
-Derivative
+Functions create relationships.
 
----
+Derivatives reveal change.
 
-## Pattern
+Integrals restore wholeness.
 
-Everything follows discoverable rules.
+Limits define boundaries.
 
-Guardian:
-Function
+Infinity reminds everyone that exploration never truly ends.
 
 ---
 
-## Growth
+# The Great Map
 
-Small things become great things.
+Numeria is composed of many connected realms.
 
-Guardian:
-Integral
+Examples include:
 
----
+- Kingdom of Functions
+- Valley of Limits
+- Forest of Variables
+- Mountains of Geometry
+- Sea of Probability
+- Islands of Statistics
+- City of Equations
+- Academy of Calculus
+- Library of Infinity
 
-## Direction
-
-Every journey has a path.
-
-Guardian:
-Vector
-
----
-
-## Order
-
-Everything has a place.
-
-Guardian:
-Matrix
+Each realm explores a different branch of mathematics while remaining part of one connected world.
 
 ---
 
-When these five forces stay in harmony...
+# The Academy
 
-Numeria flourishes.
+The Numeria Academy is the center of learning.
 
----
+Students do not memorize.
 
-# Geography
+They explore.
 
-Numeria is divided into learning regions.
+Teachers do not lecture.
 
-Each region naturally teaches one mathematical idea.
+They guide discovery.
 
----
-
-# The Valley of Variables
-
-Everything changes here.
-
-Trees change color every hour.
-
-Animals constantly adapt.
-
-Roads rearrange themselves.
-
-Children learn:
-
-Variables can take different values.
+The Academy prepares Explorers to travel throughout Numeria and uncover deeper mathematical truths.
 
 ---
 
-# The Forest of Functions
+# The Great Library
 
-Every path follows a rule.
+The Great Library preserves the history of the universe.
 
-Choose the same starting point...
+It contains:
 
-You'll always reach the same destination.
+- Ancient discoveries
+- Canonical stories
+- Mathematical records
+- Maps
+- Journals
+- Artifacts
+- Research
 
-Nothing happens randomly.
+Nothing truly disappears from the Library.
 
-Children learn:
-
-Functions connect one thing to another.
-
----
-
-# The Observatory of Change
-
-Home of Derivative.
-
-Located on the highest hill in Numeria.
-
-Every sunrise reveals tiny changes across the land.
-
-This is where great investigations begin.
+Knowledge is preserved for future generations.
 
 ---
 
-# The River of Integrals
+# Artifacts
 
-Made from millions of tiny drops.
+Artifacts are objects of great educational significance.
 
-No drop seems important.
+Examples:
 
-Together...
+- The Silver Delta
+- The Book of Change
+- Compass of Infinity
+- Scale of Balance
+- Prism of Symmetry
 
-they become the largest river in Numeria.
-
-Children learn:
-
-Small pieces become something great.
-
----
-
-# The Cave of Limits
-
-A mysterious cave where travelers can get closer and closer to a glowing crystal...
-
-yet never quite touch it.
-
-Children learn:
-
-Approaching is not always arriving.
+Artifacts should reveal mathematical ideas through adventure rather than exposition.
 
 ---
 
-# Circle City
+# The Explorers
 
-Every building is round.
+Explorers travel the world asking questions.
 
-Every road curves beautifully.
+They investigate mysteries.
 
-Home of Pi.
+They solve problems.
 
-Architecture never ends.
+They connect ideas.
 
-Every circle tells a story.
+Curiosity is their greatest strength.
 
----
-
-# Vector Plains
-
-Open grasslands where giant glowing arrows point in every direction.
-
-Travelers learn:
-
-Distance matters.
-
-Direction matters too.
-
----
-
-# Matrix Mountains
-
-Towering crystal mountains arranged in perfect rows and columns.
-
-Every stone has a position.
-
-Changing one affects many others.
-
-Children learn organization and transformation.
-
----
-
-# Infinity Horizon
-
-The edge of every map.
-
-Nobody has ever reached it.
-
-Every explorer believes it lies just beyond the next hill.
-
-Children learn:
-
-Infinity is an idea...
-
-not a destination.
-
----
-
-# The Sky of Numeria
-
-The stars are not random.
-
-They form mathematical patterns.
-
-Ancient Guardians use the stars to discover new knowledge.
+Exploration is considered one of the highest callings in Numeria.
 
 ---
 
 # Magic
 
-Magic is not created.
+Numeria does not use traditional magic.
 
-It is understood.
+Its "magic" is the discovery and application of mathematical principles.
 
-The more deeply someone understands mathematics...
+What appears magical is simply mathematics understood more deeply.
 
-the stronger their abilities become.
+Knowledge is power.
 
-Knowledge creates power.
-
-Not spells.
+Understanding is transformation.
 
 ---
 
-# Schools
+# Conflict
 
-Children attend Academies of Discovery.
+Conflict arises from misunderstanding, incomplete knowledge, competing interpretations, and unresolved mysteries.
 
-Teachers never give answers immediately.
+Challenges should encourage reasoning, collaboration, and creativity.
 
-Instead they ask questions.
-
-Learning happens through exploration.
-
----
-
-# Technology
-
-Technology and mathematics are partners.
-
-Machines are built using mathematical understanding.
-
-Inventors are highly respected.
-
----
-
-# Citizens
-
-The people of Numeria are naturally curious.
-
-Asking questions is considered courageous.
-
-Making mistakes is considered honorable.
-
-Refusing to learn is the only true failure.
+Victory comes through insight rather than force.
 
 ---
 
 # Time
 
-Time flows naturally.
+Time in Numeria is measured by discoveries rather than wars or rulers.
 
-The seasons teach cycles.
+Important eras are remembered because they expanded understanding.
 
-The stars teach patterns.
-
-The rivers teach accumulation.
-
-Everything becomes a lesson.
+History celebrates learning.
 
 ---
 
-# Values
+# Canon
 
-Numerians believe:
+Every story, location, artifact, and civilization must align with the Numeria Constitution and Canon.
 
-Curiosity is strength.
+The world may expand.
 
-Understanding is treasure.
-
-Knowledge should be shared.
-
-Questions are gifts.
-
-Mistakes are teachers.
-
-Every problem has a solution waiting to be discovered.
+Its foundational laws remain constant.
 
 ---
 
-# Story Design Rules
+# Closing
 
-Every adventure should:
+Numeria is a universe built upon curiosity.
 
-Introduce one mathematical idea.
+Every path leads to discovery.
 
-Contain one mystery.
+Every mystery reveals understanding.
 
-Reward curiosity.
+Every adventure teaches mathematics.
 
-Avoid unnecessary violence.
-
-End with understanding rather than victory.
-
-Leave readers eager to ask another question.
-
----
-
-# Canon Principles
-
-The world of Numeria must always feel:
-
-Hopeful.
-
-Curious.
-
-Beautiful.
-
-Intelligent.
-
-Playful.
-
-Wonder-filled.
-
-Mathematics should never feel frightening.
-
-It should feel like the greatest adventure in the universe.
-
----
-
-# Closing Thought
-
-The people of Numeria have a saying:
-
-> "The universe is always speaking.
-
-> Mathematics teaches us how to listen."
+The world itself is the greatest classroom.
