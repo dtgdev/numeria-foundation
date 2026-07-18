@@ -43,6 +43,7 @@ export default function StudioApplication() {
     setActiveSection,
     entities,
     selectedEntity,
+    selectEntity,
     neighborData,
     loading,
     error,
@@ -300,6 +301,43 @@ export default function StudioApplication() {
       >
         <StudioRouter
           activeSection={activeSection}
+          onOpenEntity={(entity) => {
+            selectEntity(entity.id);
+
+            switch (entity.type) {
+              case "Character":
+                setActiveSection(
+                  "characters",
+                );
+                break;
+
+              case "Story":
+              case "Scene":
+              case "Book":
+                setActiveSection(
+                  "stories",
+                );
+                break;
+
+              case "World":
+              case "Region":
+                setActiveSection(
+                  "world",
+                );
+                break;
+
+              default:
+                setActiveSection(
+                  "canon",
+                );
+            }
+          }}
+          onViewRelationships={(entity) => {
+            selectEntity(entity.id);
+            setActiveSection(
+              "relationships",
+            );
+          }}
           onCreateRegion={() =>
             setRegionCreatorOpen(true)
           }
