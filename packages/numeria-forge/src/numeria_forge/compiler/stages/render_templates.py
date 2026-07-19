@@ -1,7 +1,10 @@
 from pathlib import Path
 
 from numeria_forge.compiler.context import CompilerContext
-from numeria_forge.domain.artifacts import Artifact
+from numeria_forge.domain.artifacts import (
+    Artifact,
+    ArtifactCollection,
+)
 from numeria_forge.rendering import TemplateEnvironment, TemplateRenderer
 
 

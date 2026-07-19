@@ -1,5 +1,4 @@
-from .artifacts import Artifact
-from .artifact_collection import ArtifactCollection
+from .artifacts import Artifact, ArtifactCollection
 
 __all__ = [
     "Artifact",

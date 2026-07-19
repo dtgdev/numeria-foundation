@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
-
-from numeria_forge.domain.artifacts import Artifact
+from .artifact import Artifact
 
 
 
