@@ -1,31 +1,51 @@
+
 """Domain models for Forge manifests."""
 
 from dataclasses import dataclass, field
 from pathlib import PurePosixPath
 
-
 @dataclass(frozen=True, slots=True)
 class OutputDefinition:
-    """A file that Forge must produce from a template."""
-
-    template: str
-    destination: str
-    required: bool = True
+    template: str | None = None
+    artifact: str | None = None
+    destination: str | None = None
 
     def __post_init__(self) -> None:
-        if not self.template.strip():
-            raise ValueError("Output template cannot be empty.")
+        has_template = self.template is not None
+        has_artifact = self.artifact is not None
 
-        if not self.destination.strip():
-            raise ValueError("Output destination cannot be empty.")
-
-        destination = PurePosixPath(self.destination)
-
-        if destination.is_absolute() or ".." in destination.parts:
+        if has_template == has_artifact:
             raise ValueError(
-                f"Output destination must remain inside the package: "
-                f"{self.destination}"
+                "Exactly one of 'template' or 'artifact' must be specified."
             )
+
+        if has_template:
+            if not self.template.strip():
+                raise ValueError("Output template cannot be empty.")
+
+            if self.destination is None:
+                raise ValueError(
+                    "Template outputs must specify a destination."
+                )
+
+            if not self.destination.strip():
+                raise ValueError(
+                    "Output destination cannot be empty."
+                )
+
+            destination = PurePosixPath(self.destination)
+
+            if destination.is_absolute() or ".." in destination.parts:
+                raise ValueError(
+                    f"Output destination must remain inside the package: "
+                    f"{self.destination}"
+                )
+
+        if has_artifact:
+            if not self.artifact.strip():
+                raise ValueError(
+                    "Artifact name cannot be empty."
+                )
 
 
 @dataclass(frozen=True, slots=True)
@@ -63,7 +83,7 @@ class EntityDefinition:
                 "Entity ID must match the entity type and slug."
             )
 
-
+            
 @dataclass(frozen=True, slots=True)
 class Manifest:
     """Complete in-memory representation of a Forge manifest."""
@@ -76,7 +96,11 @@ class Manifest:
         if not self.schema_version.strip():
             raise ValueError("Manifest schema version cannot be empty.")
 
-        destinations = [output.destination for output in self.outputs]
+        destinations = [
+            output.destination
+            for output in self.outputs
+            if output.destination is not None
+        ]
 
         if len(destinations) != len(set(destinations)):
             raise ValueError(
