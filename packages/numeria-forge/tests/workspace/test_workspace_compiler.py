@@ -39,9 +39,7 @@ outputs:
     )
 
 
-def test_workspace_compiles_multiple_packages(
-    tmp_path: Path,
-) -> None:
+def create_workspace(tmp_path: Path) -> None:
     create_package(
         tmp_path,
         "packages/concepts/derivative",
@@ -69,6 +67,8 @@ packages:
         encoding="utf-8",
     )
 
+
+def build_workspace(tmp_path: Path):
     workspace = WorkspaceLoader().load(tmp_path)
 
     template_root = (
@@ -88,5 +88,43 @@ packages:
         compiler
     ).compile(workspace)
 
+    return workspace, result
+
+
+def test_workspace_compiles_multiple_packages(
+    tmp_path: Path,
+) -> None:
+    create_workspace(tmp_path)
+
+    _, result = build_workspace(tmp_path)
+
     assert result.package_count == 2
     assert result.artifact_count == 2
+    assert result.package_names == (
+        "derivative",
+        "integral",
+    )
+
+
+def test_workspace_build_result_formats_report(
+    tmp_path: Path,
+) -> None:
+    create_workspace(tmp_path)
+
+    workspace, result = build_workspace(tmp_path)
+
+    report = result.format_report(
+        workspace.metadata.name
+    )
+
+    assert report == """
+Building Numeria Foundation...
+
+✓ derivative
+✓ integral
+
+2 packages compiled
+2 artifacts generated
+
+Build succeeded.
+""".strip()
