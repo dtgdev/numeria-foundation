@@ -16,4 +16,13 @@ def create_builtin_registry() -> ArtifactRegistry:
         )
     )
 
+    registry.register(
+        ArtifactDefinition(
+            name="character_card",
+            template="concept/CHARACTER_CARD.md.j2",
+            media_type="text/markdown",
+            default_destination="CHARACTER_CARD.md",
+        )
+    )
+
     return registry
