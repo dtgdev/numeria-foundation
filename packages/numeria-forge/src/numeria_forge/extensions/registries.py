@@ -6,6 +6,9 @@ from numeria_forge.domain.artifacts import (
 )
 from numeria_forge.domain.templates import TemplateRegistry
 from numeria_forge.domain.validators import ValidatorRegistry
+from numeria_forge.extensions.hook_registry import (
+    CompilerHookRegistry,
+)
 
 
 @dataclass
@@ -20,4 +23,7 @@ class ForgeRegistries:
     )
     validators: ValidatorRegistry = field(
         default_factory=ValidatorRegistry
+    )
+    compiler_hooks: CompilerHookRegistry = field(
+        default_factory=CompilerHookRegistry
     )
