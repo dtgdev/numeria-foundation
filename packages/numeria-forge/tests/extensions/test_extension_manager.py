@@ -1,13 +1,11 @@
 import pytest
 
-from numeria_forge.domain.artifacts import (
-    ArtifactDefinition,
-    create_builtin_registry,
-)
+from numeria_forge.domain.artifacts import ArtifactDefinition
 from numeria_forge.extensions import (
     Extension,
     ExtensionContext,
     ExtensionManager,
+    ForgeRegistries,
 )
 
 
@@ -20,7 +18,7 @@ class ExampleExtension(Extension):
         self,
         context: ExtensionContext,
     ) -> None:
-        context.artifact_registry.register(
+        context.register_artifact(
             ArtifactDefinition(
                 name="example_card",
                 template="example/CARD.md.j2",
@@ -32,7 +30,7 @@ class ExampleExtension(Extension):
 
 def create_context() -> ExtensionContext:
     return ExtensionContext(
-        artifact_registry=create_builtin_registry(),
+        registries=ForgeRegistries(),
     )
 
 
