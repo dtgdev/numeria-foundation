@@ -1,8 +1,10 @@
+"""Load and validate Forge manifests from YAML files."""
+
 from pathlib import Path
 
 import yaml
 
-from numeria_forge.domain.manifests import (
+from numeria_forge.domain.manifests.models import (
     EntityDefinition,
     Manifest,
     OutputDefinition,
@@ -10,7 +12,7 @@ from numeria_forge.domain.manifests import (
 
 
 class ManifestLoader:
-    """Load manifest.yaml into domain objects."""
+    """Load a Forge manifest from a package directory."""
 
     def load(self, package_directory: Path) -> Manifest:
         manifest_path = package_directory / "manifest.yaml"
@@ -55,8 +57,9 @@ class ManifestLoader:
 
             outputs = tuple(
                 OutputDefinition(
-                    template=output["template"],
-                    destination=output["destination"],
+                    template=output.get("template"),
+                    artifact=output.get("artifact"),
+                    destination=output.get("destination"),
                 )
                 for output in outputs_data
             )
@@ -66,7 +69,7 @@ class ManifestLoader:
             ) from exc
 
         return Manifest(
-            schema_version=str(data["schema_version"]),
+            schema_version=data["schema_version"],
             entity=entity,
             outputs=outputs,
         )

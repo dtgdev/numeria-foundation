@@ -3,7 +3,7 @@ from pathlib import Path
 from numeria_forge.compiler.context import CompilerContext
 from numeria_forge.domain.artifacts import (
     Artifact,
-    ArtifactCollection,
+    create_builtin_registry,
 )
 from numeria_forge.rendering import TemplateEnvironment, TemplateRenderer
 
@@ -22,11 +22,31 @@ class RenderTemplatesStage:
                 "RenderTemplatesStage requires a loaded manifest."
             )
 
-        context.artifacts.clear()   # if your collection supports it
+        registry = create_builtin_registry()
+
+        context.artifacts.clear()
 
         for output in context.manifest.outputs:
+            if output.artifact is not None:
+                definition = registry.lookup(output.artifact)
+
+                template = definition.template
+                destination = (
+                    output.destination
+                    or definition.default_destination
+                )
+            else:
+                template = output.template
+                destination = output.destination
+
+            if template is None or destination is None:
+                raise RuntimeError(
+                    "Manifest output could not be resolved to a "
+                    "template and destination."
+                )
+
             content = self.renderer.render(
-                output.template,
+                template,
                 {
                     "entity": context.manifest.entity,
                     "manifest": context.manifest,
@@ -35,7 +55,7 @@ class RenderTemplatesStage:
 
             context.artifacts.add(
                 Artifact(
-                    destination=Path(output.destination),
+                    destination=Path(destination),
                     content=content,
                 )
             )
