@@ -5,6 +5,7 @@ from numeria_forge.domain.artifacts import (
     create_builtin_registry,
 )
 from numeria_forge.domain.templates import TemplateRegistry
+from numeria_forge.domain.validators import ValidatorRegistry
 
 
 @dataclass
@@ -16,4 +17,7 @@ class ForgeRegistries:
     )
     templates: TemplateRegistry = field(
         default_factory=TemplateRegistry
+    )
+    validators: ValidatorRegistry = field(
+        default_factory=ValidatorRegistry
     )
