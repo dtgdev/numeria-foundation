@@ -4,6 +4,7 @@ from pathlib import Path
 
 import yaml
 
+from numeria_forge.domain.artifacts import ArtifactDefinition
 from numeria_forge.domain.manifests.models import (
     EntityDefinition,
     Manifest,
@@ -40,6 +41,7 @@ class ManifestLoader:
 
         entity_data = data["entity"]
         outputs_data = data["outputs"]
+        artifacts_data = data.get("artifacts", {})
 
         if not isinstance(entity_data, dict):
             raise ValueError("Manifest entity must be a mapping")
@@ -47,12 +49,28 @@ class ManifestLoader:
         if not isinstance(outputs_data, list):
             raise ValueError("Manifest outputs must be a list")
 
+        if not isinstance(artifacts_data, dict):
+            raise ValueError("Manifest artifacts must be a mapping")
+
         try:
             entity = EntityDefinition(
                 type=entity_data["type"],
                 id=entity_data["id"],
                 slug=entity_data["slug"],
                 title=entity_data["title"],
+            )
+
+            artifacts = tuple(
+                ArtifactDefinition(
+                    name=name,
+                    template=definition["template"],
+                    default_destination=definition["destination"],
+                    media_type=definition.get(
+                        "media_type",
+                        "text/markdown",
+                    ),
+                )
+                for name, definition in artifacts_data.items()
             )
 
             outputs = tuple(
@@ -63,6 +81,7 @@ class ManifestLoader:
                 )
                 for output in outputs_data
             )
+
         except (KeyError, TypeError) as exc:
             raise ValueError(
                 f"Invalid manifest structure: {exc}"
@@ -71,5 +90,6 @@ class ManifestLoader:
         return Manifest(
             schema_version=data["schema_version"],
             entity=entity,
+            artifacts=artifacts,
             outputs=outputs,
         )

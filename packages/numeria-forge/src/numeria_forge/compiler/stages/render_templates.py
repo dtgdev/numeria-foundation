@@ -1,10 +1,7 @@
 from pathlib import Path
 
 from numeria_forge.compiler.context import CompilerContext
-from numeria_forge.domain.artifacts import (
-    Artifact,
-    create_builtin_registry,
-)
+from numeria_forge.domain.artifacts import Artifact
 from numeria_forge.rendering import TemplateEnvironment, TemplateRenderer
 
 
@@ -22,7 +19,12 @@ class RenderTemplatesStage:
                 "RenderTemplatesStage requires a loaded manifest."
             )
 
-        registry = create_builtin_registry()
+        registry = context.artifact_registry
+
+        if registry is None:
+            raise RuntimeError(
+                "Artifact registry has not been initialized."
+            )
 
         context.artifacts.clear()
 

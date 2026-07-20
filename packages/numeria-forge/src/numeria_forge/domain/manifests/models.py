@@ -1,8 +1,10 @@
-
 """Domain models for Forge manifests."""
 
 from dataclasses import dataclass, field
 from pathlib import PurePosixPath
+
+from numeria_forge.domain.artifacts import ArtifactDefinition
+
 
 @dataclass(frozen=True, slots=True)
 class OutputDefinition:
@@ -83,14 +85,19 @@ class EntityDefinition:
                 "Entity ID must match the entity type and slug."
             )
 
-            
+
 @dataclass(frozen=True, slots=True)
 class Manifest:
     """Complete in-memory representation of a Forge manifest."""
 
     schema_version: str
     entity: EntityDefinition
-    outputs: tuple[OutputDefinition, ...] = field(default_factory=tuple)
+    artifacts: tuple[ArtifactDefinition, ...] = field(
+        default_factory=tuple
+    )
+    outputs: tuple[OutputDefinition, ...] = field(
+        default_factory=tuple
+    )
 
     def __post_init__(self) -> None:
         if not self.schema_version.strip():
