@@ -30,21 +30,34 @@ class WorkspaceLoader:
             version=workspace_data["version"],
         )
 
-        packages = []
+        packages: list[WorkspacePackage] = []
 
-        for package_path in data.get("packages", []):
-            package_directory = workspace_root / package_path
+        for pattern in data.get("packages", []):
+            matches = sorted(workspace_root.glob(pattern))
 
-            manifest_file = package_directory / "manifest.yaml"
-
-            if not manifest_file.exists():
+            if not matches:
                 raise FileNotFoundError(
-                    f"Package '{package_path}' is missing manifest.yaml"
+                    f"No packages matched '{pattern}'"
                 )
 
-            packages.append(
-                WorkspacePackage(path=Path(package_path))
-            )
+            for package_directory in matches:
+                manifest_file = (
+                    package_directory / "manifest.yaml"
+                )
+
+                if not manifest_file.exists():
+                    raise FileNotFoundError(
+                        f"Package '{package_directory.relative_to(workspace_root)}' "
+                        "is missing manifest.yaml"
+                    )
+
+                packages.append(
+                    WorkspacePackage(
+                        path=package_directory.relative_to(
+                            workspace_root
+                        )
+                    )
+                )
 
         return Workspace(
             root_directory=workspace_root,
