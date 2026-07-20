@@ -30,13 +30,24 @@ class WorkspaceLoader:
             version=workspace_data["version"],
         )
 
-        packages = tuple(
-            WorkspacePackage(path=Path(package_path))
-            for package_path in data.get("packages", [])
-        )
+        packages = []
+
+        for package_path in data.get("packages", []):
+            package_directory = workspace_root / package_path
+
+            manifest_file = package_directory / "manifest.yaml"
+
+            if not manifest_file.exists():
+                raise FileNotFoundError(
+                    f"Package '{package_path}' is missing manifest.yaml"
+                )
+
+            packages.append(
+                WorkspacePackage(path=Path(package_path))
+            )
 
         return Workspace(
             root_directory=workspace_root,
             metadata=metadata,
-            packages=packages,
+            packages=tuple(packages),
         )
