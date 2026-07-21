@@ -23,7 +23,10 @@ def make_character() -> Character:
         mathematical_concept="derivative",
         realm="Realm of Change",
         description="A detective who discovers how things change.",
-        personality=("curious", "observant"),
+        personality=(
+            "curious",
+            "observant",
+        ),
         superpower="Sees rates of change.",
         weakness="Cannot solve a mystery without enough information.",
         catchphrase="Every change leaves a clue!",
@@ -31,8 +34,13 @@ def make_character() -> Character:
             "Understand rate of change.",
         ),
         age_range="8-12",
-        tags=("calculus", "change"),
-        metadata={"origin": "numeria"},
+        tags=(
+            "calculus",
+            "change",
+        ),
+        metadata={
+            "origin": "numeria",
+        },
     )
 
 
@@ -40,6 +48,7 @@ def test_publisher_writes_character_yaml(
     tmp_path: Path,
 ) -> None:
     publisher = CharacterYamlPublisher()
+
     context = PublishContext(
         output_directory=tmp_path,
         metadata={},
@@ -59,10 +68,13 @@ def test_publisher_writes_character_yaml(
     assert result.publisher == "character-yaml"
     assert result.path == expected_path
     assert result.media_type == "application/yaml"
+
     assert expected_path.exists()
 
     document = yaml.safe_load(
-        expected_path.read_text(encoding="utf-8")
+        expected_path.read_text(
+            encoding="utf-8",
+        )
     )
 
     assert document["schema"] == "numeria.character.v1"
@@ -74,6 +86,7 @@ def test_publisher_rejects_non_character(
     tmp_path: Path,
 ) -> None:
     publisher = CharacterYamlPublisher()
+
     context = PublishContext(
         output_directory=tmp_path,
         metadata={},

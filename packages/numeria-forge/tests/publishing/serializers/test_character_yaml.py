@@ -17,7 +17,10 @@ def make_character() -> Character:
         mathematical_concept="derivative",
         realm="Realm of Change",
         description="A detective who discovers how things change.",
-        personality=("curious", "observant"),
+        personality=(
+            "curious",
+            "observant",
+        ),
         superpower="Sees rates of change.",
         weakness="Cannot solve a mystery without enough information.",
         catchphrase="Every change leaves a clue!",
@@ -26,8 +29,13 @@ def make_character() -> Character:
             "Recognize derivatives in motion and growth.",
         ),
         age_range="8-12",
-        tags=("calculus", "change"),
-        metadata={"origin": "numeria"},
+        tags=(
+            "calculus",
+            "change",
+        ),
+        metadata={
+            "origin": "numeria",
+        },
     )
 
 
@@ -40,14 +48,17 @@ def test_serializer_returns_canonical_document() -> None:
     assert document["id"] == "NUM-CHR-000001"
     assert document["slug"] == "derivative"
     assert document["name"] == "Derivative"
+
     assert document["personality"] == [
         "curious",
         "observant",
     ]
+
     assert document["learning_objectives"] == [
         "Understand rate of change.",
         "Recognize derivatives in motion and growth.",
     ]
+
     assert document["metadata"] == {
         "origin": "numeria",
     }

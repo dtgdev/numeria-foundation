@@ -10,13 +10,13 @@ from numeria_forge.domain import Character
 class CharacterYamlSerializer:
     """Convert a canonical Character into a YAML-compatible dictionary."""
 
-    schema = "numeria.character.v1"
+    SCHEMA = "numeria.character.v1"
 
     def to_dict(
         self,
         character: Character,
     ) -> dict[str, Any]:
-        """Return the canonical YAML document for a character."""
+        """Return the canonical YAML document."""
 
         if not isinstance(character, Character):
             raise TypeError(
@@ -24,7 +24,7 @@ class CharacterYamlSerializer:
             )
 
         return {
-            "schema": self.schema,
+            "schema": self.SCHEMA,
             "id": character.id,
             "version": character.version,
             "status": character.status,
@@ -32,9 +32,7 @@ class CharacterYamlSerializer:
             "title": character.title,
             "slug": character.slug,
             "realm": character.realm,
-            "mathematical_concept": (
-                character.mathematical_concept
-            ),
+            "mathematical_concept": character.mathematical_concept,
             "description": character.description,
             "personality": list(character.personality),
             "superpower": character.superpower,

@@ -1,23 +1,27 @@
-"""Compiler result models."""
+"""Compilation report."""
 
-from dataclasses import dataclass
+from __future__ import annotations
 
-from numeria_forge.compiler.diagnostics import Diagnostic
+from dataclasses import dataclass, field
+
+from numeria_forge.compiler.diagnostic import Diagnostic
 
 
-@dataclass(frozen=True)
+@dataclass(slots=True)
 class CompilationReport:
-    """Summary of a Forge compilation."""
+    """Summary of a compilation."""
 
-    status: str
-    duration_seconds: float
-    diagnostics: tuple[Diagnostic, ...]
-    generated_assets: int
-    published_assets: int
-    completed_stages: tuple[str, ...]
+    diagnostics: list[Diagnostic] = field(default_factory=list)
+
+    generated_files: int = 0
+
+    published_files: int = 0
+
+    duration_seconds: float = 0.0
 
     @property
-    def succeeded(self) -> bool:
-        """Return whether compilation succeeded."""
-
-        return self.status == "success"
+    def success(self) -> bool:
+        return not any(
+            d.severity.lower() == "error"
+            for d in self.diagnostics
+        )

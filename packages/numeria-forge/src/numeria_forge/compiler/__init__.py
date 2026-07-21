@@ -1,4 +1,15 @@
-from numeria_forge.compiler.compiler import Compiler
-from numeria_forge.compiler.context import CompilerContext
+from .compiler import Compiler
 
-__all__ = ["Compiler", "CompilerContext"]
+from .context import CompilerContext
+from .diagnostic import Diagnostic
+from .report import CompilationReport
+
+from .stage import CompilerStage
+
+__all__ = [
+    "Compiler",
+    "CompilerContext",
+    "CompilationReport",
+    "CompilerStage",
+    "Diagnostic",
+]

@@ -1,4 +1,4 @@
-"""End-to-end test for the Character publishing pipeline."""
+"""End-to-end publishing pipeline test."""
 
 from pathlib import Path
 
@@ -21,18 +21,18 @@ def make_character() -> Character:
         title="The Detective of Change",
         mathematical_concept="derivative",
         realm="Realm of Change",
-        description="A detective who solves the mysteries of change.",
+        description="A detective who solves mysteries by studying change.",
         personality=(
             "curious",
             "observant",
-            "brave",
+            "persistent",
         ),
         superpower="Sees how everything changes.",
-        weakness="Needs enough clues before reaching a conclusion.",
+        weakness="Needs enough clues before drawing conclusions.",
         catchphrase="Every change leaves a clue!",
         learning_objectives=(
-            "Understand rates of change.",
-            "Recognize derivatives in real life.",
+            "Understand derivatives.",
+            "Recognize rates of change.",
         ),
         age_range="8-12",
         tags=(
@@ -40,12 +40,12 @@ def make_character() -> Character:
             "change",
         ),
         metadata={
-            "created_by": "integration-test",
+            "source": "integration-test",
         },
     )
 
 
-def test_character_publish_pipeline(
+def test_publish_character_pipeline(
     tmp_path: Path,
 ) -> None:
     character = make_character()
@@ -62,30 +62,39 @@ def test_character_publish_pipeline(
         context,
     )
 
-    assert result.path.exists()
+    assert result.publisher == "character-yaml"
+
+    output_file = (
+        tmp_path
+        / "derivative"
+        / "character.yaml"
+    )
+
+    assert output_file.exists()
 
     document = yaml.safe_load(
-        result.path.read_text(
+        output_file.read_text(
             encoding="utf-8",
         )
     )
 
     assert document["schema"] == "numeria.character.v1"
-    assert document["id"] == "NUM-CHR-000001"
-    assert document["slug"] == "derivative"
-    assert document["name"] == "Derivative"
-    assert document["title"] == "The Detective of Change"
-    assert (
-        document["mathematical_concept"]
-        == "derivative"
+    assert document["id"] == character.id
+    assert document["slug"] == character.slug
+    assert document["name"] == character.name
+    assert document["realm"] == character.realm
+    assert document["mathematical_concept"] == (
+        character.mathematical_concept
     )
-    assert document["realm"] == "Realm of Change"
-    assert document["personality"] == [
-        "curious",
-        "observant",
-        "brave",
-    ]
-    assert document["learning_objectives"] == [
-        "Understand rates of change.",
-        "Recognize derivatives in real life.",
-    ]
+    assert document["superpower"] == (
+        character.superpower
+    )
+    assert document["weakness"] == (
+        character.weakness
+    )
+    assert document["catchphrase"] == (
+        character.catchphrase
+    )
+    assert document["metadata"]["source"] == (
+        "integration-test"
+    )
