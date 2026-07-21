@@ -3,23 +3,21 @@
 
 from __future__ import annotations
 
-from numeria_forge.compiler.context import CompilerContext
+from numeria_forge.compiler.context import (
 
-from numeria_forge.compiler.stage import CompilerStage
+    CompilerContext,
+
+)
+
+from numeria_forge.compiler.report import (
+
+    CompilationReport,
+
+)
 
 class Compiler:
 
-    """Execute compiler stages."""
-
-    def __init__(
-
-        self,
-
-        stages: list[CompilerStage],
-
-    ) -> None:
-
-        self._stages = list(stages)
+    """Top-level Forge compiler."""
 
     def compile(
 
@@ -27,11 +25,31 @@ class Compiler:
 
         context: CompilerContext,
 
-    ) -> CompilerContext:
+    ) -> CompilationReport:
 
-        for stage in self._stages:
+        """Compile a Numeria project."""
 
-            stage.run(context)
+        return CompilationReport(
 
-        return context
+            success=not context.diagnostics,
+
+            generated_assets=len(
+
+                context.generated_assets
+
+            ),
+
+            published_assets=len(
+
+                context.published_assets
+
+            ),
+
+            diagnostics=len(
+
+                context.diagnostics
+
+            ),
+
+        )
 

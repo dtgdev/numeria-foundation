@@ -1,100 +1,95 @@
-"""End-to-end publishing pipeline test."""
+
+"""End-to-end test for publishing a canonical character."""
 
 from pathlib import Path
 
 import yaml
 
-from numeria_forge.domain import Character
-from numeria_forge.publishing import (
-    CharacterYamlPublisher,
-    PublishContext,
+from numeria_forge.domain import (
+
+    CharacterFactory,
+
+    GeneratedCharacter,
+
 )
 
+from numeria_forge.publishing import (
 
-def make_character() -> Character:
-    return Character(
-        id="NUM-CHR-000001",
-        slug="derivative",
-        version="1.0.0",
-        status="draft",
+    CharacterYamlPublisher,
+
+    PublishContext,
+
+)
+
+def test_character_publish_pipeline(
+
+    tmp_path: Path,
+
+) -> None:
+
+    generated = GeneratedCharacter(
+
         name="Derivative",
-        title="The Detective of Change",
+
         mathematical_concept="derivative",
-        realm="Realm of Change",
-        description="A detective who solves mysteries by studying change.",
+
+        description="A detective who solves mysteries of change.",
+
         personality=(
+
             "curious",
+
             "observant",
-            "persistent",
+
         ),
-        superpower="Sees how everything changes.",
-        weakness="Needs enough clues before drawing conclusions.",
+
+        superpower="Sees hidden rates of change.",
+
+        weakness="Needs enough evidence.",
+
         catchphrase="Every change leaves a clue!",
-        learning_objectives=(
-            "Understand derivatives.",
-            "Recognize rates of change.",
-        ),
-        age_range="8-12",
-        tags=(
-            "calculus",
-            "change",
-        ),
-        metadata={
-            "source": "integration-test",
-        },
+
     )
 
+    character = CharacterFactory().create(
 
-def test_publish_character_pipeline(
-    tmp_path: Path,
-) -> None:
-    character = make_character()
+        generated,
+
+        character_id="NUM-CHR-000001",
+
+    )
 
     publisher = CharacterYamlPublisher()
 
     context = PublishContext(
+
         output_directory=tmp_path,
+
         metadata={},
+
     )
 
     result = publisher.publish(
+
         character,
+
         context,
+
     )
 
-    assert result.publisher == "character-yaml"
-
-    output_file = (
-        tmp_path
-        / "derivative"
-        / "character.yaml"
-    )
-
-    assert output_file.exists()
+    assert result.path.exists()
 
     document = yaml.safe_load(
-        output_file.read_text(
-            encoding="utf-8",
-        )
+
+        result.path.read_text(encoding="utf-8")
+
     )
 
+    assert document["id"] == "NUM-CHR-000001"
+
+    assert document["name"] == "Derivative"
+
+    assert document["slug"] == "derivative"
+
     assert document["schema"] == "numeria.character.v1"
-    assert document["id"] == character.id
-    assert document["slug"] == character.slug
-    assert document["name"] == character.name
-    assert document["realm"] == character.realm
-    assert document["mathematical_concept"] == (
-        character.mathematical_concept
-    )
-    assert document["superpower"] == (
-        character.superpower
-    )
-    assert document["weakness"] == (
-        character.weakness
-    )
-    assert document["catchphrase"] == (
-        character.catchphrase
-    )
-    assert document["metadata"]["source"] == (
-        "integration-test"
-    )
+

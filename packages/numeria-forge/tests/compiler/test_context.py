@@ -1,23 +1,19 @@
-from pathlib import Path
 
-from numeria_forge.compiler import (
-    CompilerContext,
-    Diagnostic,
-)
+from numeria_forge.compiler import CompilerContext
 
+def test_context_defaults() -> None:
 
-def test_context_collects_diagnostics() -> None:
     context = CompilerContext(
-        project_root=Path("/tmp/project"),
-        build_directory=Path("/tmp/project/build"),
+
+        project_name="Numeria",
+
     )
 
-    diagnostic = Diagnostic(
-        severity="warning",
-        code="TEST001",
-        message="Example",
-    )
+    assert context.project_name == "Numeria"
 
-    context.add_diagnostic(diagnostic)
+    assert context.characters == []
 
-    assert context.diagnostics == [diagnostic]
+    assert context.publish_results == []
+
+    assert context.diagnostics == []
+

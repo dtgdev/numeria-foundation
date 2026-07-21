@@ -3,9 +3,10 @@ from pathlib import Path
 from numeria_forge.compiler import Compiler
 from numeria_forge.compiler.stages import (
     LoadManifestStage,
-    RegisterManifestArtifactsStage,
+    LoadManifestStage,
     RenderTemplatesStage,
 )
+from numeria_forge.compiler.stages.register_builtinArtifact_stage import RegisterBuiltinArtifactsStage
 
 
 def test_compiler_renders_manifest_outputs(tmp_path: Path) -> None:
@@ -36,7 +37,7 @@ outputs:
     context = Compiler(
         stages=[
             LoadManifestStage(),
-            RegisterManifestArtifactsStage(),
+            RegisterBuiltinArtifactsStage(),
             RenderTemplatesStage(template_root),
         ]
     ).compile(package_directory)
@@ -76,7 +77,7 @@ outputs:
     context = Compiler(
         stages=[
             LoadManifestStage(),
-            RegisterManifestArtifactsStage(),
+            LoadManifestStage(),
             RenderTemplatesStage(template_root),
         ]
     ).compile(package_directory)
@@ -119,7 +120,7 @@ outputs:
     context = Compiler(
         stages=[
             LoadManifestStage(),
-            RegisterManifestArtifactsStage(),
+            LoadManifestStage(),
             RenderTemplatesStage(template_root),
         ]
     ).compile(package_directory)

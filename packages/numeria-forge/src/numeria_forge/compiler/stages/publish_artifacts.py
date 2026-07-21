@@ -8,11 +8,14 @@ class PublishArtifactsStage:
     def __init__(self, writer: RepositoryWriter) -> None:
         self.writer = writer
 
-    def run(self, context: CompilerContext) -> CompilerContext:
-        for artifact in context.artifacts:
+    def execute(
+        self,
+        context: CompilerContext,
+    ) -> CompilerContext:
+        for artifact in context.rendered_artifacts:
             self.writer.write(
-                artifact.destination,
-                artifact.content,
+                destination=artifact.destination,
+                content=artifact.content,
             )
 
         return context

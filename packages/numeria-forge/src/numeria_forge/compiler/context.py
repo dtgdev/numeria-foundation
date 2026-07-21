@@ -1,34 +1,37 @@
+
 """Compiler execution context."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+
 from pathlib import Path
 
-from numeria_forge.compiler.diagnostic import Diagnostic
-from numeria_forge.publishing.result import PublishResult
-
+from numeria_forge.publishing import PublishResult
 
 @dataclass(slots=True)
+
 class CompilerContext:
-    """Shared state flowing through compiler stages."""
+
+    """Shared mutable state for the compiler pipeline."""
 
     project_root: Path
 
-    build_directory: Path
+    generated_assets: list[object] = field(
 
-    diagnostics: list[Diagnostic] = field(
-        default_factory=list
+        default_factory=list,
+
     )
 
-    published: list[PublishResult] = field(
-        default_factory=list
+    published_assets: list[PublishResult] = field(
+
+        default_factory=list,
+
     )
 
-    generated_files: int = 0
+    diagnostics: list[str] = field(
 
-    def add_diagnostic(
-        self,
-        diagnostic: Diagnostic,
-    ) -> None:
-        self.diagnostics.append(diagnostic)
+        default_factory=list,
+
+    )
+

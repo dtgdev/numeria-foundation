@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from numeria_forge.compiler import (
     Compiler,
     CompilerContext,
@@ -7,34 +5,35 @@ from numeria_forge.compiler import (
 )
 
 
-class TestStage(CompilerStage):
+class DummyStage(CompilerStage):
 
     @property
     def name(self) -> str:
-        return "test"
+        return "dummy"
 
-    def run(
+    def execute(
         self,
         context: CompilerContext,
-    ) -> None:
-        context.metadata["executed"] = True
+    ) -> CompilerContext:
+        context.diagnostics.append("dummy")
+        return context
 
 
-def test_compiler_executes_stage(
-    tmp_path: Path,
-) -> None:
-
+def test_compiler_runs_all_stages() -> None:
     compiler = Compiler(
         stages=[
-            TestStage(),
-        ]
+            DummyStage(),
+            DummyStage(),
+        ],
     )
 
-    context = CompilerContext(
-        source_directory=tmp_path,
-        build_directory=tmp_path / "build",
+    context = compiler.compile(
+        CompilerContext(
+            project_name="Numeria",
+        )
     )
 
-    compiler.compile(context)
-
-    assert context.metadata["executed"] is True
+    assert context.diagnostics == [
+        "dummy",
+        "dummy",
+    ]

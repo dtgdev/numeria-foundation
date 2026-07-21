@@ -1,13 +1,22 @@
-from numeria_forge.compiler.context import CompilerContext
+from numeria_forge.compiler import CompilerContext
+from numeria_forge.compiler.stages import PipelineStage
 from numeria_forge.infrastructure.manifest_loader import ManifestLoader
 
 
-class LoadManifestStage:
-    """Load manifest.yaml into the compiler context."""
+class LoadManifestStage(PipelineStage):
+    """Load the Numeria project manifest."""
 
-    def __init__(self, loader: ManifestLoader | None = None) -> None:
-        self.loader = loader or ManifestLoader()
+    def __init__(
+        self,
+        loader: ManifestLoader | None = None,
+    ) -> None:
+        self._loader = loader or ManifestLoader()
 
-    def run(self, context: CompilerContext) -> CompilerContext:
-        context.manifest = self.loader.load(context.source_directory)
+    def execute(
+        self,
+        context: CompilerContext,
+    ) -> CompilerContext:
+        context.manifest = self._loader.load(
+            context.source_directory,
+        )
         return context

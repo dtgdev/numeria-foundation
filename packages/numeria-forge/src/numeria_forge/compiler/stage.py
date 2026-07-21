@@ -1,35 +1,27 @@
-
-"""Compiler stage abstraction."""
+"""Compiler stage interface."""
 
 from __future__ import annotations
 
 from abc import ABC
-
 from abc import abstractmethod
 
 from numeria_forge.compiler.context import CompilerContext
 
-class CompilerStage(ABC):
 
-    """A single stage in the compiler pipeline."""
+class CompilerStage(ABC):
+    """Base class for all compiler stages."""
 
     @property
-
     @abstractmethod
-
     def name(self) -> str:
-
-        ...
+        """Return the stage name."""
 
     @abstractmethod
+    def execute(
 
-    def run(
+            self,
 
-        self,
+            context: CompilerContext,
 
-        context: CompilerContext,
-
-    ) -> None:
-
-        """Execute the stage."""
-
+    ) -> CompilerContext:
+        ...

@@ -4,7 +4,12 @@ from typing import Any
 from numeria_forge.extensions.hooks import HookPoint
 
 
-CompilerHook = Callable[[Any], None]
+from typing import Protocol
+
+
+class HookContext(Protocol):
+    ...
+CompilerHook = Callable[[HookContext], None]
 
 
 class CompilerHookRegistry:
@@ -61,4 +66,5 @@ class CompilerHookRegistry:
         context: Any,
     ) -> None:
         for hook in self.hooks_for(hook_point):
-            hook(context)
+            for name, hook in self._hooks[hook_point]:
+                hook(context)(context)

@@ -1,4 +1,4 @@
-from numeria_forge.compiler import Compiler
+from numeria_forge.compiler import Compiler, context
 from numeria_forge.domain.workspaces import Workspace
 
 from .build_result import WorkspaceBuildResult
@@ -23,7 +23,7 @@ class WorkspaceCompiler:
             )
 
             results.append(
-                self.compiler.compile(package_directory)
+                Compiler.compile(context)
             )
 
         return WorkspaceBuildResult(

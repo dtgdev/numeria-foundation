@@ -1,7 +1,5 @@
-from numeria_forge.compiler import (
-    CompilationReport,
-    Diagnostic,
-)
+from numeria_forge.compiler.diagnostics import Diagnostic
+from numeria_forge.compiler.report import CompilationReport
 
 
 def test_report_success() -> None:
