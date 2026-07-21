@@ -1,0 +1,9 @@
+name: Numeria Foundation
+
+version: 1.0.0
+
+canon:
+  directory: canon
+
+build:
+  directory: build
