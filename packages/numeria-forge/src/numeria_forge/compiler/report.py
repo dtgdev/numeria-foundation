@@ -1,21 +1,18 @@
-
-"""Compilation reporting."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
 
-@dataclass(slots=True)
 
+@dataclass(slots=True, frozen=True)
 class CompilationReport:
+    """Summary of a Forge compilation."""
 
-    """Summary of a compilation run."""
+    stages_executed: int
 
-    success: bool
+    characters_processed: int
 
-    generated_assets: int
-
-    published_assets: int
+    assets_published: int
 
     diagnostics: int
 
+    success: bool

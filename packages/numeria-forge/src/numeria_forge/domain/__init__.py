@@ -6,13 +6,11 @@ from numeria_forge.domain.artifacts.artifact import (
 from numeria_forge.domain.artifacts.collection import (
     ArtifactCollection,
 )
-from numeria_forge.domain.canon import (
-    Character,
-    CharacterFactory,
-)
-from numeria_forge.domain.generated_character import (
-    GeneratedCharacter,
-)
+from numeria_forge.domain.canon import Character
+from numeria_forge.domain.canon.character_factory import CharacterFactory
+from numeria_forge.domain.generated_character import GeneratedCharacter
+
+
 
 __all__ = [
     "Artifact",
@@ -21,3 +19,5 @@ __all__ = [
     "CharacterFactory",
     "GeneratedCharacter",
 ]
+
+

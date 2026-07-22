@@ -3,21 +3,17 @@
 
 from pathlib import Path
 
-from numeria_forge.compiler import (
+from numeria_forge.compiler import Compiler, CompilerContext
 
-    Compiler,
-
-    CompilerContext,
-
-)
 
 def test_compiler_returns_report(
 
     tmp_path: Path,
 
 ) -> None:
-
-    compiler = Compiler()
+    compiler = Compiler(
+        stages=[],
+    )
 
     context = CompilerContext(
 

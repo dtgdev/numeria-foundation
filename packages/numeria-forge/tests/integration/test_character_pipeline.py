@@ -1,11 +1,11 @@
 
-"""End-to-end test for the canonical character publishing pipeline."""
+"""End-to-end canonical character publishing pipeline."""
 
 from pathlib import Path
 
 import yaml
 
-from numeria_forge.domain import GeneratedCharacter, CharacterFactory
+from numeria_forge.domain import Character
 
 from numeria_forge.publishing import (
 
@@ -15,19 +15,29 @@ from numeria_forge.publishing import (
 
 )
 
-def test_character_pipeline(
+def test_character_pipeline(tmp_path: Path) -> None:
 
-    tmp_path: Path,
+    """A canonical Character should publish to character.yaml."""
 
-) -> None:
+    character = Character(
 
-    generated = GeneratedCharacter(
+        id="NUM-CHR-000001",
+
+        slug="derivative",
+
+        version="1.0.0",
+
+        status="draft",
 
         name="Derivative",
 
+        title="The Detective of Change",
+
         mathematical_concept="derivative",
 
-        description="A detective who studies change.",
+        realm="Realm of Change",
+
+        description="A detective who discovers how things change.",
 
         personality=(
 
@@ -37,19 +47,33 @@ def test_character_pipeline(
 
         ),
 
-        superpower="Sees change instantly.",
+        superpower="Sees rates of change.",
 
-        weakness="Needs enough evidence.",
+        weakness="Needs enough clues.",
 
         catchphrase="Every change leaves a clue!",
 
-    )
+        learning_objectives=(
 
-    character = CharacterFactory().create(
+            "Understand rate of change.",
 
-        generated,
+        ),
 
-        character_id="NUM-CHR-000001",
+        age_range="8-12",
+
+        tags=(
+
+            "calculus",
+
+            "change",
+
+        ),
+
+        metadata={
+
+            "origin": "numeria",
+
+        },
 
     )
 
@@ -71,13 +95,25 @@ def test_character_pipeline(
 
     )
 
-    assert result.path.exists()
+    expected = (
+
+        tmp_path
+
+        / "derivative"
+
+        / "character.yaml"
+
+    )
+
+    assert result.path == expected
+
+    assert expected.exists()
 
     document = yaml.safe_load(
 
-        result.path.read_text(
+        expected.read_text(
 
-            encoding="utf-8",
+            encoding="utf-8"
 
         )
 
@@ -91,5 +127,5 @@ def test_character_pipeline(
 
     assert document["name"] == "Derivative"
 
-    assert document["mathematical_concept"] == "derivative"
+    assert document["title"] == "The Detective of Change"
 

@@ -24,7 +24,7 @@ dev = [
 ]
 
 [project.scripts]
-forge = "numeria_forge.cli:app"
+forge = "numeria_forge.cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

@@ -1,16 +1,11 @@
-"""Compiler result."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
 
+from numeria_forge.compiler.diagnostics import Diagnostic
 
-@dataclass(slots=True)
+
+@dataclass(slots=True, frozen=True)
 class CompilerResult:
-    """Overall compiler execution result."""
-
     success: bool
-
-    warning_count: int
-
-    error_count: int
+    diagnostics: list[Diagnostic]

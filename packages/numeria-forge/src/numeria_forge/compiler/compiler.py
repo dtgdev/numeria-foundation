@@ -1,55 +1,33 @@
-
-"""Forge compiler."""
-
 from __future__ import annotations
 
-from numeria_forge.compiler.context import (
+from numeria_forge.compiler.context import CompilerContext
+from numeria_forge.compiler.result import CompilerResult
+from numeria_forge.compiler.stage import CompilerStage
 
-    CompilerContext,
-
-)
-
-from numeria_forge.compiler.report import (
-
-    CompilationReport,
-
-)
 
 class Compiler:
+    """Numeria Forge compiler."""
 
-    """Top-level Forge compiler."""
+    def __init__(
+        self,
+        stages: list[CompilerStage],
+    ) -> None:
+        self._stages = stages
 
     def compile(
-
         self,
-
         context: CompilerContext,
+    ) -> CompilerResult:
 
-    ) -> CompilationReport:
+        for stage in self._stages:
+            stage.execute(context)
 
-        """Compile a Numeria project."""
-
-        return CompilationReport(
-
-            success=not context.diagnostics,
-
-            generated_assets=len(
-
-                context.generated_assets
-
-            ),
-
-            published_assets=len(
-
-                context.published_assets
-
-            ),
-
-            diagnostics=len(
-
-                context.diagnostics
-
-            ),
-
+        success = not any(
+            d.severity.lower() == "error"
+            for d in context.diagnostics
         )
 
+        return CompilerResult(
+            success=success,
+            diagnostics=context.diagnostics,
+        )
