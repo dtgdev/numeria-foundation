@@ -3,7 +3,7 @@ from pathlib import Path
 from numeria_forge.compiler import Compiler
 from numeria_forge.compiler.stages import (
     LoadManifestStage,
-    LoadManifestStage,
+    RegisterBuiltinArtifactsStage,
     RenderTemplatesStage,
 )
 from numeria_forge.infrastructure.workspace_loader import (
@@ -79,7 +79,7 @@ def build_workspace(tmp_path: Path):
     compiler = Compiler(
         stages=[
             LoadManifestStage(),
-            LoadManifestStage(),
+            RegisterBuiltinArtifactsStage(),
             RenderTemplatesStage(template_root),
         ]
     )

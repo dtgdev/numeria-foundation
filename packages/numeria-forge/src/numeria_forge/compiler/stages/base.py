@@ -1,20 +1,13 @@
-from abc import abstractmethod, ABC
-from typing import Protocol
+"""Deprecated alias kept for backward compatibility.
 
-from numeria_forge.compiler.context import CompilerContext
+This module previously defined a separate ``PipelineStage`` contract that
+duplicated (and diverged from) ``CompilerStage``, including a broken
+``execute`` method body. All compiler stages now implement the single
+``CompilerStage`` contract from :mod:`numeria_forge.compiler.stage`.
+"""
 
+from __future__ import annotations
 
-class PipelineStage(ABC):
+from numeria_forge.compiler.stage import CompilerStage as PipelineStage
 
-    @abstractmethod
-    def execute(
-        self,
-        context: CompilerContext,
-    ) -> CompilerContext:
-        context.manifest = self.loader.load(
-
-            context.source_directory
-
-        )
-
-        return context
+__all__ = ["PipelineStage"]

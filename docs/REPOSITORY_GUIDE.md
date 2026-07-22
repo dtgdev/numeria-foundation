@@ -187,7 +187,7 @@ Each important entity may use a package directory containing structured YAML and
 
 Example:
 
-knowledge/concepts/NUM-CON-000001-derivative/
+knowledge/concepts/NUM-CON-000001-detective-derivative/
 ├── entity.yaml
 ├── mathematics.md
 ├── education.md

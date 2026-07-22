@@ -1,28 +1,13 @@
+"""Deprecated duplicate module.
+
+Kept only so any stale import of this (incorrectly capitalized) module
+path keeps working. Use
+``numeria_forge.compiler.stages.load_manifest.LoadManifestStage`` (also
+re-exported as ``numeria_forge.compiler.stages.LoadManifestStage``).
+"""
+
 from __future__ import annotations
 
-from numeria_forge.compiler import CompilerStage
-from numeria_forge.compiler.context import CompilerContext
-from numeria_forge.compiler.stages.base import PipelineStage
-from numeria_forge.infrastructure.manifest_loader import ManifestLoader
+from numeria_forge.compiler.stages.load_manifest import LoadManifestStage
 
-
-class LoadManifestStage(CompilerStage):
-
-    def __init__(
-        self,
-        loader: ManifestLoader | None = None,
-    ) -> None:
-        self.loader = loader or ManifestLoader()
-
-    @property
-    def name(self) -> str:
-        return "load-manifest"
-
-    def execute(
-        self,
-        context: CompilerContext,
-    ) -> CompilerContext:
-        context.manifest = self.loader.load(
-            context.source_directory,
-        )
-        return context
+__all__ = ["LoadManifestStage"]

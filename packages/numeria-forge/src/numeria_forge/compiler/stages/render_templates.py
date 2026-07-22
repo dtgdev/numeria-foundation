@@ -1,11 +1,14 @@
+from __future__ import annotations
+
 from pathlib import Path
 
 from numeria_forge.compiler.context import CompilerContext
+from numeria_forge.compiler.stage import CompilerStage
 from numeria_forge.domain.artifacts import Artifact
 from numeria_forge.rendering import TemplateEnvironment, TemplateRenderer
 
 
-class RenderTemplatesStage:
+class RenderTemplatesStage(CompilerStage):
     """Render every output declared in the loaded manifest."""
 
     def __init__(self, template_root: Path) -> None:
@@ -13,7 +16,11 @@ class RenderTemplatesStage:
             TemplateEnvironment(template_root)
         )
 
-    def run(self, context: CompilerContext) -> CompilerContext:
+    @property
+    def name(self) -> str:
+        return "render-templates"
+
+    def execute(self, context: CompilerContext) -> CompilerContext:
         if context.manifest is None:
             raise RuntimeError(
                 "RenderTemplatesStage requires a loaded manifest."

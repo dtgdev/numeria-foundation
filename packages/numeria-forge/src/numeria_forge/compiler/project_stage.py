@@ -9,10 +9,16 @@ from numeria_forge.compiler.stage import CompilerStage
 class ProjectDiscoveryStage(CompilerStage):
     """Ensure the build directory exists."""
 
-    def execute(
-        self,
-        context: CompilerContext,
-    ) -> CompilerContext:
+    @property
+    def name(self) -> str:
+        return "project-discovery"
+
+    def execute(self, context: CompilerContext) -> CompilerContext:
+        if context.build_directory is None:
+            raise RuntimeError(
+                "ProjectDiscoveryStage requires context.build_directory "
+                "to be set."
+            )
 
         context.build_directory.mkdir(
             parents=True,

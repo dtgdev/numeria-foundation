@@ -1,5 +1,6 @@
 id: NUM-WLD-000001
 name: Numeria
+slug: world
 type: World
 status: CANON
 version: 1.0.0
@@ -49,5 +50,5 @@ canonical_hierarchy:
   - Artifact
 
 source_documents:
-  - knowledge/world/WORLD_FOUNDATIONS.md
-  - knowledge/world/WORLD_ATLAS.md
+  - knowledge/world/NUM-WLD-000001-world/WORLD_FOUNDATIONS.md
+  - knowledge/world/NUM-WLD-000001-world/WORLD_ATLAS.md

@@ -66,5 +66,4 @@ class CompilerHookRegistry:
         context: Any,
     ) -> None:
         for hook in self.hooks_for(hook_point):
-            for name, hook in self._hooks[hook_point]:
-                hook(context)(context)
+            hook(context)

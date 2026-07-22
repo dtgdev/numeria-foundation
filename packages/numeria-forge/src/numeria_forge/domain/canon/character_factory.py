@@ -18,6 +18,10 @@ class CharacterFactory:
         generated: GeneratedCharacter,
         *,
         character_id: str,
+        title: str | None = None,
+        realm: str = "Core Mathematics",
+        learning_objectives: tuple[str, ...] = (),
+        tags: tuple[str, ...] = (),
     ) -> Character:
         return Character(
             id=character_id,
@@ -25,18 +29,18 @@ class CharacterFactory:
             version="1.0.0",
             status="draft",
             name=generated.name,
-            title=generated.name,
+            title=title if title is not None else generated.name,
             mathematical_concept=generated.mathematical_concept,
-            realm="Core Mathematics",
+            realm=realm,
             description=generated.description,
-            personality=tuple(generated.personality),
+            personality=self._parse_personality(generated.personality),
             superpower=generated.superpower,
             weakness=generated.weakness,
             catchphrase=generated.catchphrase,
-            learning_objectives=(),
+            learning_objectives=tuple(learning_objectives),
             age_range="8-12",
-            tags=(),
-            metadata={},
+            tags=tuple(tags),
+            metadata={"source": "ai-generation"},
         )
 
     def _parse_personality(

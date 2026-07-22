@@ -1,4 +1,4 @@
-from numeria_forge.compiler.diagnostics import Diagnostic
+from numeria_forge.compiler.diagnostic import Diagnostic
 from numeria_forge.compiler.report import CompilationReport
 
 

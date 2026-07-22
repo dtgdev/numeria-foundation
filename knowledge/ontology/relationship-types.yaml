@@ -59,6 +59,12 @@ relationship_types:
   REQUIRES:
     source: Concept
     target: Concept
+    # A Concept prerequisite chain must be a DAG -- if REQUIRES ever
+    # forms a cycle, some concept would require itself to be learned
+    # first. Marked in v0.15.0 so DependencyGraphValidator
+    # (numeria_forge.semantics) knows to check this specific
+    # relationship type for cycles.
+    acyclic: true
 
   FEATURES_CHARACTER:
     source: Scene

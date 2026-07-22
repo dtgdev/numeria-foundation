@@ -1,19 +1,17 @@
-from numeria_forge.compiler import CompilerContext
-from numeria_forge.compiler.stages import PipelineStage
+from __future__ import annotations
+
+from numeria_forge.compiler.context import CompilerContext
+from numeria_forge.compiler.stage import CompilerStage
 from numeria_forge.domain.artifacts import create_builtin_registry
 
 
-class RegisterBuiltinArtifactsStage(PipelineStage):
+class RegisterBuiltinArtifactsStage(CompilerStage):
     """Register the built-in artifact definitions."""
 
-    def execute(
-        self,
-        context: CompilerContext,
-    ) -> CompilerContext:
-        registry = create_builtin_registry()
+    @property
+    def name(self) -> str:
+        return "register-builtin-artifacts"
 
-        context = context.with_artifact_registry(
-            registry
-        )
-
+    def execute(self, context: CompilerContext) -> CompilerContext:
+        context.artifact_registry = create_builtin_registry()
         return context

@@ -1,0 +1,15 @@
+schema_version: "1.0"
+
+foundation:
+  id: numeria-foundation
+  name: Numeria Foundation
+  version: "0.1.0"
+
+# Root of the canonical knowledge base (loaded by the Canon Loader and
+# checked by the Validation Engine).
+knowledge_root: knowledge
+
+# Directories scanned for Forge packages (anything containing a
+# manifest.yaml) for the Generation and Publishing Engines.
+workspaces:
+  - packages/numeria-forge

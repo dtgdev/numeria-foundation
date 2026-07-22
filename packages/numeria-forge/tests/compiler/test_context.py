@@ -1,19 +1,16 @@
+from pathlib import Path
 
 from numeria_forge.compiler import CompilerContext
 
+
 def test_context_defaults() -> None:
-
     context = CompilerContext(
-
-        project_name="Numeria",
-
+        project_root=Path("."),
     )
 
-    assert context.project_name == "Numeria"
-
+    assert context.project_root == Path(".")
+    assert context.source_directory == Path(".")
     assert context.characters == []
-
-    assert context.publish_results == []
-
+    assert context.published_assets == []
     assert context.diagnostics == []
-
+    assert context.success is True

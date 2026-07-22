@@ -1,33 +1,24 @@
-
 """Compiler integration tests."""
 
 from pathlib import Path
 
-from numeria_forge.compiler import Compiler, CompilerContext
+from numeria_forge.compiler import (
+    CompilationReport,
+    Compiler,
+    CompilerContext,
+)
 
 
-def test_compiler_returns_report(
+def test_compiler_returns_report(tmp_path: Path) -> None:
+    compiler = Compiler(stages=[])
 
-    tmp_path: Path,
+    context = CompilerContext(project_root=tmp_path)
 
-) -> None:
-    compiler = Compiler(
-        stages=[],
-    )
+    result_context = compiler.compile(context)
 
-    context = CompilerContext(
-
-        project_root=tmp_path,
-
-    )
-
-    report = compiler.compile(context)
+    report = CompilationReport.from_context(result_context)
 
     assert report.success is True
-
     assert report.generated_assets == 0
-
-    assert report.published_assets == 0
-
-    assert report.diagnostics == 0
-
+    assert report.assets_published == 0
+    assert report.diagnostics == []
