@@ -28,6 +28,11 @@ Wires together the full pipeline:
                                context.knowledge_model.query)
         |
         v
+    Publish Knowledge Graph    (PublishKnowledgeGraphStage, v0.17.0 --
+                               exports the graph to build/graph/
+                               knowledge.{json,yaml,graphml})
+        |
+        v
     Generate Missing Assets   (GenerateMissingAssetsStage, v0.15.0 --
                                renders readme/character_card directly
                                from every Canon entity)
@@ -85,6 +90,7 @@ from numeria_forge.compiler.stages import (
     LoadManifestStage,
     PublishArtifactsStage,
     PublishGeneratedAssetsStage,
+    PublishKnowledgeGraphStage,
     RegisterBuiltinArtifactsStage,
     RenderTemplatesStage,
     TopologicalOrderStage,
@@ -132,6 +138,9 @@ class FoundationCompiler:
         stages_executed += 1
 
         BuildKnowledgeModelStage().execute(context)
+        stages_executed += 1
+
+        PublishKnowledgeGraphStage().execute(context)
         stages_executed += 1
 
         package_results: list[CompilerContext] = []

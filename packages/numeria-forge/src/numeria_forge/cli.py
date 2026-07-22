@@ -4,6 +4,8 @@ import typer
 from rich.console import Console
 
 from numeria_forge import __version__
+from numeria_forge.commands._shared import resolve_knowledge_root as _resolve_knowledge_root
+from numeria_forge.commands.graph import graph_app
 from numeria_forge.commands.init import init_repository
 
 console = Console()
@@ -24,23 +26,11 @@ def version_command() -> None:
 
 
 app.command("init")(init_repository)
-
-
-def _resolve_knowledge_root(path: "Path") -> "Path":
-    """Resolve a knowledge root from a foundation root, a parent of
-    `knowledge/`, or a knowledge root passed directly."""
-
-    from numeria_forge.infrastructure.foundation_loader import FoundationLoader
-
-    resolved = path.resolve()
-
-    if (resolved / "numeria.yaml").is_file():
-        return FoundationLoader().load(resolved).knowledge_root
-
-    if (resolved / "knowledge").is_dir():
-        return resolved / "knowledge"
-
-    return resolved
+app.add_typer(
+    graph_app,
+    name="graph",
+    help="Build, validate, export, and query the knowledge graph (v0.17.0).",
+)
 
 
 @app.command("validate")

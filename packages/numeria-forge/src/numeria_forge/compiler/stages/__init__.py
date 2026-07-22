@@ -8,6 +8,7 @@ from .load_manifest import LoadManifestStage
 from .publish_artifacts import PublishArtifactsStage
 from .publish_characters import PublishCharactersStage
 from .publish_generated_assets import PublishGeneratedAssetsStage
+from .publish_knowledge_graph import PublishKnowledgeGraphStage
 from .register_builtinArtifact_stage import RegisterBuiltinArtifactsStage
 from .render_templates import RenderTemplatesStage
 from .topological_order import TopologicalOrderStage
@@ -23,6 +24,7 @@ __all__ = [
     "PublishArtifactsStage",
     "PublishCharactersStage",
     "PublishGeneratedAssetsStage",
+    "PublishKnowledgeGraphStage",
     "RegisterBuiltinArtifactsStage",
     "RenderTemplatesStage",
     "TopologicalOrderStage",

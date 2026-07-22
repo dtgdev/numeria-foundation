@@ -89,6 +89,21 @@ class SemanticGraph:
 
         return {node_id: tuple(targets) for node_id, targets in adjacency.items()}
 
+    def orphaned_node_ids(self) -> tuple[str, ...]:
+        """Node ids touched by zero edges, in either direction --
+        entities the Canon's relationship graph doesn't connect to
+        anything. Added for v0.17.0's semantic integrity checks
+        ("detect... orphaned concepts"). Sorted for determinism
+        (Compiler Law #1)."""
+
+        touched: set[str] = set()
+
+        for edge in self.edges:
+            touched.add(edge.source_id)
+            touched.add(edge.target_id)
+
+        return tuple(sorted(node_id for node_id in self.nodes if node_id not in touched))
+
     @classmethod
     def build_from_canon(cls, canon: Canon) -> "SemanticGraph":
         nodes = {
@@ -99,10 +114,7 @@ class SemanticGraph:
         edges: list[GraphEdge] = []
 
         for relationship in canon.relationships():
-            source = relationship.get("source") or {}
-            target = relationship.get("target") or {}
-            source_id = source.get("id")
-            target_id = target.get("id")
+            source_id, target_id = cls._endpoints(relationship)
 
             if not source_id or not target_id:
                 # Malformed relationship -- the Canon Validation Engine's
@@ -114,7 +126,7 @@ class SemanticGraph:
             edges.append(
                 GraphEdge(
                     id=relationship.id,
-                    type=relationship.type,
+                    type=relationship.get("predicate") or relationship.type,
                     source_id=source_id,
                     target_id=target_id,
                     description=relationship.get("description"),
@@ -124,3 +136,44 @@ class SemanticGraph:
             )
 
         return cls(nodes=nodes, edges=tuple(edges))
+
+    @staticmethod
+    def _endpoints(relationship) -> tuple[str | None, str | None]:
+        """Resolve a relationship entity's source/target ids under
+        either supported schema.
+
+        v0.14.0 (the schema every real relationship entity in the repo
+        uses today): `source`/`target` are `{id, type}` reference
+        objects -- the embedded `type` lets `RelationshipValidator`
+        cross-check it against the referenced entity's actual type.
+
+        v0.17.0 (`schema: numeria.relationship.v1`, RDF/OWL-style):
+        `subject`/`object` are bare canonical ID strings, with the
+        relationship type carried by a separate `predicate` field
+        rather than embedded per-endpoint.
+
+        This method only resolves *endpoints* for graph-building --
+        it doesn't attempt type cross-checking for the v0.17.0 shape.
+        `RelationshipValidator` has not been extended to understand
+        `subject`/`predicate`/`object`; a relationship written in that
+        schema will appear correctly in `SemanticGraph` (and therefore
+        in `KnowledgeQuery`, graph exports, and graph statistics) but
+        will not yet get the same schema/type validation
+        `source`/`target` relationships get from `forge validate`.
+        See `docs/architecture/CANONICAL_KNOWLEDGE_MODEL.md` for the
+        full note.
+        """
+
+        source = relationship.get("source")
+        target = relationship.get("target")
+
+        if isinstance(source, dict) and isinstance(target, dict):
+            return source.get("id"), target.get("id")
+
+        subject = relationship.get("subject")
+        obj = relationship.get("object")
+
+        if isinstance(subject, str) and isinstance(obj, str):
+            return subject, obj
+
+        return None, None

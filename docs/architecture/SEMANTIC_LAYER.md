@@ -77,18 +77,42 @@ a read-only view built from a loaded `Canon`:
   `source`/`target` fields.
 
 `SemanticGraph.build_from_canon(canon)` constructs this in one pass.
-Edges whose `source`/`target` don't resolve to an id at all are
-skipped, not guessed at — a malformed relationship is
-`RelationshipValidator`'s concern, not the graph's. `graph.adjacency(types=...)`
-builds `{node_id: (neighbor_id, ...)}` restricted to a set of edge
-types (or every type if omitted), and additionally drops any edge
-whose endpoint isn't a known node (again, deferring to
-`RelationshipValidator` to report dangling references).
+Edges whose endpoints don't resolve to an id at all are skipped, not
+guessed at — a malformed relationship is `RelationshipValidator`'s
+concern, not the graph's. `graph.adjacency(types=...)` builds
+`{node_id: (neighbor_id, ...)}` restricted to a set of edge types (or
+every type if omitted), and additionally drops any edge whose endpoint
+isn't a known node (again, deferring to `RelationshipValidator` to
+report dangling references).
+
+Two v0.17.0 additions: `graph.incoming(node_id, types=)` (the mirror
+of `outgoing()`, for reverse-direction queries) and
+`graph.orphaned_node_ids()` (nodes touched by zero edges in either
+direction -- see `CANONICAL_KNOWLEDGE_MODEL.md`). Also as of v0.17.0,
+endpoint resolution accepts a second relationship schema alongside
+`source`/`target`/`{id,type}`: `subject`/`object` as bare id strings
+plus a `predicate` field, matching `schema: numeria.relationship.v1`.
+Full detail, including the one known gap (`RelationshipValidator`
+itself hasn't been extended to the new schema), is in
+`CANONICAL_KNOWLEDGE_MODEL.md`.
 
 Against the real knowledge base: 123 entities, 87 relationships ->
-36 graph nodes (only entities that participate in at least one
-relationship), 87 edges, of which 7 are `REQUIRES` connecting 8
+36 graph nodes, 87 edges, of which 7 are `REQUIRES` connecting 8
 Concepts.
+
+**Correction (found while building v0.17.0's orphan detection):** an
+earlier version of this document claimed the 36 nodes were "only
+entities that participate in at least one relationship." That's
+wrong -- `build_from_canon` creates one `GraphNode` for *every*
+non-relationship entity in the Canon, with no participation filter at
+all. 36 happens to equal the *total* count of non-relationship
+entities in the real Canon (123 entities - 87 relationships = 36), which
+created the false impression that filtering had occurred. It hadn't.
+Proof: `SemanticGraph.orphaned_node_ids()` (v0.17.0) finds 4 of those
+36 nodes with zero edges in either direction -- entities that exist as
+graph nodes despite participating in no relationship at all. See
+`CANONICAL_KNOWLEDGE_MODEL.md`'s "Semantic integrity: orphaned
+entities" section.
 
 ## CycleDetector
 

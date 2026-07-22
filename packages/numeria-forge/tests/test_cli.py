@@ -16,6 +16,7 @@ def test_help_command() -> None:
     assert "version" in result.stdout
     assert "init" in result.stdout
     assert "doctor" in result.stdout
+    assert "graph" in result.stdout
 
 
 def test_version_command() -> None:

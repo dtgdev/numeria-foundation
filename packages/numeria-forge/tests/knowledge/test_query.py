@@ -72,6 +72,35 @@ def test_traverse_respects_max_depth(model) -> None:
     assert two_hops == ("CON-LIMIT", "CON-FUNCTION")
 
 
+def test_orphaned_entities_finds_untouched_nodes(model) -> None:
+    # The fixture Canon connects every entity to at least one
+    # relationship, so orphaned_entities() is empty by default; add
+    # one deliberately unconnected Concept and confirm it's found.
+    import dataclasses
+
+    from numeria_forge.domain.canon.entity import CanonEntity
+    from numeria_forge.semantics.node import GraphNode
+    from pathlib import Path
+
+    lonely = CanonEntity(
+        id="CON-LONELY", type="Concept",
+        source_path=Path("knowledge/concepts/lonely/entity.yaml"),
+        data={"id": "CON-LONELY", "type": "Concept", "name": "Lonely"},
+    )
+    canon = dataclasses.replace(
+        model.canon, entities={**model.canon.entities, "CON-LONELY": lonely}
+    )
+    graph = dataclasses.replace(
+        model.graph,
+        nodes={**model.graph.nodes, "CON-LONELY": GraphNode(id="CON-LONELY", type="Concept")},
+    )
+    query = KnowledgeQuery(canon=canon, graph=graph, ontology=model.ontology)
+
+    orphans = query.orphaned_entities()
+
+    assert [e.id for e in orphans] == ["CON-LONELY"]
+
+
 def test_traverse_is_cycle_safe_even_without_an_acyclic_declaration(model) -> None:
     # Build a graph with a genuine cycle among a *non*-acyclic
     # relationship type and confirm traverse() still terminates,

@@ -117,6 +117,25 @@ class KnowledgeQuery:
 
         return tuple(order)
 
+    def orphaned_entities(self) -> tuple[CanonEntity, ...]:
+        """Every entity touched by zero relationships, in either
+        direction (v0.17.0 semantic integrity check). Not necessarily
+        wrong -- a brand-new Concept with no relationships authored
+        yet is orphaned by definition -- but worth surfacing. See
+        `OrphanedEntityValidator` (numeria_forge.semantics) for an
+        opt-in `forge validate` check built on this same method, and
+        `CompilationReport`'s graph statistics for the count on every
+        `forge compile` run.
+        """
+
+        ids = self.graph.orphaned_node_ids()
+
+        return tuple(
+            entity
+            for entity in (self.get(entity_id) for entity_id in ids)
+            if entity is not None
+        )
+
     def prerequisites_of(self, entity_id: str) -> tuple[CanonEntity, ...]:
         """Every entity ``entity_id`` transitively requires, nearest
         first -- "everything needed before X". Driven entirely by

@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 from numeria_forge.compiler.context import CompilerContext
 from numeria_forge.diagnostics import Diagnostic
 from numeria_forge.diagnostics import Severity as DiagnosticSeverity
+from numeria_forge.knowledge.statistics import GraphStatistics
 
 
 @dataclass(slots=True, frozen=True)
@@ -21,6 +22,12 @@ class CompilationReport:
     generated_assets: int = 0
 
     diagnostics: list[Diagnostic] = field(default_factory=list)
+
+    # v0.17.0: populated from context.knowledge_model when present.
+    # None (not an all-zero GraphStatistics) when compilation never
+    # reached BuildKnowledgeModelStage, so a caller can tell "no graph
+    # was built" apart from "the graph was empty."
+    graph_statistics: GraphStatistics | None = None
 
     @property
     def errors(self) -> tuple[Diagnostic, ...]:
@@ -55,12 +62,19 @@ class CompilationReport:
     ) -> "CompilationReport":
         """Build a report by summarizing a compiled context."""
 
+        knowledge_model = context.knowledge_model
+
         return cls(
             stages_executed=stages_executed,
             characters_processed=len(context.characters),
             assets_published=len(context.published_assets),
             generated_assets=len(context.generated_assets),
             diagnostics=list(context.diagnostics),
+            graph_statistics=(
+                GraphStatistics.from_model(knowledge_model)
+                if knowledge_model is not None
+                else None
+            ),
         )
 
     def to_dict(self) -> dict:
@@ -72,6 +86,11 @@ class CompilationReport:
             "generated_assets": self.generated_assets,
             "error_count": len(self.errors),
             "warning_count": len(self.warnings),
+            "graph_statistics": (
+                self.graph_statistics.to_dict()
+                if self.graph_statistics is not None
+                else None
+            ),
             "diagnostics": [
                 {
                     "severity": diagnostic.severity.value,
@@ -96,8 +115,18 @@ class CompilationReport:
             f"{self.characters_processed} character(s) processed, "
             f"{self.generated_assets} asset(s) generated, "
             f"{self.assets_published} asset(s) published.",
-            "",
         ]
+
+        if self.graph_statistics is not None:
+            stats = self.graph_statistics
+            lines.append(
+                f"Knowledge graph: {stats.node_count} node(s), "
+                f"{stats.edge_count} edge(s), "
+                f"{stats.orphaned_node_count} orphaned entit"
+                f"{'y' if stats.orphaned_node_count == 1 else 'ies'}."
+            )
+
+        lines.append("")
 
         if not self.diagnostics:
             lines.append("No diagnostics.")

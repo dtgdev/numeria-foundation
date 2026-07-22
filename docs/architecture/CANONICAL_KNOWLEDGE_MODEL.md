@@ -101,6 +101,7 @@ and narrative relationships," "expose a stable query API" — lives in
 | `related(entity_id, relationship_type, direction=)` | Entities directly connected by one relationship type, either direction |
 | `traverse(start_id, types=, direction=, max_depth=)` | Breadth-first walk over one or more relationship types |
 | `prerequisites_of(entity_id)` | Everything transitively required before this entity, nearest first |
+| `orphaned_entities()` | Every entity touched by zero relationships in either direction (v0.17.0) |
 
 `related()` and `traverse()` are generic — they work with *any*
 relationship type declared in the ontology, not just `REQUIRES`. The
@@ -135,6 +136,97 @@ whether the relationship types involved are declared `acyclic` in the
 ontology: already-visited nodes are never re-queued, so a malformed
 Canon with an actual cycle in a non-acyclic relationship type still
 terminates rather than hanging.
+
+## Semantic integrity: orphaned entities (v0.17.0)
+
+An "orphaned" entity is one no relationship touches at all -- neither
+as source/subject nor target/object. Not necessarily a defect (a
+brand-new Concept genuinely has no relationships until someone authors
+them), but worth surfacing:
+
+```python
+model.query.orphaned_entities()
+# real Canon, today: 4 entities -- one Character, one Organization,
+# one Region, one World, none yet connected to anything
+```
+
+Backed by `SemanticGraph.orphaned_node_ids()`. Surfaced two ways:
+always, as a count on every `forge compile` via
+`CompilationReport.graph_statistics.orphaned_node_count`; optionally,
+as a `WARNING` diagnostic per orphan via `OrphanedEntityValidator`
+(`numeria_forge.semantics`), which is opt-in -- like
+`DependencyGraphValidator` -- rather than part of the default
+`forge validate` validator set, so a Canon that's still being written
+doesn't get flooded with warnings for content nobody has connected
+yet.
+
+Broken references (a relationship pointing at an entity id that
+doesn't exist) are *not* a new v0.17.0 check -- `RelationshipValidator`
+(v0.14.0) has always reported these as `ERROR` diagnostics. Nothing
+new was needed there.
+
+## Graph export (v0.17.0)
+
+`numeria_forge/knowledge/export.py` serializes `model.graph` to three
+machine-readable formats, all built from one shared `to_dict()` so
+they never drift from each other:
+
+```python
+from numeria_forge.knowledge import to_json, to_yaml, to_graphml
+
+to_json(model)     # {"schema": "numeria.knowledge-graph.v1", "nodes": [...], "edges": [...]}
+to_yaml(model)      # the same data, YAML
+to_graphml(model)   # hand-written GraphML XML -- no networkx dependency
+```
+
+Deterministic: nodes sorted by id, edges sorted by `(type, id)`. These
+are exactly the files `PublishKnowledgeGraphStage` writes to
+`build/graph/knowledge.{json,yaml,graphml}` on every `forge compile`
+(see `FORGE_COMPILER.md`).
+
+## Graph statistics (v0.17.0)
+
+`numeria_forge/knowledge/statistics.py`'s `GraphStatistics.from_model(model)`
+computes node count, edge count, a per-relationship-type edge
+breakdown, orphaned-entity count, and which relationship types the
+ontology declares `acyclic`. This is what populates
+`CompilationReport.graph_statistics` on every `forge compile` run --
+see `FORGE_COMPILER.md`'s `CompilationReport` section.
+
+## A second relationship schema (v0.17.0)
+
+The real Canon's 87 relationship entities all use the v0.14.0 schema:
+`source`/`target` as `{id, type}` reference objects, with the
+relationship type as the entity's own top-level `type` field.
+v0.17.0 introduces a second, RDF/OWL-style schema
+(`schema: numeria.relationship.v1`):
+
+```yaml
+schema: numeria.relationship.v1
+id: NUM-REL-000001
+subject: NUM-CHR-000001
+predicate: represents
+object: NUM-CON-000001
+status: canon
+```
+
+`subject`/`object` are bare canonical ID strings (no embedded type),
+and `predicate` carries the relationship type instead of the entity's
+own `type` field. `SemanticGraph.build_from_canon` accepts both
+shapes -- a relationship written in either schema appears correctly
+in the graph, `KnowledgeQuery`, graph exports, and graph statistics.
+
+**Known gap:** `RelationshipValidator` (the v0.14.0 `forge validate`
+check that cross-verifies each endpoint's declared type against its
+actual type) has *not* been extended to the new schema -- it still
+only understands `source`/`target`. A `subject`/`predicate`/`object`
+relationship will build correctly into the graph but won't get that
+same type-checking from `forge validate` yet. Extending it would mean
+looking up each endpoint's actual type from the Canon at validation
+time, since `subject`/`object` don't carry type inline the way
+`source`/`target` do. Not done here because migrating or dual-writing
+validation logic for a schema with zero real entities using it yet
+felt premature; worth doing once the new schema sees real use.
 
 ## Real example (from the actual Canon)
 
@@ -215,3 +307,32 @@ See `docs/architecture/FORGE_COMPILER.md` for the full pipeline.
   Limit → Function → Variable/Constant chain shown above, and a full
   `FoundationCompiler().compile()` run against the real repo still
   succeeds with `context.knowledge_model` populated.
+- `tests/semantics/test_graph.py` (v0.17.0 additions) —
+  `orphaned_node_ids()`, and the `subject`/`predicate`/`object` schema
+  compatibility shim (both the happy path and the "incomplete, skip
+  it" path).
+- `tests/semantics/test_orphan_validator.py` — `OrphanedEntityValidator`
+  reporting one `WARNING` per orphan, never failing validation.
+- `tests/knowledge/test_export.py` — `to_json`/`to_yaml` round-trip to
+  the same dict, deterministic ordering, well-formed GraphML XML
+  (including one test with XML special characters in an edge type, to
+  confirm escaping), and a schema/shape check against a known edge.
+- `tests/knowledge/test_statistics.py` — `GraphStatistics.from_model`
+  counts, the per-type edge breakdown, and `to_dict()` shape.
+- `tests/compiler/test_publish_knowledge_graph_stage.py` — stage
+  ordering requirements, all three files written, `PublishResult`
+  accounting, overwrite-on-rerun.
+- `tests/integration/test_knowledge_graph_export.py` — the full
+  v0.17.0 lifecycle through the real pipeline: a fixture Canon with
+  one deliberate orphan, compiled via `FoundationCompiler`, then
+  `build/graph/*` files, `report.graph_statistics`, and
+  `result.knowledge_model.query.orphaned_entities()` all checked
+  against each other.
+- Verified against the real 123-entity knowledge base: 36 graph nodes,
+  87 edges, exactly 4 orphaned entities (one Character, one
+  Organization, one Region, one World), and `build/graph/knowledge.json`
+  / `.yaml` / `.graphml` all written correctly by a real
+  `FoundationCompiler().compile()` run. Ran the real compile twice in a
+  row and confirmed `report.to_json()` (including `graph_statistics`)
+  is byte-identical both times -- Compiler Law #1 holds with the
+  v0.17.0 stages included.

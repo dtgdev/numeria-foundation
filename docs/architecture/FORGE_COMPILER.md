@@ -3,7 +3,7 @@
 The Forge Compiler is the engine that turns a Numeria Foundation's raw
 knowledge base into validated, generated, published, and packaged
 output. This document describes what it is made of and how a
-compilation actually runs, as of v0.16.0 ("Canonical Knowledge Model").
+compilation actually runs, as of v0.17.0 ("Knowledge Graph").
 
 ## The pipeline, end to end
 
@@ -40,6 +40,11 @@ Build Knowledge Model        (BuildKnowledgeModelStage, v0.16.0 --
                              RelationshipOntology into one
                              CanonicalKnowledgeModel, queryable via
                              context.knowledge_model.query)
+    |
+    v
+Publish Knowledge Graph      (PublishKnowledgeGraphStage, v0.17.0 --
+                             exports the graph to build/graph/
+                             knowledge.{json,yaml,graphml})
     |
     v
 Generate Missing Assets      (GenerateMissingAssetsStage, v0.15.0 --
@@ -93,33 +98,39 @@ Concretely, `FoundationCompiler.compile` does this:
    `CANONICAL_KNOWLEDGE_MODEL.md`). Runs unconditionally, like steps 5
    and 6 — a Canon with validation errors or a dependency cycle still
    has a Canon and a graph worth querying.
-8. If `context.success` is `False` at this point (any diagnostic is an
+8. Run `PublishKnowledgeGraphStage` (v0.17.0) — exports
+   `context.knowledge_model`'s graph to `build/graph/knowledge.json`,
+   `knowledge.yaml`, and `knowledge.graphml`. Also unconditional, same
+   reasoning as step 7.
+9. If `context.success` is `False` at this point (any diagnostic is an
    `ERROR` — from validation *or* from a dependency cycle), generation
    and publishing are skipped entirely: `package_results` stays empty
-   and nothing is written to `build/` except the reports (step 13
-   below still runs, so `build/reports/diagnostics.md` explains why).
+   and nothing is written to `build/` except the graph export (step 8)
+   and the reports (step 14 below still runs, so
+   `build/reports/diagnostics.md` explains why).
    **Only a valid, acyclic Canon proceeds to generation.**
-9. Otherwise: run `GenerateMissingAssetsStage` — renders `readme` (and
-   `character_card` for Characters) directly from every non-relationship
-   Canon entity into `context.generated_assets`.
-10. Run `PublishGeneratedAssetsStage` — writes every one of those
+10. Otherwise: run `GenerateMissingAssetsStage` — renders `readme` (and
+    `character_card` for Characters) directly from every non-relationship
+    Canon entity into `context.generated_assets`.
+11. Run `PublishGeneratedAssetsStage` — writes every one of those
     artifacts under `context.build_directory`, routed into
     `canon/`, `stories/`, `lessons/`, or `assessments/` by entity type
     (see "The `build/` output layout" below).
-11. Walk every workspace listed in `numeria.yaml`, and for each
+12. Walk every workspace listed in `numeria.yaml`, and for each
     `manifest.yaml` found, run a per-package `Compiler` with
     `LoadManifestStage`, `RegisterBuiltinArtifactsStage`,
     `RenderTemplatesStage`, and `PublishArtifactsStage` (writing
     output next to that `manifest.yaml`), producing its own
     `CompilerContext` per package (collected as `package_results`).
-12. Build a `CompilationReport` from the foundation-wide context
-    (every diagnostic accumulated across steps 4-6) via
-    `CompilationReport.from_context`.
-13. **Package**: call `write_build_reports(context.build_directory,
+13. Build a `CompilationReport` from the foundation-wide context
+    (every diagnostic accumulated across steps 4-6), including
+    `graph_statistics` computed from `context.knowledge_model`
+    (v0.17.0), via `CompilationReport.from_context`.
+14. **Package**: call `write_build_reports(context.build_directory,
     report)`, writing `build/reports/compile.json`,
     `diagnostics.json`, and `diagnostics.md` — always, whether or not
     the build succeeded.
-14. Return a `FoundationCompilationResult` wrapping the foundation-wide
+15. Return a `FoundationCompilationResult` wrapping the foundation-wide
     context, the report, and the tuple of package results.
 
 Before v0.15.0, generation "legitimately compiled zero packages
@@ -160,12 +171,13 @@ callers can inspect `context.artifacts`, `context.diagnostics`, and
 
 Stages shipped today: `LoadCanonStage`, `ValidateCanonStage`,
 `DependencyGraphStage`, `TopologicalOrderStage`,
-`BuildKnowledgeModelStage`, `GenerateMissingAssetsStage`,
-`LoadManifestStage`, `RegisterBuiltinArtifactsStage`,
-`RenderTemplatesStage`, `PublishArtifactsStage`,
-`PublishGeneratedAssetsStage`, `PublishCharactersStage` (not currently
-wired into `FoundationCompiler` -- nothing populates
-`context.characters` in that pipeline).
+`BuildKnowledgeModelStage`, `PublishKnowledgeGraphStage`,
+`GenerateMissingAssetsStage`, `LoadManifestStage`,
+`RegisterBuiltinArtifactsStage`, `RenderTemplatesStage`,
+`PublishArtifactsStage`, `PublishGeneratedAssetsStage`,
+`PublishCharactersStage` (not currently wired into
+`FoundationCompiler` -- nothing populates `context.characters` in that
+pipeline).
 
 ## CompilerContext
 
@@ -278,6 +290,21 @@ AI generators) use to ask things like "everything Concept X requires"
 or "which Lessons teach Concept Y" without walking `SemanticGraph` or
 `Canon` directly.
 
+## PublishKnowledgeGraphStage
+
+Exports `context.knowledge_model`'s graph to `build/graph/`, in three
+formats (`numeria_forge.knowledge.export`): `knowledge.json`,
+`knowledge.yaml` (the same data, both formats built from one shared
+`to_dict()`), and `knowledge.graphml` (hand-written XML, no new
+dependency -- for graph-analysis tools that expect the GraphML
+standard). Requires `context.knowledge_model` (raises `RuntimeError`
+otherwise -- run `BuildKnowledgeModelStage` first). Runs
+unconditionally, same reasoning as `BuildKnowledgeModelStage`: even an
+invalid or cyclic Canon has a graph worth exporting for inspection.
+All three files are deterministic (nodes sorted by id, edges sorted by
+`(type, id)`) -- Compiler Law #1 holds for graph exports too, verified
+by `tests/integration/test_compiler_determinism.py`.
+
 ## GenerateMissingAssetsStage
 
 Renders default output directly from Canon entities, closing the
@@ -331,6 +358,10 @@ build/
         compile.json
         diagnostics.json
         diagnostics.md
+    graph/
+        knowledge.json
+        knowledge.yaml
+        knowledge.graphml
     canon/
         <type>/<id-or-id-slug>/README.md
         character/<id-or-id-slug>/{README.md,CHARACTER_CARD.md}
@@ -342,6 +373,10 @@ build/
     assessments/
         assessment/<id>/README.md
 ```
+
+`graph/` (v0.17.0) is written by `PublishKnowledgeGraphStage` and
+always present, even when the rest of generation is skipped due to a
+validation failure -- see "PublishKnowledgeGraphStage" above.
 
 Routing is by entity type
 (`compiler.stages.generate_missing_assets.TYPE_DIRECTORY_BY_ENTITY_TYPE`):
@@ -390,14 +425,25 @@ round out the result object (see below).
 ## CompilationReport
 
 `CompilationReport` summarizes one compilation: `stages_executed`,
-`characters_processed`, `assets_published`, `generated_assets`, and the
+`characters_processed`, `assets_published`, `generated_assets`, the
 full `diagnostics` list, plus derived `errors` / `warnings` /
-`success` properties.
+`success` properties, and (v0.17.0) `graph_statistics` --
+`GraphStatistics.from_model(context.knowledge_model)`
+(`numeria_forge.knowledge.statistics`): node count, edge count, a
+per-relationship-type edge breakdown, orphaned-entity count, and which
+relationship types the ontology declares `acyclic`. `None`, not an
+all-zero `GraphStatistics`, when compilation never reached
+`BuildKnowledgeModelStage` -- so a caller can tell "no graph was
+built" apart from "the graph was empty." This is what satisfies
+v0.17.0's "produce compilation reports that include graph statistics
+and semantic validation results" success criterion, without requiring
+a separate command.
 
 - `to_json()` — a machine-readable JSON document (`success`,
-  `stages_executed`, counts, `error_count`, `warning_count`, and the
-  full diagnostics list with severity/code/message/location) for
-  automation and CI. This is exactly what `build/reports/compile.json`
+  `stages_executed`, counts, `error_count`, `warning_count`,
+  `graph_statistics`, and the full diagnostics list with
+  severity/code/message/location) for automation and CI. This is
+  exactly what `build/reports/compile.json`
   contains.
 - `format_human_readable()` — a short plain-text summary plus one line
   per diagnostic, ending in `Build succeeded.` / `Build failed.`
@@ -454,8 +500,11 @@ IDs, hidden AI calls, or network dependence. Enforced by a code audit
 plus `tests/integration/test_compiler_determinism.py`, which compiles
 an identical fixture Canon twice (in independent directories, and
 again in the same directory) and asserts the report, every generated
-artifact, and every byte under `build/` are identical. Verified against
-the real knowledge base too.
+artifact, and every byte under `build/` are identical -- including,
+as of v0.17.0, `build/graph/knowledge.{json,yaml,graphml}` and
+`report.graph_statistics`, since both are covered by "every byte under
+`build/`" and "the report" respectively without any test changes
+required. Verified against the real knowledge base too.
 
 ## The CLI
 
@@ -482,6 +531,56 @@ above (or self-explanatory). Two more:
   the Canon fails to validate and how many errors/warnings, not the
   diagnostics themselves.
 
+### `forge graph` (v0.17.0)
+
+A command group (`numeria_forge/commands/graph.py`) that works
+directly against `CanonicalKnowledgeModel.build_from_root` -- no
+`templates/` directory or full `forge compile` pipeline required,
+unlike `forge compile` itself:
+
+```
+forge graph build [path] [--json]
+forge graph validate [path] [--json]
+forge graph export [path] [--output DIR] [--format json|yaml|graphml|all] [--stdout]
+forge graph query get ENTITY_ID [path] [--json]
+forge graph query related ENTITY_ID RELATIONSHIP_TYPE [path] [--direction outgoing|incoming] [--json]
+forge graph query prerequisites ENTITY_ID [path] [--json]
+forge graph query traverse ENTITY_ID [path] [--types t1,t2] [--direction] [--max-depth N] [--json]
+forge graph query orphans [path] [--json]
+forge graph query stats [path] [--json]
+```
+
+- **`build`** — loads the Canon + ontology, builds the `SemanticGraph`,
+  and checks every `acyclic`-declared relationship type for cycles
+  (the same graph-building work `forge compile` does via
+  `DependencyGraphStage`/`TopologicalOrderStage`/`BuildKnowledgeModelStage`,
+  without also running full Canon validation or generating/publishing
+  anything). Prints `GraphStatistics` and exits 1 on a cycle.
+- **`validate`** — runs only the two semantics-package validators
+  (`DependencyGraphValidator`, `OrphanedEntityValidator`) via
+  `CanonValidationRunner` with an explicit validator set, rather than
+  `forge validate`'s full ten-validator default. Since both are
+  opt-in (see "What's still not built" below), this is how you check
+  them without changing that default. Exits 1 only on a cycle
+  (ERROR) -- orphans are WARNING and don't fail the exit code.
+- **`export`** — writes `knowledge.{json,yaml,graphml}` (default:
+  `<path>/build/graph/`, same as `PublishKnowledgeGraphStage`), or a
+  single format to `--stdout` for piping into another tool.
+- **`query`** — one subcommand per `KnowledgeQuery` method
+  (`get`/`related`/`prerequisites`/`traverse`/`orphans`) plus `stats`
+  (`GraphStatistics`). E.g. `forge graph query related NUM-CON-000002
+  TEACHES_CONCEPT --direction incoming` answers "which Lessons teach
+  this Concept" directly from the command line -- the "Query Engine"
+  use case from the v0.17.0 vision doc, without needing a Python
+  session.
+
+Every subcommand accepts `--json` (or, for `export`, writes files) for
+scripting; every one works against a bare `knowledge_root`, a
+Foundation root with `numeria.yaml`, or a directory containing
+`knowledge/`, resolved the same way as every other `forge` command
+(`commands/_shared.py:resolve_knowledge_root`, factored out from
+`cli.py` so both share identical path-resolution behavior).
+
 ## What's still not built
 
 The formal `tests/integration/{test_compile_project.py,
@@ -493,3 +592,29 @@ this pass live under `tests/compiler/`, `tests/test_cli.py`, and
 existing per-stage test organization rather than introducing a new,
 differently-named top-level suite. That reorganization (if still
 wanted) is a natural next step.
+
+`RelationshipValidator` (v0.14.0, schema/type-checking for
+relationship entities) has not been extended to understand the
+v0.17.0 `subject`/`predicate`/`object` schema
+(`schema: numeria.relationship.v1`) -- only `SemanticGraph` has (see
+`CANONICAL_KNOWLEDGE_MODEL.md`). A relationship entity written in that
+schema will appear correctly in the graph, query API, exports, and
+graph statistics, but won't get the source/target type
+cross-validation `forge validate` gives the existing `source`/`target`
+schema. Extending `RelationshipValidator` to the new shape (it would
+need to look up each endpoint's actual type from the Canon, since
+`subject`/`object` don't carry type inline) is a natural next step if
+the new schema sees real use.
+
+`OrphanedEntityValidator` (v0.17.0, `numeria_forge.semantics`) is opt-in,
+like `DependencyGraphValidator` -- not part of `create_default_canon_validators()`,
+so plain `forge validate` never reports orphans. Three ways to see
+them anyway, in increasing order of ceremony: `forge graph query
+orphans` (just the list), `forge graph validate` (the same validator,
+run explicitly, WARNING diagnostics), or
+`CompilationReport.graph_statistics.orphaned_node_count` (just the
+count, on every `forge compile`). Add the validator to
+`create_default_canon_validators()` if orphans should actually fail
+plain `forge validate` too -- not done here since that's a real
+behavior change to what "a valid Canon" means, same reasoning as
+`DependencyGraphValidator` staying opt-in.

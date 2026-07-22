@@ -37,6 +37,7 @@ from numeria_forge.semantics.ontology import (
     RelationshipOntology,
     RelationshipTypeDefinition,
 )
+from numeria_forge.semantics.orphan_validator import OrphanedEntityValidator
 from numeria_forge.semantics.topo_sort import TopologicalSortError, topological_sort
 from numeria_forge.semantics.validator import DependencyGraphValidator
 
@@ -47,6 +48,7 @@ __all__ = [
     "GraphEdge",
     "GraphNode",
     "OntologyError",
+    "OrphanedEntityValidator",
     "RelationshipOntology",
     "RelationshipTypeDefinition",
     "SemanticGraph",
