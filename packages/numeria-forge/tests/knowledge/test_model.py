@@ -7,12 +7,14 @@ from numeria_forge.knowledge.query import KnowledgeQuery
 
 
 def test_build_from_root_loads_canon_graph_and_ontology(model) -> None:
-    # Canon.entities includes relationship entities too (13 = 7
-    # non-relationship entities + 6 relationships); the graph only
-    # gets a node per non-relationship entity.
-    assert len(model.canon) == 13
-    assert len(model.graph) == 7
+    # Canon.entities includes relationship entities too (18 = 10
+    # non-relationship entities + 8 relationships, since v0.19.0 added
+    # a 3-scene FOLLOWS_SCENE chain alongside the original 7 + 6); the
+    # graph only gets a node per non-relationship entity.
+    assert len(model.canon) == 18
+    assert len(model.graph) == 10
     assert "REQUIRES" in model.ontology
+    assert "FOLLOWS_SCENE" in model.ontology
     assert isinstance(model.query, KnowledgeQuery)
 
 

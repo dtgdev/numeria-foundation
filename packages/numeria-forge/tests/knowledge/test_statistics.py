@@ -9,7 +9,9 @@ def test_from_model_counts_nodes_edges_and_orphans(model) -> None:
     assert stats.node_count == len(model.graph)
     assert stats.edge_count == len(model.graph.edges)
     assert stats.orphaned_node_count == len(model.graph.orphaned_node_ids())
-    assert stats.acyclic_relationship_types == ("REQUIRES",)
+    # v0.19.0: FOLLOWS_SCENE is also acyclic now (the 3-scene
+    # story chain in this fixture), alongside REQUIRES.
+    assert stats.acyclic_relationship_types == ("REQUIRES", "FOLLOWS_SCENE")
 
 
 def test_edge_type_counts_sums_correctly(model) -> None:
@@ -26,7 +28,7 @@ def test_to_dict_is_json_shaped(model) -> None:
     data = stats.to_dict()
 
     assert data["node_count"] == stats.node_count
-    assert data["acyclic_relationship_types"] == ["REQUIRES"]
+    assert data["acyclic_relationship_types"] == ["REQUIRES", "FOLLOWS_SCENE"]
     assert isinstance(data["edge_type_counts"], dict)
 
 

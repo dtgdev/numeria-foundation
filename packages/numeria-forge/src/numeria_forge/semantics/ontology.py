@@ -38,13 +38,38 @@ def _as_tuple(value: object) -> tuple[str, ...]:
 
 @dataclass(frozen=True, slots=True)
 class RelationshipTypeDefinition:
-    """One entry under `relationship_types:` in the ontology file."""
+    """One entry under `relationship_types:` in the ontology file.
+
+    `category` and `traversal` (v0.19.0 -- "Views over One Canon") are
+    descriptive grouping fields, not consumed by `allows()` or by
+    graph-building: `category` is free-form documentation of what kind
+    of relationship this is (`learning`, `narrative`, `world`,
+    `publishing`, ...), while `traversal` names the specific query a
+    relationship type participates in (`learning`, `story`, ...) and
+    is what `RelationshipOntology.acyclic_type_names(traversal=...)`
+    filters on. Multiple relationship types can share a `category`
+    without sharing a `traversal` -- `traversal` is the narrower,
+    query-scoping field.
+
+    `ordered` and `transitive` are likewise descriptive metadata about
+    the relationship's shape (does instance order matter, e.g. scene
+    sequence; does A->B->C imply A->C). Neither is consumed by any
+    validator or traversal today -- they exist so relationship types
+    can declare their own semantics in one place rather than every
+    consumer re-deciding it, the same way `acyclic` started as
+    descriptive metadata before `DependencyGraphValidator` and
+    `topological_sort` were built to consume it.
+    """
 
     name: str
     allowed_source_types: tuple[str, ...]
     allowed_target_types: tuple[str, ...]
     symmetric: bool = False
     acyclic: bool = False
+    category: str = ""
+    traversal: str = ""
+    ordered: bool = False
+    transitive: bool = False
 
     def allows(self, source_type: str, target_type: str) -> bool:
         return (
@@ -71,11 +96,28 @@ class RelationshipOntology:
     def get(self, type_name: str) -> RelationshipTypeDefinition | None:
         return self.types.get(type_name)
 
-    def acyclic_type_names(self) -> tuple[str, ...]:
-        """Relationship types that must never form a cycle (e.g. REQUIRES)."""
+    def acyclic_type_names(self, *, traversal: str | None = None) -> tuple[str, ...]:
+        """Relationship types that must never form a cycle (e.g. REQUIRES).
+
+        With no `traversal` filter (the default), this returns every
+        acyclic-declared type combined -- what
+        `DependencyGraphValidator` wants, since a cycle in *any*
+        acyclic-declared relationship type is a defect regardless of
+        which query uses it.
+
+        Pass `traversal=` (v0.19.0) to scope to one named query
+        instead, e.g. `traversal="learning"` for just `REQUIRES` or
+        `traversal="story"` for just `FOLLOWS_SCENE` -- what
+        `KnowledgeQuery.learning_path`/`.story_path` want, so that
+        having two (or more) acyclic relationship types declared at
+        once never mixes unrelated graphs into one topological order.
+        """
 
         return tuple(
-            name for name, definition in self.types.items() if definition.acyclic
+            name
+            for name, definition in self.types.items()
+            if definition.acyclic
+            and (traversal is None or definition.traversal == traversal)
         )
 
     @classmethod
@@ -109,6 +151,10 @@ class RelationshipOntology:
                 allowed_target_types=_as_tuple(rule.get("target")),
                 symmetric=bool(rule.get("symmetric", False)),
                 acyclic=bool(rule.get("acyclic", False)),
+                category=str(rule.get("category", "")),
+                traversal=str(rule.get("traversal", "")),
+                ordered=bool(rule.get("ordered", False)),
+                transitive=bool(rule.get("transitive", False)),
             )
 
         return cls(

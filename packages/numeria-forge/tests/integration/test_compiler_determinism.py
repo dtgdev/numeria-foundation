@@ -15,11 +15,32 @@ source content.
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import yaml
 
 from numeria_forge.compiler import FoundationCompiler
+
+
+def _report_dict_excluding_duration(report) -> dict:
+    """The report as a dict, minus `duration_seconds`.
+
+    v0.19.0 -- "Compiler Hardening" -- added wall-clock duration
+    timing to `CompilationReport`. It is, by construction, never
+    reproducible between two separate compiles (even of byte-identical
+    Canon content, the two runs take different amounts of wall-clock
+    time) -- so it is deliberately excluded from this determinism
+    comparison, exactly as documented in
+    `docs/architecture/ADR-0008-compiler-hardening.md`'s "Consequences"
+    section. Everything else in the report -- entity counts,
+    diagnostics, graph statistics, published/generated asset counts --
+    remains part of the byte-identical contract.
+    """
+
+    data = json.loads(report.to_json())
+    data.pop("duration_seconds", None)
+    return data
 
 TEMPLATE_ROOT = Path(__file__).resolve().parents[2] / "templates"
 
@@ -157,8 +178,12 @@ def test_compile_is_deterministic_across_independent_directories(
     assert result_a.success is True
     assert result_b.success is True
 
-    # The full Compilation Report, as JSON, must be byte-identical.
-    assert result_a.report.to_json() == result_b.report.to_json()
+    # The full Compilation Report must be identical -- except
+    # `duration_seconds`, which is wall-clock and never reproducible
+    # by construction (see `_report_dict_excluding_duration` above).
+    assert _report_dict_excluding_duration(
+        result_a.report
+    ) == _report_dict_excluding_duration(result_b.report)
 
     # Every generated (Canon-driven) asset's destination + content.
     generated_a = sorted(
@@ -203,7 +228,26 @@ def test_compile_is_deterministic_across_independent_directories(
     assert set(tree_a.keys()) == set(tree_b.keys())
     assert len(tree_a) > 0
 
+    # build/reports/compile.json embeds duration_seconds -- wall-clock,
+    # never reproducible by construction (see
+    # _report_dict_excluding_duration above). Compare it with that one
+    # field excluded; every other byte under build/, including
+    # build/reports/diagnostics.{json,md}, must still match exactly.
+    compile_json_path = Path("reports/compile.json")
+
     for relative_path in tree_a:
+        if relative_path == compile_json_path:
+            data_a = json.loads(tree_a[relative_path])
+            data_b = json.loads(tree_b[relative_path])
+            data_a.pop("duration_seconds", None)
+            data_b.pop("duration_seconds", None)
+            assert data_a == data_b, (
+                "build/reports/compile.json differs (beyond duration_seconds) "
+                "between two compiles of an identical Canon -- Compiler Law #1 "
+                "violation"
+            )
+            continue
+
         assert tree_a[relative_path] == tree_b[relative_path], (
             f"build/{relative_path} differs between two compiles of an "
             "identical Canon -- Compiler Law #1 violation"
@@ -218,7 +262,9 @@ def test_recompiling_the_same_directory_overwrites_identically(
     first = FoundationCompiler(template_root=TEMPLATE_ROOT).compile(tmp_path)
     second = FoundationCompiler(template_root=TEMPLATE_ROOT).compile(tmp_path)
 
-    assert first.report.to_json() == second.report.to_json()
+    assert _report_dict_excluding_duration(
+        first.report
+    ) == _report_dict_excluding_duration(second.report)
 
     build_dir = tmp_path / "build"
     readme = (

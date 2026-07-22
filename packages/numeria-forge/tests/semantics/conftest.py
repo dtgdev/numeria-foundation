@@ -23,10 +23,37 @@ relationship_types:
     source: Concept
     target: Concept
     acyclic: true
+    category: learning
+    traversal: learning
   FRIEND_OF:
     source: Character
     target: Character
     symmetric: true
+""".strip()
+
+# v0.19.0: a second acyclic, ordered relationship type alongside
+# REQUIRES, scoped to a different `traversal` name -- used to prove
+# `.learning_path`/`.prerequisites_of` (traversal="learning") and
+# `.story_path` (traversal="story") each stay scoped to their own
+# type and never combine into one meaningless topological order.
+ONTOLOGY_WITH_LEARNING_AND_STORY = """
+version: "1.0.0"
+status: CANON
+
+relationship_types:
+  REQUIRES:
+    source: Concept
+    target: Concept
+    acyclic: true
+    category: learning
+    traversal: learning
+  FOLLOWS_SCENE:
+    source: Scene
+    target: Scene
+    acyclic: true
+    category: narrative
+    traversal: story
+    ordered: true
 """.strip()
 
 
@@ -45,4 +72,17 @@ def requires_edge(edge_id: str, source_id: str, target_id: str) -> CanonEntity:
         f"knowledge/relationships/{edge_id}/entity.yaml",
         source={"id": source_id, "type": "Concept"},
         target={"id": target_id, "type": "Concept"},
+    )
+
+
+def follows_scene_edge(edge_id: str, source_id: str, target_id: str) -> CanonEntity:
+    """``source_id`` follows (comes after) ``target_id``, matching the
+    real Canon's FOLLOWS_SCENE direction convention."""
+
+    return make_entity(
+        edge_id,
+        "FOLLOWS_SCENE",
+        f"knowledge/relationships/{edge_id}/entity.yaml",
+        source={"id": source_id, "type": "Scene"},
+        target={"id": target_id, "type": "Scene"},
     )

@@ -102,6 +102,8 @@ and narrative relationships," "expose a stable query API" — lives in
 | `traverse(start_id, types=, direction=, max_depth=)` | Breadth-first walk over one or more relationship types |
 | `prerequisites_of(entity_id)` | Everything transitively required before this entity, nearest first |
 | `orphaned_entities()` | Every entity touched by zero relationships in either direction (v0.17.0) |
+| `learning_path(entity_id)` | The ordered sequence to learn, prerequisites first, ending with this entity (v0.18.0) |
+| `story_path(scene_id)` | The ordered reading sequence of Scenes, earliest first, ending with this scene (v0.19.0) |
 
 `related()` and `traverse()` are generic — they work with *any*
 relationship type declared in the ontology, not just `REQUIRES`. The
@@ -246,6 +248,61 @@ prereqs = model.query.prerequisites_of("NUM-CON-000001")  # Derivative
 Derivative → Limit → Function → {Variable, Constant} — nearest
 prerequisite first.
 
+## Views over one Canon (v0.19.0)
+
+`learning_path` (v0.18.0) computes an *ordered* learning sequence, not
+just the unordered `prerequisites_of` closure. v0.19.0 asked: Numeria
+also has a narrative structure -- Scenes connected by `FOLLOWS_SCENE`
+("this scene follows that one") -- and wants the same kind of ordered
+answer for "what's the reading order up to this scene?" The original
+proposal for this (see the "Story Graph" vision doc) sketched a
+parallel `story/` package: `StoryNode`, `StoryEdge`, its own graph,
+its own traversal, its own validator -- a second graph engine sitting
+next to `SemanticGraph`.
+
+That was deliberately not built. Instead, `story_path` is `learning_path`'s
+narrative counterpart, walking the *same* `SemanticGraph` every other
+query in this module uses, scoped to a different, ontology-declared
+`traversal` name:
+
+```python
+def learning_path(self, entity_id: str) -> tuple[CanonEntity, ...]:
+    return self._ordered_path(entity_id, traversal="learning")
+
+def story_path(self, scene_id: str) -> tuple[CanonEntity, ...]:
+    return self._ordered_path(scene_id, traversal="story")
+```
+
+Both are thin wrappers over one shared `_ordered_path` implementation
+(topological sort over the ontology's `acyclic`-declared types for
+that `traversal`, reversed into "earliest first," filtered to the
+target's own transitive predecessors). The relationship ontology is
+what tells each which edges to walk -- see `SEMANTIC_LAYER.md`'s
+"`category` and `traversal`: one graph, several views" section for the
+full `RelationshipTypeDefinition` schema and why `traversal` scoping
+matters once more than one relationship type is `acyclic: true` at
+once.
+
+This is the "one database, many views" shape: `Canon` is the one
+source of truth, `SemanticGraph` is the one graph engine, and each
+named query (`learning_path`, `story_path`, and whatever comes next --
+a `world_path` over `OCCURS_AT`/`LOCATED_IN`, say) is a *projection*
+over it, not a new storage model. Adding a third view means adding a
+`traversal` name to the ontology and a query method, not a new
+package.
+
+`StoryValidator` (`numeria_forge.semantics`, see `SEMANTIC_LAYER.md`)
+is `story_path`'s validation counterpart, the narrative equivalent of
+`DependencyGraphValidator`: every story-traversal component must have
+a beginning and an ending. Also opt-in, also honestly scoped -- it
+does not attempt "every character is reachable" or "required
+artifacts exist" from the original vision doc, since both need a
+first-class notion of story membership the Canon doesn't have yet.
+
+Not built in v0.19.0: a `forge story` CLI command (the v0.17.0
+`forge graph` pattern would be the template) and a `world_path`/other
+additional views -- scoped out explicitly rather than spec-crept in.
+
 ## What this enables, and what's deliberately not built yet
 
 The vision doc's "structured AI context" example (a Concept + its
@@ -336,3 +393,33 @@ See `docs/architecture/FORGE_COMPILER.md` for the full pipeline.
   row and confirmed `report.to_json()` (including `graph_statistics`)
   is byte-identical both times -- Compiler Law #1 holds with the
   v0.17.0 stages included.
+- `tests/semantics/test_ontology.py` (v0.19.0 additions) --
+  `category`/`traversal`/`ordered`/`transitive` parsing,
+  `acyclic_type_names(traversal=...)` scoping including the
+  "no match" empty-tuple case.
+- `tests/semantics/test_story_validator.py` (v0.19.0) -- a clean
+  linear Scene chain passes; a 2-cycle produces exactly two WARNING
+  diagnostics ("no beginning", "no ending"); two separate clean
+  chains both pass independently; Scenes untouched by `FOLLOWS_SCENE`
+  are correctly out of scope; fail-open on a missing ontology or on
+  an ontology with no `traversal="story"` type declared.
+- `tests/knowledge/test_query.py` (v0.19.0 additions) -- `story_path`
+  against a fixture 3-scene chain (earliest-first, ending with the
+  target; a leaf scene is just itself; an unknown id is empty), and
+  two regression tests proving `.learning_path`/`.prerequisites_of`
+  stay scoped to `traversal="learning"` and never cross into
+  `traversal="story"` now that the fixture ontology declares both as
+  acyclic at once.
+- Verified against the real 123-entity knowledge base (33
+  relationship types, all now `category`-annotated): `story_path` over
+  the real 6-scene chain returns the exact reading order (Derivative
+  Meets Delta → The Silver Delta → The Book of Change Awakens → The
+  First Clue of Change → Measuring the Change → The Pattern Appears);
+  `learning_path` still returns the identical Constant → Variable →
+  Function → Limit → Derivative order it did before this change
+  (proving the traversal-scoping refactor didn't alter v0.18.0
+  behavior); `StoryValidator` against the real Canon reports zero
+  diagnostics (one clean, six-scene component); and a full
+  `FoundationCompiler().compile()` run against the real repo, twice in
+  a row, still produces byte-identical reports -- Compiler Law #1
+  holds with `FOLLOWS_SCENE` now acyclic too.

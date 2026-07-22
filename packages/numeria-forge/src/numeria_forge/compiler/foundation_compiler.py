@@ -71,17 +71,39 @@ today, and fabricating an empty `website/` directory would misrepresent
 that as done. `Story` in the target layout is also not a literal Canon
 entity type; `Scene` and `Book` (the closest narrative-adjacent types)
 are routed to `build/stories/` -- see `GenerateMissingAssetsStage`.
+
+v0.19.0 -- "Compiler Hardening": `FoundationCompiler` accepts an
+`extra_stages` sequence, run (via the existing `Compiler` class --
+already a generic ordered-stage runner; it's what the per-package
+sub-pipeline below has always used) right after
+`PublishKnowledgeGraphStage`, before the success-gated generation
+block. This is the pipeline's extension point: a caller can register
+additional analysis/publishing stages without editing this file, the
+same way `LoadManifestStage`/`RegisterBuiltinArtifactsStage`/
+`RenderTemplatesStage`/`PublishArtifactsStage` are already composed
+through `Compiler` for each package. Deliberately not a rename of
+`CompilerStage` to some `CompilerPass` concept, and not a new parallel
+abstraction -- `Compiler` already *is* Forge's pass-runner; this just
+uses it for the foundation-wide pipeline too, in the one place where
+"more passes" was a real, concrete ask rather than a stylistic one.
+See `docs/architecture/ADR-0008-compiler-hardening.md` for the
+reasoning behind keeping the existing `Stage`/`Diagnostic`
+vocabulary rather than adopting the `PassManager`/`CompilerPass`
+naming a companion proposal sketched.
 """
 
 from __future__ import annotations
 
+import time
 from pathlib import Path
+from typing import Sequence
 
 from numeria_forge.compiler.build_reports import write_build_reports
 from numeria_forge.compiler.compiler import Compiler
 from numeria_forge.compiler.context import CompilerContext
 from numeria_forge.compiler.foundation_result import FoundationCompilationResult
 from numeria_forge.compiler.report import CompilationReport
+from numeria_forge.compiler.stage import CompilerStage
 from numeria_forge.compiler.stages import (
     BuildKnowledgeModelStage,
     DependencyGraphStage,
@@ -108,12 +130,16 @@ class FoundationCompiler:
         validators: ValidatorRegistry | None = None,
         template_root: Path | None = None,
         loader: FoundationLoader | None = None,
+        extra_stages: Sequence[CompilerStage] = (),
     ) -> None:
         self._validators = validators
         self._template_root = template_root
         self._loader = loader or FoundationLoader()
+        self._extra_stages = tuple(extra_stages)
 
     def compile(self, foundation_root: Path) -> FoundationCompilationResult:
+        started_at = time.perf_counter()
+
         manifest = self._loader.load(foundation_root)
         template_root = self._resolve_template_root(foundation_root)
 
@@ -142,6 +168,10 @@ class FoundationCompiler:
 
         PublishKnowledgeGraphStage().execute(context)
         stages_executed += 1
+
+        if self._extra_stages:
+            Compiler(stages=list(self._extra_stages)).compile(context)
+            stages_executed += len(self._extra_stages)
 
         package_results: list[CompilerContext] = []
 
@@ -176,9 +206,12 @@ class FoundationCompiler:
 
                     stages_executed += package_compiler.stage_count
 
+        duration_seconds = time.perf_counter() - started_at
+
         report = CompilationReport.from_context(
             context,
             stages_executed=stages_executed,
+            duration_seconds=duration_seconds,
         )
 
         # "Package": write the Compilation Report to build/reports/

@@ -144,64 +144,61 @@ class KnowledgeQuery:
         transitive closure ("everything needed before X"), this gives
         the specific sequence to learn them in.
 
-        Built from `topological_sort` over the ontology's declared
-        `acyclic` relationship types (today: `REQUIRES`), reversed
-        into learning order -- `topological_sort` itself places a
-        dependent *before* what it requires (see
-        `docs/architecture/SEMANTIC_LAYER.md`'s "direction convention"
-        note), which is backwards for "what should I learn first" --
-        then filtered down to just ``entity_id``'s own prerequisite
-        closure plus itself, preserving their relative order. Because
-        that relative order is a subsequence of a valid whole-graph
-        topological order, it remains a valid ordering for this
-        subset: every prerequisite still appears before anything that
-        depends on it.
-
-        Returns an empty tuple if ``entity_id`` is unknown, if no
-        relationship type is declared `acyclic` (nothing to order),
-        or if the graph actually contains a cycle (a malformed Canon
-        has no reliable learning order -- see `forge graph build` /
-        `DependencyGraphValidator` to find and fix the cycle first).
+        A thin wrapper over `_ordered_path` scoped to `traversal:
+        "learning"` (today: just `REQUIRES`) -- see `_ordered_path`
+        for the algorithm and `_ordered_path`'s and
+        `RelationshipOntology.acyclic_type_names`'s docstrings for why
+        this is scoped by traversal rather than using every
+        `acyclic`-declared type combined (v0.19.0 added a second
+        acyclic, ordered relationship type, `FOLLOWS_SCENE`, for
+        `.story_path` -- without this scoping the two would be
+        combined into one meaningless topological order).
         """
 
-        if entity_id not in self.graph.nodes:
-            return ()
+        return self._ordered_path(entity_id, traversal="learning")
 
-        acyclic_types = self.ontology.acyclic_type_names()
+    def story_path(self, scene_id: str) -> tuple[CanonEntity, ...]:
+        """The ordered reading sequence of Scenes, earliest first,
+        ending with ``scene_id`` itself (v0.19.0 -- "Views over One
+        Canon"). The narrative counterpart of `.learning_path`: same
+        algorithm, scoped to `traversal: "story"` (today: just
+        `FOLLOWS_SCENE`) instead of `"learning"`. Not a second graph
+        engine -- `FOLLOWS_SCENE` is walked through the same
+        `SemanticGraph` every other relationship type is, just via a
+        different named, ontology-declared view. See
+        `docs/architecture/CANONICAL_KNOWLEDGE_MODEL.md`.
 
-        if not acyclic_types:
-            entity = self.get(entity_id)
-            return (entity,) if entity is not None else ()
+        Returns an empty tuple if ``scene_id`` is unknown, if no
+        relationship type is declared `acyclic` with `traversal:
+        "story"` (nothing to order), or if the Scene graph actually
+        contains a cycle.
+        """
 
-        relevant_ids = {entity_id} | {
-            prerequisite.id for prerequisite in self.prerequisites_of(entity_id)
-        }
-
-        try:
-            whole_graph_order = topological_sort(self.graph, types=acyclic_types)
-        except TopologicalSortError:
-            return ()
-
-        learning_order = tuple(reversed(whole_graph_order))
-        filtered_ids = (
-            node_id for node_id in learning_order if node_id in relevant_ids
-        )
-
-        return tuple(
-            entity
-            for entity in (self.get(node_id) for node_id in filtered_ids)
-            if entity is not None
-        )
+        return self._ordered_path(scene_id, traversal="story")
 
     def prerequisites_of(self, entity_id: str) -> tuple[CanonEntity, ...]:
         """Every entity ``entity_id`` transitively requires, nearest
         first -- "everything needed before X". Driven entirely by
         whichever relationship types the ontology marks `acyclic:
-        true` (`REQUIRES`, as of v0.15.0/v0.16.0); if none are
-        declared, this returns an empty tuple rather than guessing.
+        true` *and* `traversal: "learning"` (`REQUIRES`, as of
+        v0.15.0/v0.16.0); if none are declared, this returns an empty
+        tuple rather than guessing.
         """
 
-        acyclic_types = self.ontology.acyclic_type_names()
+        return self._predecessors(entity_id, traversal="learning")
+
+    def _predecessors(
+        self, entity_id: str, *, traversal: str
+    ) -> tuple[CanonEntity, ...]:
+        """Everything `entity_id` transitively points at via
+        outgoing, acyclic, `traversal`-scoped relationship types,
+        nearest first. The shared implementation behind
+        `prerequisites_of` (`traversal="learning"`); `.story_path`
+        uses this internally too, to find every scene a given scene
+        transitively follows.
+        """
+
+        acyclic_types = self.ontology.acyclic_type_names(traversal=traversal)
 
         if not acyclic_types:
             return ()
@@ -211,6 +208,45 @@ class KnowledgeQuery:
         return tuple(
             entity
             for entity in (self.get(entity_id) for entity_id in ids)
+            if entity is not None
+        )
+
+    def _ordered_path(
+        self, entity_id: str, *, traversal: str
+    ) -> tuple[CanonEntity, ...]:
+        """The shared algorithm behind `.learning_path` and
+        `.story_path`: a `traversal`-scoped topological order,
+        reversed into "earliest first" order (see `.learning_path`'s
+        original docstring for why the reversal is needed), then
+        filtered down to just `entity_id`'s own transitive
+        predecessors plus itself, preserving their relative order.
+        """
+
+        if entity_id not in self.graph.nodes:
+            return ()
+
+        acyclic_types = self.ontology.acyclic_type_names(traversal=traversal)
+
+        if not acyclic_types:
+            entity = self.get(entity_id)
+            return (entity,) if entity is not None else ()
+
+        relevant_ids = {entity_id} | {
+            predecessor.id
+            for predecessor in self._predecessors(entity_id, traversal=traversal)
+        }
+
+        try:
+            whole_graph_order = topological_sort(self.graph, types=acyclic_types)
+        except TopologicalSortError:
+            return ()
+
+        ordered = tuple(reversed(whole_graph_order))
+        filtered_ids = (node_id for node_id in ordered if node_id in relevant_ids)
+
+        return tuple(
+            entity
+            for entity in (self.get(node_id) for node_id in filtered_ids)
             if entity is not None
         )
 

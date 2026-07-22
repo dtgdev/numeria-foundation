@@ -1,40 +1,59 @@
-version: 1.0.0
+version: 1.1.0
 status: CANON
+
+# v0.19.0 -- "Views over One Canon": every relationship type now
+# declares a `category` (free-form documentation of what kind of
+# relationship this is) and, for the two order-sensitive types,
+# a `traversal` name that scopes which named query
+# (`KnowledgeQuery.learning_path` / `.story_path`) is allowed to walk
+# it. See `docs/architecture/SEMANTIC_LAYER.md` and
+# `docs/architecture/CANONICAL_KNOWLEDGE_MODEL.md` for the full
+# write-up: the Canon stays one graph, `category`/`traversal` are what
+# let it be queried through several *views* (learning, narrative,
+# world, publishing) without needing a second graph engine per view.
 
 relationship_types:
 
   LIVES_AT:
     source: Character
     target: Location
+    category: narrative
 
   GUIDED_BY:
     source: Character
     target: Character
+    category: narrative
 
   FRIEND_OF:
     source: Character
     target: Character
     symmetric: true
+    category: narrative
 
   CARRIES:
     source: Character
     target: Artifact
+    category: narrative
 
   CREATED:
     source: Character
     target: Artifact
+    category: narrative
 
   STORED_AT:
     source: Artifact
     target: Location
+    category: narrative
 
   MEMBER_OF:
     source: Character
     target: Organization
+    category: world
 
   PROTECTS:
     source: Character
     target: Artifact
+    category: narrative
 
   APPEARS_IN:
     source:
@@ -43,105 +62,152 @@ relationship_types:
       - Artifact
       - Location
     target: Book
+    category: publishing
 
   LOCATED_IN:
     source: Organization
     target: Location
+    category: world
 
   REPRESENTED_BY:
     source: Concept
     target: Character
+    category: learning
 
   TEACHES:
     source: LearningObjective
     target: Concept
+    category: learning
 
   REQUIRES:
     source: Concept
     target: Concept
+    category: learning
+    traversal: learning
     # A Concept prerequisite chain must be a DAG -- if REQUIRES ever
     # forms a cycle, some concept would require itself to be learned
     # first. Marked in v0.15.0 so DependencyGraphValidator
     # (numeria_forge.semantics) knows to check this specific
-    # relationship type for cycles.
+    # relationship type for cycles. `traversal: learning` (v0.19.0)
+    # additionally scopes `KnowledgeQuery.learning_path`/
+    # `.prerequisites_of` to just this type, so a second acyclic,
+    # ordered relationship type (FOLLOWS_SCENE, below) can be declared
+    # without the two graphs being combined into one topological
+    # order.
     acyclic: true
+    transitive: true
 
   FEATURES_CHARACTER:
     source: Scene
     target: Character
+    category: narrative
 
   INTRODUCES_CONCEPT:
     source: Scene
     target: Concept
+    category: narrative
 
   OCCURS_AT:
     source: Scene
     target: Location
+    category: narrative
 
   ACHIEVES_OBJECTIVE:
     source: Scene
     target: LearningObjective
+    category: learning
 
   PART_OF_BOOK:
     source: Scene
     target: Book
+    category: publishing
 
   USES_SCENE:
     source: Lesson
     target: Scene
+    category: publishing
 
   TEACHES_OBJECTIVE:
     source: Lesson
     target: LearningObjective
+    category: learning
 
   TEACHES_CONCEPT:
     source: Lesson
     target: Concept
+    category: learning
 
   ASSESSES_OBJECTIVE:
     source: Assessment
     target: LearningObjective
+    category: learning
 
   EVALUATES_LESSON:
     source: Assessment
     target: Lesson
+    category: learning
 
   ASSESSES_CONCEPT:
     source: Assessment
     target: Concept
+    category: learning
 
   PART_OF_LESSON:
     source: Activity
     target: Lesson
+    category: learning
 
   PRACTICES_OBJECTIVE:
     source: Activity
     target: LearningObjective
+    category: learning
 
   PRACTICES_CONCEPT:
     source: Activity
     target: Concept
+    category: learning
 
   STARTS_WITH_SCENE:
     source: LearningJourney
     target: Scene
+    category: publishing
 
   INCLUDES_LESSON:
     source: LearningJourney
     target: Lesson
+    category: learning
 
   INCLUDES_ACTIVITY:
     source: LearningJourney
     target: Activity
+    category: learning
 
   ENDS_WITH_ASSESSMENT:
     source: LearningJourney
     target: Assessment
+    category: learning
 
   FEATURES_ARTIFACT:
     source: Scene
     target: Artifact
+    category: narrative
 
   FOLLOWS_SCENE:
     source: Scene
     target: Scene
+    category: narrative
+    traversal: story
+    ordered: true
+    # v0.19.0: a Scene sequence must be a DAG for the same reason a
+    # Concept prerequisite chain must be -- if FOLLOWS_SCENE ever
+    # forms a cycle, some scene would follow itself. This closes a
+    # real, previously-unvalidated gap: before this, nothing checked
+    # scene ordering for cycles. Now that it is `acyclic: true`,
+    # `DependencyGraphValidator` covers it automatically (it already
+    # checks every acyclic-declared type combined), and
+    # `KnowledgeQuery.story_path` can compute a reading order the same
+    # way `.learning_path` computes a learning order. `traversal:
+    # story` keeps this type's topological order from being combined
+    # with `REQUIRES`'s.
+    acyclic: true
+    transitive: false

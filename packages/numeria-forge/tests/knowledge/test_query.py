@@ -209,3 +209,49 @@ def test_traverse_is_cycle_safe_even_without_an_acyclic_declaration(model) -> No
 
     assert len(visited) == len(set(visited))  # no duplicates, no infinite loop
     assert "CON-DERIVATIVE" not in visited  # start node itself excluded
+
+
+def test_story_path_is_earliest_first_ending_with_the_target(model) -> None:
+    path = model.query.story_path("SCN-CLIMAX")
+
+    assert [e.id for e in path] == ["SCN-OPENING", "SCN-MIDDLE", "SCN-CLIMAX"]
+
+
+def test_story_path_for_the_opening_scene_is_just_itself(model) -> None:
+    path = model.query.story_path("SCN-OPENING")
+
+    assert [e.id for e in path] == ["SCN-OPENING"]
+
+
+def test_story_path_for_an_unknown_id_is_empty(model) -> None:
+    assert model.query.story_path("SCN-DOES-NOT-EXIST") == ()
+
+
+def test_learning_path_and_story_path_stay_scoped_to_their_own_traversal(model) -> None:
+    # Both REQUIRES (traversal="learning") and FOLLOWS_SCENE
+    # (traversal="story") are acyclic in this fixture's ontology at
+    # the same time. Before v0.19.0's traversal scoping, both
+    # `.learning_path` and `.story_path` were driven by *every*
+    # acyclic-declared type combined, which would mix Concepts and
+    # Scenes into one meaningless topological order. Confirm each
+    # stays scoped to only its own relationship type.
+    learning = model.query.learning_path("CON-DERIVATIVE")
+    story = model.query.story_path("SCN-CLIMAX")
+
+    assert all(e.type == "Concept" for e in learning)
+    assert all(e.type == "Scene" for e in story)
+
+    # And the unscoped combination is still available for consumers
+    # that genuinely want it (DependencyGraphValidator's cycle check).
+    assert set(model.ontology.acyclic_type_names()) == {"REQUIRES", "FOLLOWS_SCENE"}
+    assert model.ontology.acyclic_type_names(traversal="learning") == ("REQUIRES",)
+    assert model.ontology.acyclic_type_names(traversal="story") == ("FOLLOWS_SCENE",)
+
+
+def test_prerequisites_of_does_not_cross_into_the_story_traversal(model) -> None:
+    # CON-DERIVATIVE and SCN-* are disjoint node sets, but this proves
+    # prerequisites_of() only ever considers REQUIRES, never
+    # FOLLOWS_SCENE, even though both are acyclic in this fixture.
+    prerequisites = model.query.prerequisites_of("CON-DERIVATIVE")
+
+    assert all(e.type == "Concept" for e in prerequisites)

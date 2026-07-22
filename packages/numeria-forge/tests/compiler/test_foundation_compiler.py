@@ -3,6 +3,8 @@ from pathlib import Path
 import yaml
 
 from numeria_forge.compiler import FoundationCompiler
+from numeria_forge.compiler.context import CompilerContext
+from numeria_forge.compiler.stage import CompilerStage
 
 
 def write_entity(path: Path, **fields) -> None:
@@ -242,3 +244,111 @@ def test_foundation_compile_generates_and_publishes_canon_content(
     )
     assert compile_data["success"] is True
     assert compile_data["generated_assets"] == 3  # 2 Character + 1 Lesson
+
+
+
+class _RecordingStage(CompilerStage):
+    """A minimal custom CompilerStage, standing in for a caller-supplied
+    extension -- proves `extra_stages` (v0.19.0 -- "Compiler Hardening")
+    actually runs, with access to everything the built-in pipeline has
+    already populated on the context by that point."""
+
+    def __init__(self, calls: list[str]) -> None:
+        self._calls = calls
+
+    @property
+    def name(self) -> str:
+        return "test.recording-stage"
+
+    def execute(self, context: CompilerContext) -> None:
+        self._calls.append(self.name)
+        # Prove this runs *after* the knowledge graph has been built --
+        # extra_stages are wired in right after PublishKnowledgeGraphStage.
+        assert context.knowledge_model is not None
+
+
+def test_extra_stages_run_and_are_counted(tmp_path: Path) -> None:
+    write_numeria_yaml(tmp_path, ["packages/example"])
+
+    write_entity(
+        tmp_path / "knowledge" / "characters" / "NUM-CHR-000001-derivative",
+        id="NUM-CHR-000001",
+        type="Character",
+        status="CANON",
+        version="1.0.0",
+        name="Derivative",
+        role="Detective",
+    )
+
+    ontology_dir = tmp_path / "knowledge" / "ontology"
+    ontology_dir.mkdir(parents=True, exist_ok=True)
+    (ontology_dir / "relationship-types.yaml").write_text(
+        "version: 1.0.0\nstatus: CANON\nrelationship_types: {}\n",
+        encoding="utf-8",
+    )
+
+    package_directory = tmp_path / "packages" / "example" / "derivative"
+    package_directory.mkdir(parents=True)
+    (package_directory / "manifest.yaml").write_text(
+        """
+schema_version: "1.0"
+
+entity:
+  type: concept
+  id: numeria:concept:derivative
+  slug: derivative
+  title: Derivative
+
+outputs:
+  - artifact: readme
+""".strip(),
+        encoding="utf-8",
+    )
+
+    template_root = Path(__file__).resolve().parents[2] / "templates"
+
+    calls: list[str] = []
+    without_extra = FoundationCompiler(template_root=template_root).compile(tmp_path)
+    with_extra = FoundationCompiler(
+        template_root=template_root,
+        extra_stages=(_RecordingStage(calls),),
+    ).compile(tmp_path)
+
+    assert with_extra.success is True
+    assert calls == ["test.recording-stage"]
+    # Exactly one more stage ran than the identical compile without
+    # extra_stages -- proves the extension point adds work without
+    # changing anything else about the pipeline.
+    assert (
+        with_extra.report.stages_executed
+        == without_extra.report.stages_executed + 1
+    )
+
+
+def test_no_extra_stages_by_default(tmp_path: Path) -> None:
+    write_numeria_yaml(tmp_path, ["packages/example"])
+
+    write_entity(
+        tmp_path / "knowledge" / "characters" / "NUM-CHR-000001-derivative",
+        id="NUM-CHR-000001",
+        type="Character",
+        status="CANON",
+        version="1.0.0",
+        name="Derivative",
+        role="Detective",
+    )
+
+    ontology_dir = tmp_path / "knowledge" / "ontology"
+    ontology_dir.mkdir(parents=True, exist_ok=True)
+    (ontology_dir / "relationship-types.yaml").write_text(
+        "version: 1.0.0\nstatus: CANON\nrelationship_types: {}\n",
+        encoding="utf-8",
+    )
+
+    template_root = Path(__file__).resolve().parents[2] / "templates"
+
+    result = FoundationCompiler(template_root=template_root).compile(tmp_path)
+
+    assert result.success is True
+    assert result.report.duration_seconds is not None
+    assert result.report.duration_seconds >= 0

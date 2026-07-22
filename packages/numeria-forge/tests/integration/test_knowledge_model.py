@@ -140,6 +140,8 @@ relationship_types:
     source: Concept
     target: Concept
     acyclic: true
+    category: learning
+    traversal: learning
   REPRESENTED_BY:
     source: Concept
     target: Character

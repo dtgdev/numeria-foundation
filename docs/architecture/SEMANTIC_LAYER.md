@@ -66,6 +66,53 @@ flagged this way; that's the set `CycleDetector` and
 malformed ontology file raises `OntologyError` — callers decide how to
 handle that (see `DependencyGraphValidator` below, which fails open).
 
+## `category` and `traversal`: one graph, several views (v0.19.0)
+
+The original v0.15 proposal (see "What v0.15.0 does not (yet) cover"
+below) sketched two semantic layers -- relationships describing
+mathematics itself, versus relationships describing Numeria's
+fictional universe. v0.19.0 delivers that split, but not as a second
+graph engine: `RelationshipTypeDefinition` gained two more fields.
+
+```python
+@dataclass(frozen=True, slots=True)
+class RelationshipTypeDefinition:
+    ...
+    category: str = ""     # free-form documentation: "learning", "narrative", "world", "publishing", ...
+    traversal: str = ""    # which named query this type participates in: "learning", "story", ...
+    ordered: bool = False  # does instance order matter (e.g. scene sequence)
+    transitive: bool = False  # does A->B->C imply A->C
+```
+
+`category` is purely descriptive -- every one of the 33 real
+relationship types in `knowledge/ontology/relationship-types.yaml` now
+declares one, but nothing reads it except a human skimming the file.
+`traversal` is the field actually consumed by code: it scopes
+`RelationshipOntology.acyclic_type_names(traversal=...)`, so a query
+can ask for just the acyclic types that belong to *one* named view
+instead of every acyclic type combined.
+
+```python
+ontology.acyclic_type_names()                    # ("REQUIRES", "FOLLOWS_SCENE")
+ontology.acyclic_type_names(traversal="learning") # ("REQUIRES",)
+ontology.acyclic_type_names(traversal="story")    # ("FOLLOWS_SCENE",)
+```
+
+This exists because v0.19.0 also marked `FOLLOWS_SCENE` (Scene ->
+Scene, "this scene follows that one") `acyclic: true` -- closing a
+real gap: nothing previously checked a Scene sequence for cycles. With
+two acyclic, order-sensitive relationship types now declared at once,
+an *unscoped* query (`KnowledgeQuery.learning_path`, before this
+change) would combine REQUIRES and FOLLOWS_SCENE into one meaningless
+topological order over two disjoint node sets (Concepts and Scenes).
+`traversal` is what keeps that from happening: `.learning_path`/
+`.prerequisites_of` are scoped to `traversal="learning"`,
+`.story_path` (new in v0.19.0) is scoped to `traversal="story"`. See
+`CANONICAL_KNOWLEDGE_MODEL.md`'s "Views over one Canon" section for
+the query-level story. `DependencyGraphValidator` (below) is
+deliberately *not* scoped -- a cycle in any acyclic-declared type is a
+defect regardless of which named query would have used it.
+
 ## SemanticGraph
 
 "No graph database is needed. Just a graph model." `SemanticGraph` is
@@ -216,6 +263,33 @@ the default set (making "no dependency cycles" part of what `forge
 validate`/`forge compile` guarantee out of the box), same shape as the
 open Law #1 migration decision in `governance/CANON_LAWS.md`.
 
+## StoryValidator (v0.19.0)
+
+The narrative counterpart of `DependencyGraphValidator`. Same
+`CanonValidator` contract, same opt-in status, same fail-open behavior
+on a missing/malformed ontology. Code:
+`canon.semantics.story-structure`. Also does not hardcode
+`FOLLOWS_SCENE` -- it asks the ontology for whatever relationship
+types are `acyclic: true` *and* `traversal: "story"`.
+
+Where `DependencyGraphValidator` only checks for cycles,
+`StoryValidator` checks a different, narrative-specific property:
+every weakly-connected component of the story-traversal subgraph must
+have at least one Scene with no outgoing edge of that type (a
+"beginning" -- follows nothing) and at least one with no incoming edge
+(an "ending" -- nothing follows it). A pure cycle with no valid
+beginning/ending shows up here as two WARNING diagnostics (not an
+ERROR -- `DependencyGraphValidator` is what fails the build for the
+cycle itself; this validator would be redundant and noisier if it also
+tried to detect the cycle).
+
+Honestly scoped, not overclaimed: this does **not** check "every
+character is reachable" or "required artifacts exist" from the
+original v0.19 Story Graph sketch. Both need a first-class notion of
+"which Scenes belong to this story," which the Canon doesn't have yet
+-- `FOLLOWS_SCENE` today only expresses pairwise scene order, not
+story membership boundaries. Deferred rather than guessed at.
+
 ## What v0.15.0 does not (yet) cover
 
 The original v0.15 proposal sketched two "semantic layers" (roughly:
@@ -234,3 +308,12 @@ implement without guessing. Also not yet built: anything that actually
 in dependency order) -- it's computed and available on the context, but
 the Generation Pipeline doesn't consume it yet. Publishing Pipeline and
 Packaging Pipeline (see `FORGE_COMPILER.md`) remain unbuilt as well.
+
+The two-layer split *was* eventually formalized -- see "`category` and
+`traversal`: one graph, several views (v0.19.0)" above -- once a
+concrete second layer (narrative/story) actually needed scoping
+against the first (learning), rather than being speculatively built
+ahead of a real second consumer. `forge graph`, a standalone CLI
+command for the graph, also shipped later (v0.17.0; see
+`FORGE_COMPILER.md`); a narrative equivalent (`forge story`) has not
+been built as of v0.19.0.

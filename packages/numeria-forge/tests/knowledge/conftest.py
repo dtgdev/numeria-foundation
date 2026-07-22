@@ -4,7 +4,14 @@ Mirrors the real repo's Derivative -> Limit -> Function -> {Variable,
 Constant} REQUIRES chain (see docs/architecture/CANONICAL_KNOWLEDGE_MODEL.md),
 plus one TEACHES_CONCEPT edge and one REPRESENTED_BY edge, so tests
 exercise `related()` in both directions without needing the real
-knowledge base.
+knowledge base. Also includes a small 3-scene FOLLOWS_SCENE chain
+(v0.19.0 -- "Views over One Canon"), mirroring the real repo's Scene
+sequence, so `.story_path` can be tested the same way `.learning_path`
+is tested against the REQUIRES chain, and so both acyclic,
+traversal-scoped relationship types (`REQUIRES` traversal="learning",
+`FOLLOWS_SCENE` traversal="story") are present at once -- proving
+`.learning_path`/`.story_path` stay scoped to their own traversal
+rather than combining into one topological order.
 """
 
 from __future__ import annotations
@@ -82,6 +89,21 @@ def knowledge_root(tmp_path: Path) -> Path:
         id="LESSON-INTRO", type="Lesson", status="CANON", version="1.0.0",
         name="Intro to Derivatives",
     )
+    _write_entity(
+        root / "scenes" / "opening",
+        id="SCN-OPENING", type="Scene", status="CANON", version="1.0.0",
+        name="Opening",
+    )
+    _write_entity(
+        root / "scenes" / "middle",
+        id="SCN-MIDDLE", type="Scene", status="CANON", version="1.0.0",
+        name="Middle",
+    )
+    _write_entity(
+        root / "scenes" / "climax",
+        id="SCN-CLIMAX", type="Scene", status="CANON", version="1.0.0",
+        name="Climax",
+    )
 
     _write_relationship(
         root / "relationships" / "function-requires-variable",
@@ -119,6 +141,18 @@ def knowledge_root(tmp_path: Path) -> Path:
         source_id="LESSON-INTRO", source_type="Lesson",
         target_id="CON-DERIVATIVE", target_type="Concept",
     )
+    _write_relationship(
+        root / "relationships" / "middle-follows-opening",
+        rel_id="REL-007", rel_type="FOLLOWS_SCENE",
+        source_id="SCN-MIDDLE", source_type="Scene",
+        target_id="SCN-OPENING", target_type="Scene",
+    )
+    _write_relationship(
+        root / "relationships" / "climax-follows-middle",
+        rel_id="REL-008", rel_type="FOLLOWS_SCENE",
+        source_id="SCN-CLIMAX", source_type="Scene",
+        target_id="SCN-MIDDLE", target_type="Scene",
+    )
 
     ontology_dir = root / "ontology"
     ontology_dir.mkdir(parents=True, exist_ok=True)
@@ -132,12 +166,21 @@ relationship_types:
     source: Concept
     target: Concept
     acyclic: true
+    category: learning
+    traversal: learning
   REPRESENTED_BY:
     source: Concept
     target: Character
   TEACHES_CONCEPT:
     source: Lesson
     target: Concept
+  FOLLOWS_SCENE:
+    source: Scene
+    target: Scene
+    acyclic: true
+    category: narrative
+    traversal: story
+    ordered: true
 """.strip(),
         encoding="utf-8",
     )

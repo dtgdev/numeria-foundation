@@ -38,6 +38,7 @@ from numeria_forge.semantics.ontology import (
     RelationshipTypeDefinition,
 )
 from numeria_forge.semantics.orphan_validator import OrphanedEntityValidator
+from numeria_forge.semantics.story_validator import StoryValidator
 from numeria_forge.semantics.topo_sort import TopologicalSortError, topological_sort
 from numeria_forge.semantics.validator import DependencyGraphValidator
 
@@ -52,6 +53,7 @@ __all__ = [
     "RelationshipOntology",
     "RelationshipTypeDefinition",
     "SemanticGraph",
+    "StoryValidator",
     "TopologicalSortError",
     "topological_sort",
 ]
