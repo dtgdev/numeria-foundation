@@ -60,6 +60,94 @@ def test_prerequisites_of_an_unknown_id_is_empty(model) -> None:
     assert model.query.prerequisites_of("does-not-exist") == ()
 
 
+def test_learning_path_is_prerequisites_first_ending_with_the_target(
+    model,
+) -> None:
+    # Kahn's algorithm's exact tie-break order between two
+    # independent siblings (Variable and Constant, neither requiring
+    # the other) is an implementation detail, not a contract -- so
+    # this asserts the invariants a learning path actually promises,
+    # rather than one specific total order among ties.
+    path = [e.id for e in model.query.learning_path("CON-DERIVATIVE")]
+
+    assert path[-1] == "CON-DERIVATIVE"
+    assert set(path) == {
+        "CON-CONSTANT", "CON-VARIABLE", "CON-FUNCTION", "CON-LIMIT",
+        "CON-DERIVATIVE",
+    }
+    # Every direct REQUIRES edge must be respected: prerequisite
+    # before dependent.
+    assert path.index("CON-LIMIT") < path.index("CON-DERIVATIVE")
+    assert path.index("CON-FUNCTION") < path.index("CON-LIMIT")
+    assert path.index("CON-VARIABLE") < path.index("CON-FUNCTION")
+    assert path.index("CON-CONSTANT") < path.index("CON-FUNCTION")
+
+
+def test_learning_path_for_a_leaf_concept_is_just_itself(model) -> None:
+    path = model.query.learning_path("CON-VARIABLE")
+
+    assert [e.id for e in path] == ["CON-VARIABLE"]
+
+
+def test_learning_path_for_an_intermediate_concept_stops_there(model) -> None:
+    path = [e.id for e in model.query.learning_path("CON-LIMIT")]
+
+    assert path[-1] == "CON-LIMIT"
+    assert set(path) == {"CON-CONSTANT", "CON-VARIABLE", "CON-FUNCTION", "CON-LIMIT"}
+    assert "CON-DERIVATIVE" not in path
+    assert path.index("CON-FUNCTION") < path.index("CON-LIMIT")
+    assert path.index("CON-VARIABLE") < path.index("CON-FUNCTION")
+    assert path.index("CON-CONSTANT") < path.index("CON-FUNCTION")
+
+
+def test_learning_path_for_an_unknown_id_is_empty(model) -> None:
+    assert model.query.learning_path("does-not-exist") == ()
+
+
+def test_learning_path_is_empty_when_ontology_declares_no_acyclic_type(
+    tmp_path,
+) -> None:
+    from numeria_forge.knowledge import CanonicalKnowledgeModel
+
+    root = tmp_path / "knowledge"
+    (root / "concepts" / "a").mkdir(parents=True)
+    (root / "concepts" / "a" / "entity.yaml").write_text(
+        "id: CON-A\ntype: Concept\nstatus: CANON\nversion: '1.0.0'\nname: A\n",
+        encoding="utf-8",
+    )
+    (root / "ontology").mkdir(parents=True)
+    (root / "ontology" / "relationship-types.yaml").write_text(
+        "version: '1.0.0'\nstatus: CANON\nrelationship_types: {}\n",
+        encoding="utf-8",
+    )
+
+    no_ontology_model = CanonicalKnowledgeModel.build_from_root(root)
+
+    # No acyclic type declared -- learning_path can't order anything,
+    # but a lone node with no prerequisites is still just itself.
+    assert [e.id for e in no_ontology_model.query.learning_path("CON-A")] == ["CON-A"]
+
+
+def test_learning_path_is_empty_on_a_genuine_cycle(model) -> None:
+    import dataclasses
+
+    from numeria_forge.knowledge.query import KnowledgeQuery
+    from numeria_forge.semantics.edge import GraphEdge
+
+    # Force a REQUIRES cycle: Variable now (incorrectly) requires
+    # Derivative, closing a loop back through the existing chain.
+    cyclic_edges = model.graph.edges + (
+        GraphEdge(
+            id="REL-CYCLE", type="REQUIRES",
+            source_id="CON-VARIABLE", target_id="CON-DERIVATIVE",
+        ),
+    )
+    cyclic_graph = dataclasses.replace(model.graph, edges=cyclic_edges)
+    query = KnowledgeQuery(canon=model.canon, graph=cyclic_graph, ontology=model.ontology)
+
+    assert query.learning_path("CON-DERIVATIVE") == ()
+
+
 def test_traverse_respects_max_depth(model) -> None:
     one_hop = model.query.traverse(
         "CON-DERIVATIVE", types=("REQUIRES",), max_depth=1

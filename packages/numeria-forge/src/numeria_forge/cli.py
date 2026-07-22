@@ -7,6 +7,7 @@ from numeria_forge import __version__
 from numeria_forge.commands._shared import resolve_knowledge_root as _resolve_knowledge_root
 from numeria_forge.commands.graph import graph_app
 from numeria_forge.commands.init import init_repository
+from numeria_forge.commands.learn import learn_app
 
 console = Console()
 
@@ -30,6 +31,11 @@ app.add_typer(
     graph_app,
     name="graph",
     help="Build, validate, export, and query the knowledge graph (v0.17.0).",
+)
+app.add_typer(
+    learn_app,
+    name="learn",
+    help="Query the Learning Graph: prerequisites and ordered learning paths (v0.18.0).",
 )
 
 

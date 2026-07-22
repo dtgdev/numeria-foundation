@@ -25,6 +25,7 @@ from numeria_forge.domain.canon.canon import Canon
 from numeria_forge.domain.canon.entity import CanonEntity
 from numeria_forge.semantics.graph import SemanticGraph
 from numeria_forge.semantics.ontology import RelationshipOntology
+from numeria_forge.semantics.topo_sort import TopologicalSortError, topological_sort
 
 Direction = str  # "outgoing" | "incoming"
 
@@ -133,6 +134,62 @@ class KnowledgeQuery:
         return tuple(
             entity
             for entity in (self.get(entity_id) for entity_id in ids)
+            if entity is not None
+        )
+
+    def learning_path(self, entity_id: str) -> tuple[CanonEntity, ...]:
+        """The ordered sequence of entities to learn, prerequisites
+        first, ending with ``entity_id`` itself (v0.18.0 -- "Learning
+        Graph"). Where `prerequisites_of` gives the unordered
+        transitive closure ("everything needed before X"), this gives
+        the specific sequence to learn them in.
+
+        Built from `topological_sort` over the ontology's declared
+        `acyclic` relationship types (today: `REQUIRES`), reversed
+        into learning order -- `topological_sort` itself places a
+        dependent *before* what it requires (see
+        `docs/architecture/SEMANTIC_LAYER.md`'s "direction convention"
+        note), which is backwards for "what should I learn first" --
+        then filtered down to just ``entity_id``'s own prerequisite
+        closure plus itself, preserving their relative order. Because
+        that relative order is a subsequence of a valid whole-graph
+        topological order, it remains a valid ordering for this
+        subset: every prerequisite still appears before anything that
+        depends on it.
+
+        Returns an empty tuple if ``entity_id`` is unknown, if no
+        relationship type is declared `acyclic` (nothing to order),
+        or if the graph actually contains a cycle (a malformed Canon
+        has no reliable learning order -- see `forge graph build` /
+        `DependencyGraphValidator` to find and fix the cycle first).
+        """
+
+        if entity_id not in self.graph.nodes:
+            return ()
+
+        acyclic_types = self.ontology.acyclic_type_names()
+
+        if not acyclic_types:
+            entity = self.get(entity_id)
+            return (entity,) if entity is not None else ()
+
+        relevant_ids = {entity_id} | {
+            prerequisite.id for prerequisite in self.prerequisites_of(entity_id)
+        }
+
+        try:
+            whole_graph_order = topological_sort(self.graph, types=acyclic_types)
+        except TopologicalSortError:
+            return ()
+
+        learning_order = tuple(reversed(whole_graph_order))
+        filtered_ids = (
+            node_id for node_id in learning_order if node_id in relevant_ids
+        )
+
+        return tuple(
+            entity
+            for entity in (self.get(node_id) for node_id in filtered_ids)
             if entity is not None
         )
 
