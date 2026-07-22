@@ -6,11 +6,22 @@ from dataclasses import dataclass
 
 from numeria_forge.compiler.context import CompilerContext
 from numeria_forge.compiler.report import CompilationReport
+from numeria_forge.knowledge import CanonicalKnowledgeModel
 
 
 @dataclass(frozen=True)
 class FoundationCompilationResult:
-    """Everything produced by one :class:`FoundationCompiler` run."""
+    """Everything produced by one :class:`FoundationCompiler` run.
+
+    Two things a caller almost always wants are promoted to first-class
+    properties here rather than left as something you dig out of
+    `.context`: the `CompilationReport` (`.report`, pre-existing) and,
+    as of v0.16.0, the `CanonicalKnowledgeModel` (`.knowledge_model`).
+    Both are compiler *artifacts* in the same sense -- durable,
+    queryable output of a compilation, not incidental pipeline
+    bookkeeping -- so both get a stable name on the result object
+    instead of requiring `result.context.knowledge_model`.
+    """
 
     context: CompilerContext
     report: CompilationReport
@@ -19,6 +30,15 @@ class FoundationCompilationResult:
     @property
     def success(self) -> bool:
         return self.report.success
+
+    @property
+    def knowledge_model(self) -> CanonicalKnowledgeModel | None:
+        """The `CanonicalKnowledgeModel` built by `BuildKnowledgeModelStage`
+        (v0.16.0), or `None` if compilation never reached that stage.
+        See `docs/architecture/CANONICAL_KNOWLEDGE_MODEL.md`.
+        """
+
+        return self.context.knowledge_model
 
     @property
     def artifact_count(self) -> int:

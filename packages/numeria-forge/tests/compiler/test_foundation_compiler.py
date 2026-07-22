@@ -199,6 +199,12 @@ def test_foundation_compile_generates_and_publishes_canon_content(
 
     assert result.success is True
 
+    # knowledge_model is a first-class artifact of the result, not
+    # something callers should have to dig out of .context (v0.16.0).
+    assert result.knowledge_model is not None
+    assert result.knowledge_model is result.context.knowledge_model
+    assert result.knowledge_model.query.get("NUM-CHR-000001") is not None
+
     build_directory = tmp_path / "build"
 
     character_readme = (

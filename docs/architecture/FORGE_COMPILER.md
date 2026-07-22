@@ -3,7 +3,7 @@
 The Forge Compiler is the engine that turns a Numeria Foundation's raw
 knowledge base into validated, generated, published, and packaged
 output. This document describes what it is made of and how a
-compilation actually runs, as of v0.15.0 ("Compiler Completion").
+compilation actually runs, as of v0.16.0 ("Canonical Knowledge Model").
 
 ## The pipeline, end to end
 
@@ -33,6 +33,13 @@ Validate                   (ValidateCanonStage -- ten CanonValidators:
 Resolve Dependencies        (DependencyGraphStage + TopologicalOrderStage,
                              v0.15.0 -- builds the graph, orders it,
                              fails the build on a dependency cycle)
+    |
+    v
+Build Knowledge Model        (BuildKnowledgeModelStage, v0.16.0 --
+                             wraps the Canon + SemanticGraph +
+                             RelationshipOntology into one
+                             CanonicalKnowledgeModel, queryable via
+                             context.knowledge_model.query)
     |
     v
 Generate Missing Assets      (GenerateMissingAssetsStage, v0.15.0 --
@@ -79,33 +86,40 @@ Concretely, `FoundationCompiler.compile` does this:
    `acyclic: true` (`REQUIRES`, today). A cycle here appends an
    `ERROR` diagnostic instead of raising, so it's caught by the same
    gate as validation failures.
-7. If `context.success` is `False` at this point (any diagnostic is an
+7. Run `BuildKnowledgeModelStage` (v0.16.0) — wraps `context.loaded_canon`,
+   `context.semantic_graph`, and the ontology into one
+   `CanonicalKnowledgeModel` on `context.knowledge_model`, without
+   rebuilding the graph or re-reading the Canon (see
+   `CANONICAL_KNOWLEDGE_MODEL.md`). Runs unconditionally, like steps 5
+   and 6 — a Canon with validation errors or a dependency cycle still
+   has a Canon and a graph worth querying.
+8. If `context.success` is `False` at this point (any diagnostic is an
    `ERROR` — from validation *or* from a dependency cycle), generation
    and publishing are skipped entirely: `package_results` stays empty
-   and nothing is written to `build/` except the reports (step 12
+   and nothing is written to `build/` except the reports (step 13
    below still runs, so `build/reports/diagnostics.md` explains why).
    **Only a valid, acyclic Canon proceeds to generation.**
-8. Otherwise: run `GenerateMissingAssetsStage` — renders `readme` (and
+9. Otherwise: run `GenerateMissingAssetsStage` — renders `readme` (and
    `character_card` for Characters) directly from every non-relationship
    Canon entity into `context.generated_assets`.
-9. Run `PublishGeneratedAssetsStage` — writes every one of those
-   artifacts under `context.build_directory`, routed into
-   `canon/`, `stories/`, `lessons/`, or `assessments/` by entity type
-   (see "The `build/` output layout" below).
-10. Walk every workspace listed in `numeria.yaml`, and for each
+10. Run `PublishGeneratedAssetsStage` — writes every one of those
+    artifacts under `context.build_directory`, routed into
+    `canon/`, `stories/`, `lessons/`, or `assessments/` by entity type
+    (see "The `build/` output layout" below).
+11. Walk every workspace listed in `numeria.yaml`, and for each
     `manifest.yaml` found, run a per-package `Compiler` with
     `LoadManifestStage`, `RegisterBuiltinArtifactsStage`,
     `RenderTemplatesStage`, and `PublishArtifactsStage` (writing
     output next to that `manifest.yaml`), producing its own
     `CompilerContext` per package (collected as `package_results`).
-11. Build a `CompilationReport` from the foundation-wide context
+12. Build a `CompilationReport` from the foundation-wide context
     (every diagnostic accumulated across steps 4-6) via
     `CompilationReport.from_context`.
-12. **Package**: call `write_build_reports(context.build_directory,
+13. **Package**: call `write_build_reports(context.build_directory,
     report)`, writing `build/reports/compile.json`,
     `diagnostics.json`, and `diagnostics.md` — always, whether or not
     the build succeeded.
-13. Return a `FoundationCompilationResult` wrapping the foundation-wide
+14. Return a `FoundationCompilationResult` wrapping the foundation-wide
     context, the report, and the tuple of package results.
 
 Before v0.15.0, generation "legitimately compiled zero packages
@@ -146,11 +160,12 @@ callers can inspect `context.artifacts`, `context.diagnostics`, and
 
 Stages shipped today: `LoadCanonStage`, `ValidateCanonStage`,
 `DependencyGraphStage`, `TopologicalOrderStage`,
-`GenerateMissingAssetsStage`, `LoadManifestStage`,
-`RegisterBuiltinArtifactsStage`, `RenderTemplatesStage`,
-`PublishArtifactsStage`, `PublishGeneratedAssetsStage`,
-`PublishCharactersStage` (not currently wired into `FoundationCompiler`
--- nothing populates `context.characters` in that pipeline).
+`BuildKnowledgeModelStage`, `GenerateMissingAssetsStage`,
+`LoadManifestStage`, `RegisterBuiltinArtifactsStage`,
+`RenderTemplatesStage`, `PublishArtifactsStage`,
+`PublishGeneratedAssetsStage`, `PublishCharactersStage` (not currently
+wired into `FoundationCompiler` -- nothing populates
+`context.characters` in that pipeline).
 
 ## CompilerContext
 
@@ -177,6 +192,11 @@ stage. The fields that matter most:
   Typed loosely (`Any` / a bare `tuple[str, ...]`), matching
   `loaded_canon`'s existing style, rather than importing
   `numeria_forge.semantics.SemanticGraph` into `CompilerContext`.
+- `knowledge_model` (v0.16.0) — populated by `BuildKnowledgeModelStage`;
+  a `CanonicalKnowledgeModel` wrapping `loaded_canon` + `semantic_graph`
+  + the ontology behind one stable `query` API (see
+  `CANONICAL_KNOWLEDGE_MODEL.md`). Typed loosely (`Any`), same
+  reasoning as `semantic_graph` above.
 - `context.success` — `True` only when no diagnostic in
   `context.diagnostics` has `Severity.ERROR`. This is the single
   source of truth a caller checks to know whether a compilation
@@ -235,6 +255,28 @@ opt-in rather than a default.
 `context.topological_order` is computed but not yet consumed by
 anything downstream (e.g. generating in dependency order) -- it's
 available on the context for a future stage to use.
+
+## BuildKnowledgeModelStage
+
+Wraps `context.loaded_canon`, `context.semantic_graph`, and the
+ontology into one `CanonicalKnowledgeModel` on `context.knowledge_model`
+(full detail in `CANONICAL_KNOWLEDGE_MODEL.md`). Requires both
+`LoadCanonStage` and `DependencyGraphStage` to have already run (raises
+`RuntimeError` otherwise); reuses both rather than rebuilding the
+graph or re-reading the Canon from disk. Loading the ontology is
+fail-open the same way `TopologicalOrderStage` is: a missing or
+malformed `ontology/relationship-types.yaml` falls back to an empty
+`RelationshipOntology` rather than raising, since
+`RelationshipValidator` already reports that as a diagnostic
+elsewhere.
+
+Runs unconditionally, not gated on `context.success` -- a Canon with
+validation errors or an unresolved dependency cycle still has a Canon
+and a graph worth querying. `context.knowledge_model.query` is the
+stable API downstream consumers (the compiler itself, Numeria Studio,
+AI generators) use to ask things like "everything Concept X requires"
+or "which Lessons teach Concept Y" without walking `SemanticGraph` or
+`Canon` directly.
 
 ## GenerateMissingAssetsStage
 
@@ -312,6 +354,38 @@ they're mapped there to match the target layout), everything else ->
 **No `website/` directory is produced.** The target layout sketches
 one, but nothing in this codebase generates a static site --
 fabricating an empty directory would misrepresent that as done.
+
+## FoundationCompilationResult: the compiler's artifacts
+
+`FoundationCompiler.compile()` returns one `FoundationCompilationResult`
+-- the top-level, caller-facing object. It wraps `context` (the raw,
+mutable `CompilerContext` every stage wrote into) and
+`package_results` (one `CompilerContext` per compiled package), but
+callers shouldn't need to dig into `context` for the two things a
+compilation actually *produces*:
+
+- **`.report`** — the `CompilationReport` (diagnostics, counts,
+  success/failure), pre-existing since v0.14.0.
+- **`.knowledge_model`** — the `CanonicalKnowledgeModel` (v0.16.0),
+  built by `BuildKnowledgeModelStage`. `None` only if compilation never
+  reached that stage.
+
+Both are formally compiler *artifacts*: durable, queryable output of a
+compilation, not incidental pipeline bookkeeping -- which is why each
+gets its own stable property on the result instead of requiring
+`result.context.report` / `result.context.knowledge_model`. A caller
+who just ran `forge compile` programmatically queries the Canon this
+way, with no knowledge of `CompilerContext`'s internals:
+
+```python
+result = FoundationCompiler().compile(foundation_root)
+
+if result.success and result.knowledge_model is not None:
+    prereqs = result.knowledge_model.query.prerequisites_of("NUM-CON-000001")
+```
+
+`.success`, `.artifact_count`, and `.format_report(foundation_name)`
+round out the result object (see below).
 
 ## CompilationReport
 

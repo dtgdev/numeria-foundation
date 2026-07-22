@@ -1,5 +1,6 @@
 from numeria_forge.compiler.stage import CompilerStage
 
+from .build_knowledge_model import BuildKnowledgeModelStage
 from .dependency_graph import DependencyGraphStage
 from .generate_missing_assets import GenerateMissingAssetsStage
 from .load_canon import LoadCanonStage
@@ -13,6 +14,7 @@ from .topological_order import TopologicalOrderStage
 from .validate_canon import ValidateCanonStage
 
 __all__ = [
+    "BuildKnowledgeModelStage",
     "CompilerStage",
     "DependencyGraphStage",
     "GenerateMissingAssetsStage",

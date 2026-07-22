@@ -21,6 +21,13 @@ Wires together the full pipeline:
     Topological Ordering     (TopologicalOrderStage, v0.15.0)
         |
         v
+    Build Knowledge Model     (BuildKnowledgeModelStage, v0.16.0 --
+                               wraps the Canon + SemanticGraph +
+                               RelationshipOntology into one
+                               CanonicalKnowledgeModel, queryable via
+                               context.knowledge_model.query)
+        |
+        v
     Generate Missing Assets   (GenerateMissingAssetsStage, v0.15.0 --
                                renders readme/character_card directly
                                from every Canon entity)
@@ -71,6 +78,7 @@ from numeria_forge.compiler.context import CompilerContext
 from numeria_forge.compiler.foundation_result import FoundationCompilationResult
 from numeria_forge.compiler.report import CompilationReport
 from numeria_forge.compiler.stages import (
+    BuildKnowledgeModelStage,
     DependencyGraphStage,
     GenerateMissingAssetsStage,
     LoadCanonStage,
@@ -121,6 +129,9 @@ class FoundationCompiler:
         stages_executed += 1
 
         TopologicalOrderStage().execute(context)
+        stages_executed += 1
+
+        BuildKnowledgeModelStage().execute(context)
         stages_executed += 1
 
         package_results: list[CompilerContext] = []

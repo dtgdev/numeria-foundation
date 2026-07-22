@@ -54,6 +54,12 @@ class CompilerContext:
 
     topological_order: tuple[str, ...] = ()
 
+    # Populated by BuildKnowledgeModelStage (v0.16.0). Typed loosely
+    # for the same reason as `semantic_graph` above -- see
+    # `numeria_forge.knowledge.CanonicalKnowledgeModel` for the
+    # concrete shape.
+    knowledge_model: Any | None = None
+
     def __post_init__(self) -> None:
         if self.source_directory is None:
             self.source_directory = self.project_root

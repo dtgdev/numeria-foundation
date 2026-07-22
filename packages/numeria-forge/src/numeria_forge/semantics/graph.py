@@ -48,6 +48,23 @@ class SemanticGraph:
             if edge.source_id == node_id and (wanted is None or edge.type in wanted)
         )
 
+    def incoming(
+        self, node_id: str, *, types: Iterable[str] | None = None
+    ) -> tuple[GraphEdge, ...]:
+        """The mirror of :meth:`outgoing`: every edge that points *at*
+        ``node_id``. Added for v0.16.0's `KnowledgeQuery`, which needs
+        both directions (e.g. "which Lessons TEACHES_CONCEPT this
+        Concept" is an incoming-edge query from the Concept's point of
+        view)."""
+
+        wanted = set(types) if types is not None else None
+
+        return tuple(
+            edge
+            for edge in self.edges
+            if edge.target_id == node_id and (wanted is None or edge.type in wanted)
+        )
+
     def adjacency(
         self, *, types: Iterable[str] | None = None
     ) -> dict[str, tuple[str, ...]]:
